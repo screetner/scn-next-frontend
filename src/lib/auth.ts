@@ -10,6 +10,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 password: { label: "Password", type: "password" }
             },
             authorize: async ({ username, password }) => {
+                // @ts-ignore
                 const response = await AuthRepository.signIn(username, password)
                 if (response.user && response.token) {
                     return {
