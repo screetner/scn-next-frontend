@@ -1,6 +1,13 @@
 "use client"
 
-import {Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator} from "@/components/ui/breadcrumb";
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbSeparator,
+    BreadcrumbPage
+} from "@/components/ui/breadcrumb";
 import Link from "next/link";
 import {usePathname} from "next/navigation";
 import {Fragment} from "react";
@@ -19,7 +26,13 @@ export default function NavTree() {
                         <Fragment key={index}>
                             <BreadcrumbItem>
                                 <BreadcrumbLink asChild>
-                                    <Link href={href}>{segment.toUpperCase()}</Link>
+                                    {
+                                        index === pathArray.length - 1 ? (
+                                            <BreadcrumbPage>{segment.toUpperCase()}</BreadcrumbPage>
+                                        ) : (
+                                            <Link href={href}>{segment.toUpperCase()}</Link>
+                                        )
+                                    }
                                 </BreadcrumbLink>
                             </BreadcrumbItem>
                             {index !== pathArray.length - 1 && (
