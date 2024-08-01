@@ -15,3 +15,7 @@ export type TSignInResponse = {
     token : string,
     user : TUser
 }
+
+export type TSessions = TUser & {
+    token : string
+}

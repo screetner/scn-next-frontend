@@ -8,10 +8,12 @@ import {
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import {Button} from "@/components/ui/button";
-import { signOut } from "next-auth/react"
+import {signOut, useSession} from "next-auth/react"
+import {get2CapitalizedWords} from "@/utils/helper";
 
 
 export function Person() {
+    const {data : session} = useSession()
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -20,7 +22,7 @@ export function Person() {
                     size="icon"
                     className="overflow-hidden rounded-full"
                 >
-                    test
+                    {get2CapitalizedWords(session?.user.username)}
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">

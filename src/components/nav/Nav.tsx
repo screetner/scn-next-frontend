@@ -1,11 +1,3 @@
-import Link from "next/link";
-import {
-    Breadcrumb,
-    BreadcrumbItem,
-    BreadcrumbLink,
-    BreadcrumbList,
-} from "@/components/ui/breadcrumb"
-
 import {
     TooltipProvider
 } from "@/components/ui/tooltip"
@@ -15,6 +7,7 @@ import {PropsWithChildren} from "react";
 import {navList} from "@/utils/navlist"
 import NavIcon from "@/components/nav/navIcon";
 import SideNav from "@/components/nav/SideNav";
+import NavTree from "@/components/nav/NavTree";
 
 export function Nav({children} : PropsWithChildren) {
     return (
@@ -37,15 +30,7 @@ export function Nav({children} : PropsWithChildren) {
                 <header
                     className="sticky top-0 flex h-14 items-center justify-between gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
                     <SideNav/>
-                    <Breadcrumb className="hidden sm:flex">
-                        <BreadcrumbList>
-                            <BreadcrumbItem>
-                                <BreadcrumbLink asChild>
-                                    <Link href="#">Dashboard</Link>
-                                </BreadcrumbLink>
-                            </BreadcrumbItem>
-                        </BreadcrumbList>
-                    </Breadcrumb>
+                    <NavTree/>
                     <Person/>
                 </header>
                 <main className={"p-2 md:px-6"}>

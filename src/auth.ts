@@ -1,6 +1,7 @@
 import { AuthRepository } from "@/repository/auth";
 import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
+import {TSignInResponse} from "@/types/auth";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
     providers: [
@@ -14,11 +15,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 const response = await AuthRepository.signIn(username, password)
                 if (response.user && response.token) {
                     return {
-                        id: response.user.username,
-                        name: response.user.username,
-                        email: response.user.email,
-                        role: response.user.roleName,
-                        token: response.token
+                        username : response.user.username,
+                        roleId : response.user.roleId,
+                        roleName : response.user.roleName,
+                        email : response.user.email,
+                        token : response.token,
+                        organization_name : response.user.organization_name
                     }
                 }
                 return null
@@ -26,12 +28,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         })
     ],
     callbacks: {
-        async jwt({ token, account }) {
-            if (account) {
-                token.accessToken = account?.access_token
-                token.id = account.id
+        async jwt({ token, user }) {
+            if (user) {
+                token.user = user;
             }
-            return token
+            return token;
+        },
+        async session({ session, token }) {
+            // @ts-ignore
+            session.user = token.user as TSignInResponse["user"];
+            return session;
         }
-    },
+    }
 })
