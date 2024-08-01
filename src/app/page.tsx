@@ -9,8 +9,7 @@ export default async function Home(){
         <div className="relative min-h-screen flex flex-col items-center justify-center text-white">
             <Image
                 src="/bg-home.jpg"
-                layout="fill"
-                objectFit="cover"
+                fill
                 quality={100}
                 alt="GPS road background"
             />
