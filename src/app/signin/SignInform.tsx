@@ -1,72 +1,98 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import {auth, signIn} from "@/auth"
-import { redirect } from "next/navigation"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+import { signInSchema } from "@/formSchemas/signin"
+import { zodResolver } from "@hookform/resolvers/zod"
+import {useRouter} from "next/navigation";
+import * as action from "@/actions"
 
-export async function SignInForm() {
-    const session = await auth()
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage
+} from "@/components/ui/form"
 
-    if (session) {
-        redirect("/")
-    }
-
-    async function signInAction(formData: FormData) {
-        'use server'
-
-        const username = formData.get('username') as string
-        const password = formData.get('password') as string
-
-        const result = await signIn('credentials', {
-            username,
-            password,
-            redirect: false,
-        })
-
-        if (result?.error) {
-            console.error(result.error)
-            return
+export function SignInForm() {
+    const router = useRouter()
+    const form = useForm<z.infer<typeof signInSchema>>({
+        resolver: zodResolver(signInSchema),
+        defaultValues: {
+            username: "",
+            password: "",
         }
+    })
 
-        redirect('/dashboard')
+    const handleSubmit = async (values: z.infer<typeof signInSchema>) => {
+        const data = await action.authenticate(values.username, values.password)
+        if (data.error) {
+            form.setError("root", {
+                type: "manual",
+                message: data.error,
+            })
+        }else{
+            router.push("/dashboard")
+        }
     }
 
     return (
-        <form action={signInAction}>
-            <div className="grid gap-2">
-                <div className="grid gap-1">
-                    <Label className="sr-only" htmlFor="username">
-                        Username
-                    </Label>
-                    <Input
-                        id="username"
-                        name="username"
-                        placeholder="Username"
-                        type="text"
-                        autoCapitalize="none"
-                        autoComplete="username"
-                        autoCorrect="off"
-                        required
-                    />
-                </div>
-                <div className="grid gap-1">
-                    <Label className="sr-only" htmlFor="password">
-                        Password
-                    </Label>
-                    <Input
-                        id="password"
-                        name="password"
-                        placeholder="Password"
-                        type="password"
-                        autoCapitalize="none"
-                        autoComplete="current-password"
-                        required
-                    />
-                </div>
-                <Button type="submit">
-                    Sign In
+        <Form {...form}>
+            <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
+                <FormField
+                    control={form.control}
+                    name="username"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Username</FormLabel>
+                            <FormControl>
+                                <Input
+                                    {...field}
+                                    placeholder="Username"
+                                    type="text"
+                                    autoCapitalize="none"
+                                    autoComplete="username"
+                                    autoCorrect="off"
+                                />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="password"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Password</FormLabel>
+                            <FormControl>
+                                <Input
+                                    {...field}
+                                    placeholder="Password"
+                                    type="password"
+                                    autoCapitalize="none"
+                                    autoComplete="current-password"
+                                />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+                <Button type="submit" className="w-full">
+                    {form.formState.isLoading ? "Signing in..." : "Sign In"}
                 </Button>
-            </div>
-        </form>
+                {
+                    form.formState.errors && (
+                        <p className="text-red-500 text-sm">
+                            {form.formState.errors.root?.message}
+                        </p>
+                    )
+                }
+            </form>
+        </Form>
     )
 }

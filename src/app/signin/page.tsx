@@ -1,12 +1,19 @@
 import {Metadata} from "next"
 import {SignInForm} from "./SignInform"
+import {auth} from "@/auth"
+import {redirect} from "next/navigation";
 
 export const metadata: Metadata = {
     title: "Sign In",
     description: "Sign in to your account",
 }
 
-export default function SignInPage() {
+export default async function SignInPage() {
+    const session = await auth()
+    if(session){
+        redirect("/dashboard")
+    }
+
     return (
         <div className="container flex h-screen w-screen flex-col items-center justify-center">
             <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">

@@ -1,7 +1,8 @@
-import { AuthRepository } from "@/repository/auth";
+import {AuthRepository} from "@/repository/auth";
 import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import {TSignInResponse} from "@/types/auth";
+import {InvalidLoginError} from "@/utils/custom";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
     providers: [
@@ -11,26 +12,36 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 password: { label: "Password", type: "password" }
             },
             authorize: async ({ username, password }) => {
-                // @ts-ignore
-                const response = await AuthRepository.signIn(username, password)
-                if (response.user && response.token) {
-                    return {
-                        username : response.user.username,
-                        roleId : response.user.roleId,
-                        roleName : response.user.roleName,
-                        email : response.user.email,
-                        token : response.token,
-                        organization_name : response.user.organization_name
+                try{
+                    // @ts-ignore
+                    const response = await AuthRepository.signIn(username, password)
+                    if (response.user) {
+                        return {
+                            username: response.user.username,
+                            roleName: response.user.roleName,
+                            email: response.user.email,
+                            accessToken: response.user.accessToken,
+                            organization_name: response.user.orgName,
+                            accessTokenExpiry: response.user.accessTokenExpiry
+                        }
                     }
+                    return null
+                }catch(e : any){
+                    throw new InvalidLoginError(e.response.data || "An error occurred while trying to authenticate")
                 }
-                return null
             }
         })
     ],
     callbacks: {
         async jwt({ token, user }) {
-            if (user) {
-                token.user = user;
+            if(user) {
+                token.user = user
+            }
+            // @ts-ignore
+            const shouldRefreshTime = Math.round((token.user.accessTokenExpiry - 60 * 60 * 1000) - Date.now());
+            if (shouldRefreshTime < 0) {
+                console.log("Refreshing token")
+                // token.user.accessToken = await AuthRepository.refreshToken(token.user.accessToken)
             }
             return token;
         },
@@ -38,6 +49,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             // @ts-ignore
             session.user = token.user as TSignInResponse["user"];
             return session;
-        }
-    }
+        },
+    },
 })

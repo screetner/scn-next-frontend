@@ -4,15 +4,15 @@ export type TSignIn = {
 }
 
 type TUser = {
+    accessToken : string
     username : string
-    roleId : number
     roleName : string
     email : string
-    organization_name : string
+    orgName : string
+    accessTokenExpiry : number
 }
 
 export type TSignInResponse = {
-    token : string,
     user : TUser
 }
 
