@@ -37,11 +37,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             if(user) {
                 token.user = user
             }
+
             // @ts-ignore
-            const shouldRefreshTime = Math.round((token.user.accessTokenExpiry - 60 * 60 * 1000) - Date.now());
+            const exp = new Date(token.user.accessTokenExpiry);
+            const shouldRefreshTime = Math.round(exp.getTime() - (60 * 60 * 1000) - Date.now());
             if (shouldRefreshTime < 0) {
-                console.log("Refreshing token")
-                // token.user.accessToken = await AuthRepository.refreshToken(token.user.accessToken)
+                await signOut();
+                // token.user.accessToken = await AuthRepository.refreshToken(token.user.accessToken);
             }
             return token;
         },

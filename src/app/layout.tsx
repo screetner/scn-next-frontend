@@ -5,6 +5,7 @@ import {ThemeProvider} from "@/components/theme-provider";
 import React from "react";
 import Provider from "@/provider";
 const inter = Inter({ subsets: ["latin"] });
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 export const metadata: Metadata = {
   title: "Create Next App",
