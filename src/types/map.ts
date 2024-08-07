@@ -23,4 +23,5 @@ export interface CustomMapProps {
     popupData?: PopupData[];
     initialGeometry?: Location[];
     onGeometryChange?: (geometry: Location[]) => void;
+    hoveredIndex: number | null;
 }

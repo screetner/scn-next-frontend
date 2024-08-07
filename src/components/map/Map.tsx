@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useMemo } from 'react';
 import Map, { Marker, Source, Layer, Popup } from 'react-map-gl';
 import { CustomMapProps, Location, PopupData } from "@/types/map";
 import { Dot, MapPinCheckInside } from "lucide-react";
@@ -12,37 +12,47 @@ function CustomMap({
                        initialGeometry = [],
                        onGeometryChange,
                        width = "100%",
-                       height = "600px"
+                       height = "600px",
+                       hoveredIndex
                    }: CustomMapProps) {
     const mapboxAccessToken = process.env.NEXT_PUBLIC_MAP_API_KEY;
     const [locations, setLocations] = useState<Location[]>(initialGeometry);
-    const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
     const [selectedPopup, setSelectedPopup] = useState<PopupData | null>(null);
 
     useEffect(() => {
         setLocations(initialGeometry);
     }, [initialGeometry]);
 
-    useEffect(() => {
-        if (onGeometryChange) {
-            onGeometryChange(locations);
-        }
-    }, [locations, onGeometryChange]);
-
     const handleMapClick = useCallback((event: any) => {
         if (!isSettingMode) return;
 
         const newLocation = {long: event.lngLat.lng, lat: event.lngLat.lat};
-        setLocations(prevLocations => [...prevLocations, newLocation]);
-    }, [isSettingMode]);
+        setLocations(prevLocations => {
+            const updatedLocations = [...prevLocations, newLocation];
+            if (onGeometryChange) {
+                onGeometryChange(updatedLocations);
+            }
+            return updatedLocations;
+        });
+    }, [isSettingMode, onGeometryChange]);
 
-    const polygonData = {
+    const handleMarkerRemove = useCallback((index: number) => {
+        setLocations(prevLocations => {
+            const updatedLocations = prevLocations.filter((_, i) => i !== index);
+            if (onGeometryChange) {
+                onGeometryChange(updatedLocations);
+            }
+            return updatedLocations;
+        });
+    }, [onGeometryChange]);
+
+    const polygonData = useMemo(() => ({
         type: 'Feature',
         geometry: {
             type: 'Polygon',
             coordinates: [locations.length > 2 ? [...locations.map(loc => [loc.long, loc.lat]), [locations[0].long, locations[0].lat]] : []]
         }
-    };
+    }), [locations]);
 
     if (!mapboxAccessToken) {
         return <div>Loading map...</div>;
@@ -84,36 +94,19 @@ function CustomMap({
                     >
                         <div
                             style={{
-                                color: hoveredIndex === index ? 'blue' : 'red',
+                                color: hoveredIndex === index ? '#3b82f6' : '#ef4444',
                                 fontSize: '24px',
                                 cursor: 'pointer',
-                                transition: 'color 0.3s'
+                                transition: 'all 0.3s',
+                                transform: hoveredIndex === index ? 'scale(1.2) translateY(-5px)' : 'scale(1)',
+                                filter: hoveredIndex === index ? 'drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06))' : 'none'
                             }}
-                            onMouseEnter={() => setHoveredIndex(index)}
-                            onMouseLeave={() => setHoveredIndex(null)}
                             onClick={(e) => {
                                 e.stopPropagation();
-                                setLocations(prevLocations =>
-                                    prevLocations.filter((_, i) => i !== index)
-                                );
+                                handleMarkerRemove(index);
                             }}
                         >
-                            <MapPinCheckInside/>
-                            {hoveredIndex === index && (
-                                <span style={{
-                                    position: 'absolute',
-                                    backgroundColor: 'white',
-                                    padding: '5px',
-                                    borderRadius: '3px',
-                                    boxShadow: '0 0 5px rgba(0,0,0,0.3)',
-                                    left: '100%',
-                                    top: '50%',
-                                    transform: 'translateY(-50%)',
-                                    whiteSpace: 'nowrap'
-                                }}>
-                Click to remove
-              </span>
-                            )}
+                            <MapPinCheckInside />
                         </div>
                     </Marker>
                 ))}
@@ -127,7 +120,7 @@ function CustomMap({
                             setSelectedPopup(data);
                         }}
                     >
-                        <Dot/>
+                        <Dot />
                     </Marker>
                 ))}
 
