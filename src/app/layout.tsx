@@ -6,6 +6,7 @@ import React from "react";
 import Provider from "@/provider";
 const inter = Inter({ subsets: ["latin"] });
 import 'mapbox-gl/dist/mapbox-gl.css';
+import {Toaster} from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -28,6 +29,7 @@ export default function RootLayout({
       >
           <Provider>
               {children}
+              <Toaster />
           </Provider>
       </ThemeProvider>
       </body>

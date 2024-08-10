@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { useForm } from "react-hook-form"
+import {useForm} from "react-hook-form"
 import { z } from "zod"
 import { signInSchema } from "@/formSchemas/signin"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -17,8 +17,10 @@ import {
     FormLabel,
     FormMessage
 } from "@/components/ui/form"
+import {useState} from "react";
 
 export function SignInForm() {
+    const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
     const router = useRouter()
     const form = useForm<z.infer<typeof signInSchema>>({
         resolver: zodResolver(signInSchema),
@@ -29,7 +31,9 @@ export function SignInForm() {
     })
 
     const handleSubmit = async (values: z.infer<typeof signInSchema>) => {
+        setIsSubmitting(true)
         const data = await action.authenticate(values.username, values.password)
+        setIsSubmitting(false)
         if (data.error) {
             form.setError("root", {
                 type: "manual",
@@ -82,8 +86,8 @@ export function SignInForm() {
                         </FormItem>
                     )}
                 />
-                <Button type="submit" className="w-full">
-                    {form.formState.isLoading ? "Signing in..." : "Sign In"}
+                <Button type="submit" className="w-full" disabled={isSubmitting}>
+                    {isSubmitting ? "Signing in..." : "Sign In"}
                 </Button>
                 {
                     form.formState.errors && (

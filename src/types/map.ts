@@ -1,8 +1,8 @@
 import React from "react";
 
 export interface Location {
-    long: number;
-    lat: number;
+    latitude: number;
+    longitude: number;
 }
 
 export interface PopupData {
@@ -11,17 +11,17 @@ export interface PopupData {
 }
 
 export interface CustomMapProps {
-    width?: string;
-    height?: string;
-    fullscreenControl?: boolean;
     isSettingMode: boolean;
     initialViewState: {
         longitude: number;
         latitude: number;
         zoom: number;
     };
-    popupData?: PopupData[];
-    initialGeometry?: Location[];
-    onGeometryChange?: (geometry: Location[]) => void;
+    popupData: PopupData[];
+    locations: Location[];
+    onLocationAdd: (location: Location) => void;
+    onLocationRemove: (index: number) => void;
+    width?: string;
+    height?: string;
     hoveredIndex: number | null;
 }

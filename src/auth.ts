@@ -3,6 +3,9 @@ import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import {TSignInResponse} from "@/types/auth";
 import {InvalidLoginError} from "@/utils/custom";
+import axios from "@/lib/axios";
+import {shouldRefreshToken} from "@/utils/helper";
+
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
     providers: [
@@ -39,9 +42,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             }
 
             // @ts-ignore
-            const exp = new Date(token.user.accessTokenExpiry);
-            const shouldRefreshTime = Math.round(exp.getTime() - (60 * 60 * 1000) - Date.now());
-            if (shouldRefreshTime < 0) {
+            axios.defaults.headers.common["Authorization"] = `Bearer ${token.user.accessToken}`
+
+            // @ts-ignore
+            const shouldRefresh = shouldRefreshToken(new Date(token?.user.accessTokenExpiry), 0)
+            if (shouldRefresh) {
                 await signOut();
                 // token.user.accessToken = await AuthRepository.refreshToken(token.user.accessToken);
             }

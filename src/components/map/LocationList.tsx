@@ -55,7 +55,7 @@ export function LocationList({ locations, onHover, onDelete, onClearAll, onSave 
                                 onMouseLeave={() => onHover(null)}
                             >
                                 <span className="font-mono">
-                                    {location.lat.toFixed(6)}, {location.long.toFixed(6)}
+                                    {location.latitude.toFixed(3)}, {location.longitude.toFixed(3)}
                                 </span>
                                 <Button
                                     variant="destructive"
@@ -73,9 +73,11 @@ export function LocationList({ locations, onHover, onDelete, onClearAll, onSave 
                 <Button variant="outline" onClick={onClearAll}>
                     Clear All
                 </Button>
-                <Button onClick={onSave}>
-                    <Save className="mr-2 h-4 w-4" /> Save
-                </Button>
+                <form action={onSave}>
+                    <Button>
+                        <Save className="mr-2 h-4 w-4" /> Save
+                    </Button>
+                </form>
             </CardFooter>
         </Card>
     )

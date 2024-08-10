@@ -1,56 +1,35 @@
 "use client"
 
-import { useState, useCallback, useEffect, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import Map, { Marker, Source, Layer, Popup } from 'react-map-gl';
-import { CustomMapProps, Location, PopupData } from "@/types/map";
+import { CustomMapProps, PopupData } from "@/types/map";
 import { Dot, MapPinCheckInside } from "lucide-react";
 
 function CustomMap({
                        isSettingMode,
                        initialViewState,
                        popupData,
-                       initialGeometry = [],
-                       onGeometryChange,
+                       locations,
+                       onLocationAdd,
+                       onLocationRemove,
                        width = "100%",
                        height = "600px",
                        hoveredIndex
-                   }: CustomMapProps) {
+}: CustomMapProps) {
     const mapboxAccessToken = process.env.NEXT_PUBLIC_MAP_API_KEY;
-    const [locations, setLocations] = useState<Location[]>(initialGeometry);
     const [selectedPopup, setSelectedPopup] = useState<PopupData | null>(null);
 
-    useEffect(() => {
-        setLocations(initialGeometry);
-    }, [initialGeometry]);
-
-    const handleMapClick = useCallback((event: any) => {
+    const handleMapClick = (event: any) => {
         if (!isSettingMode) return;
-
-        const newLocation = {long: event.lngLat.lng, lat: event.lngLat.lat};
-        setLocations(prevLocations => {
-            const updatedLocations = [...prevLocations, newLocation];
-            if (onGeometryChange) {
-                onGeometryChange(updatedLocations);
-            }
-            return updatedLocations;
-        });
-    }, [isSettingMode, onGeometryChange]);
-
-    const handleMarkerRemove = useCallback((index: number) => {
-        setLocations(prevLocations => {
-            const updatedLocations = prevLocations.filter((_, i) => i !== index);
-            if (onGeometryChange) {
-                onGeometryChange(updatedLocations);
-            }
-            return updatedLocations;
-        });
-    }, [onGeometryChange]);
+        const newLocation = {longitude: event.lngLat.lng, latitude: event.lngLat.lat};
+        onLocationAdd(newLocation);
+    };
 
     const polygonData = useMemo(() => ({
         type: 'Feature',
         geometry: {
             type: 'Polygon',
-            coordinates: [locations.length > 2 ? [...locations.map(loc => [loc.long, loc.lat]), [locations[0].long, locations[0].lat]] : []]
+            coordinates: [locations.length > 2 ? [...locations.map(loc => [loc.longitude, loc.latitude]), [locations[0].longitude, locations[0].latitude]] : []]
         }
     }), [locations]);
 
@@ -58,13 +37,14 @@ function CustomMap({
         return <div>Loading map...</div>;
     }
 
+
     return (
         <div style={{ width: width, height: height }}>
             <Map
                 mapboxAccessToken={mapboxAccessToken}
                 initialViewState={initialViewState}
                 style={{ width: "100%", height: "100%" }}
-                mapStyle="mapbox://styles/mapbox/streets-v9"
+                mapStyle="mapbox://styles/mapbox/light-v11"
                 onClick={handleMapClick}
             >
                 <Source id="polygon" type="geojson" data={polygonData}>
@@ -89,8 +69,8 @@ function CustomMap({
                 {isSettingMode && locations.map((location, index) => (
                     <Marker
                         key={index}
-                        longitude={location.long}
-                        latitude={location.lat}
+                        longitude={location.longitude}
+                        latitude={location.latitude}
                     >
                         <div
                             style={{
@@ -103,7 +83,7 @@ function CustomMap({
                             }}
                             onClick={(e) => {
                                 e.stopPropagation();
-                                handleMarkerRemove(index);
+                                onLocationRemove(index);
                             }}
                         >
                             <MapPinCheckInside />
@@ -114,8 +94,8 @@ function CustomMap({
                 {!isSettingMode && popupData && popupData.map((data, index) => (
                     <Marker
                         key={`popup-${index}`}
-                        longitude={data.location.long}
-                        latitude={data.location.lat}
+                        longitude={data.location.longitude}
+                        latitude={data.location.latitude}
                         onClick={() => {
                             setSelectedPopup(data);
                         }}
@@ -126,8 +106,8 @@ function CustomMap({
 
                 {selectedPopup && (
                     <Popup
-                        longitude={selectedPopup.location.long}
-                        latitude={selectedPopup.location.lat}
+                        longitude={selectedPopup.location.longitude}
+                        latitude={selectedPopup.location.latitude}
                         onClose={() => setSelectedPopup(null)}
                         closeOnClick={false}
                     >
