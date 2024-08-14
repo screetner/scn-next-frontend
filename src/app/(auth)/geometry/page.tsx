@@ -1,3 +1,4 @@
+"use server"
 import EditGeolocation from "@/app/(auth)/geometry/editGeolocation";
 import * as action from "@/actions";
 

@@ -9,13 +9,17 @@ type TUser = {
     roleName : string
     email : string
     orgName : string
-    accessTokenExpiry : number
+    accessTokenExpiry : string
+    refreshToken : string
 }
 
 export type TSignInResponse = {
     user : TUser
 }
 
-export type TSessions = TUser & {
-    token : string
+export type TSessions = TUser
+
+export type TRefreshTokenResponse = {
+    accessToken : string
+    accessTokenExpiry : string
 }
