@@ -9,7 +9,7 @@ import axios from "@/lib/axios";
 import {shouldRefreshToken} from "@/utils/helper";
 import * as action from "@/actions"
 
-export const { handlers, signIn, signOut, auth, unstable_update } = NextAuth({
+export const { handlers, signIn, signOut, auth} = NextAuth({
     providers: [
         Credentials({
             credentials: {

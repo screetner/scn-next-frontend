@@ -6,6 +6,9 @@ import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Location } from "@/types/map"
 import { Trash2, Save } from "lucide-react"
+import {TypographyP} from "@/components/typography/TypographyP";
+import {cn} from "@/lib/utils";
+import {useTheme} from "next-themes";
 
 interface LocationListProps {
     locations: Location[]
@@ -39,6 +42,8 @@ export function LocationList({ locations, onHover, onDelete, onClearAll, onSave 
         }
     }, [])
 
+    const {theme} = useTheme()
+
     return (
         <Card ref={cardRef} className="flex flex-col h-full">
             <CardHeader ref={headerRef}>
@@ -50,13 +55,16 @@ export function LocationList({ locations, onHover, onDelete, onClearAll, onSave 
                         {locations.map((location, index) => (
                             <div
                                 key={index}
-                                className="flex justify-between items-center p-2 hover:bg-slate-100 rounded-md transition-colors"
+                                className={cn("flex justify-between items-center p-2 rounded-md transition-colors",{
+                                    "hover:dark:bg-slate-800": theme === "dark",
+                                    "hover:bg-slate-50": theme === "light"
+                                })}
                                 onMouseEnter={() => onHover(index)}
                                 onMouseLeave={() => onHover(null)}
                             >
-                                <span className="font-mono">
-                                    {location.latitude.toFixed(3)}, {location.longitude.toFixed(3)}
-                                </span>
+                                <TypographyP
+                                    text={`${location.latitude.toFixed(3)}, ${location.longitude.toFixed(3)}`}
+                                />
                                 <Button
                                     variant="destructive"
                                     size="icon"
