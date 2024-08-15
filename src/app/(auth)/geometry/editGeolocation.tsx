@@ -54,7 +54,7 @@ export default function EditGeolocation({Locations} : EditGeolocationProps) {
 
     return (
         <>
-            <div className="w-3/4 h-full">
+            <div className="w-full md:w-3/4 h-full">
                 <CustomMap
                     isSettingMode={true}
                     initialViewState={{

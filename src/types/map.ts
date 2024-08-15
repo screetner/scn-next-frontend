@@ -19,9 +19,9 @@ export interface CustomMapProps {
     };
     popupData: PopupData[];
     locations: Location[];
-    onLocationAdd: (location: Location) => void;
-    onLocationRemove: (index: number) => void;
+    onLocationAdd?: (location: Location) => void;
+    onLocationRemove?: (index: number) => void;
     width?: string;
     height?: string;
-    hoveredIndex: number | null;
+    hoveredIndex?: number | null;
 }

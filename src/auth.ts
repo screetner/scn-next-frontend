@@ -61,8 +61,6 @@ export const { handlers, signIn, signOut, auth} = NextAuth({
                         };
                     } catch (error) {
                         console.error("Failed to refresh token:", error);
-                        // You might want to handle this error, e.g., by signing out the user
-                        // return { ...token, error: "RefreshAccessTokenError" };
                     }
                 }
             }

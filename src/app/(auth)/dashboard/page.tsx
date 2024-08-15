@@ -1,12 +1,15 @@
-import { auth } from "@/auth"
+import CustomMap from "@/components/map/Map";
 
 export default async function Dashboard() {
-    const session = await auth()
     return (
         <div className="h-full w-full overflow-auto">
-            <pre className="w-full whitespace-pre-wrap break-words">
-                {JSON.stringify(session, null, 2)}
-            </pre>
+            <CustomMap
+                isSettingMode={false}
+                initialViewState={{latitude: 0, longitude: 0, zoom: 1}}
+                popupData={[]}
+                locations={[]}
+                height="100%"
+            />
         </div>
     )
 }

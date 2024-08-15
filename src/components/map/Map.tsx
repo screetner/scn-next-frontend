@@ -4,7 +4,7 @@ import { useState, useMemo } from 'react';
 import Map, { Marker, Source, Layer, Popup } from 'react-map-gl';
 import { CustomMapProps, PopupData } from "@/types/map";
 import { Dot, MapPinCheckInside } from "lucide-react";
-import {useTheme} from "next-themes";
+import { useTheme } from "next-themes";
 
 function CustomMap({
                        isSettingMode,
@@ -16,14 +16,14 @@ function CustomMap({
                        width = "100%",
                        height = "600px",
                        hoveredIndex
-}: CustomMapProps) {
-    const {theme} = useTheme()
+                   }: CustomMapProps) {
+    const { theme } = useTheme()
     const mapboxAccessToken = process.env.NEXT_PUBLIC_MAP_API_KEY;
     const [selectedPopup, setSelectedPopup] = useState<PopupData | null>(null);
 
     const handleMapClick = (event: any) => {
-        if (!isSettingMode) return;
-        const newLocation = {longitude: event.lngLat.lng, latitude: event.lngLat.lat};
+        if (!isSettingMode || !onLocationAdd) return;
+        const newLocation = { longitude: event.lngLat.lng, latitude: event.lngLat.lat };
         onLocationAdd(newLocation);
     };
 
@@ -39,14 +39,12 @@ function CustomMap({
         return <div>Loading map...</div>;
     }
 
-
     return (
         <div style={{ width: width, height: height }}>
             <Map
                 mapboxAccessToken={mapboxAccessToken}
                 initialViewState={initialViewState}
                 style={{ width: "100%", height: "100%" }}
-                // mapStyle="mapbox://styles/mapbox/light-v11"
                 mapStyle={theme === "dark" ? "mapbox://styles/mapbox/dark-v11" : "mapbox://styles/mapbox/light-v11"}
                 onClick={handleMapClick}
             >
@@ -86,7 +84,7 @@ function CustomMap({
                             }}
                             onClick={(e) => {
                                 e.stopPropagation();
-                                onLocationRemove(index);
+                                if (onLocationRemove) onLocationRemove(index);
                             }}
                         >
                             <MapPinCheckInside />
