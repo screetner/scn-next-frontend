@@ -6,6 +6,7 @@ import {useCallback, useMemo, useState} from "react"
 import { Location } from "@/types/map"
 import * as action from "@/actions"
 import {toast} from "sonner";
+import {calculateCenter} from "@/utils/helper";
 
 interface EditGeolocationProps {
     Locations : Location[]
@@ -14,22 +15,7 @@ export default function EditGeolocation({Locations} : EditGeolocationProps) {
     const [savedGeometry, setSavedGeometry] = useState<Location[]>(Locations)
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
 
-    const center = useMemo(() => {
-        const totalPoints = savedGeometry.length;
-        const { lat, long } = savedGeometry.reduce(
-            (acc, { latitude, longitude }) => {
-                acc.lat += latitude;
-                acc.long += longitude;
-                return acc;
-            },
-            { lat: 0, long: 0 }
-        );
-
-        return {
-            lat: lat / totalPoints,
-            long: long / totalPoints
-        };
-    }, [savedGeometry]);
+    const center = useMemo(() => calculateCenter(savedGeometry), [savedGeometry]);
 
     const handleLocationAdd = useCallback((newLocation: Location) => {
         setSavedGeometry(prev => [...prev, newLocation])

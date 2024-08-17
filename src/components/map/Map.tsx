@@ -101,7 +101,7 @@ function CustomMap({
                             setSelectedPopup(data);
                         }}
                     >
-                        <Dot />
+                        <Dot color={"red"}/>
                     </Marker>
                 ))}
 

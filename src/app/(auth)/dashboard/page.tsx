@@ -1,14 +1,12 @@
-import CustomMap from "@/components/map/Map";
+import {DashboardMap} from "@/app/(auth)/dashboard/DashboardMap";
+import * as actions from "@/actions";
 
 export default async function Dashboard() {
+    const assets = await actions.getAssets()
     return (
         <div className="h-full w-full overflow-auto">
-            <CustomMap
-                isSettingMode={false}
-                initialViewState={{latitude: 0, longitude: 0, zoom: 1}}
-                popupData={[]}
-                locations={[]}
-                height="100%"
+            <DashboardMap
+                data={assets}
             />
         </div>
     )
