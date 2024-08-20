@@ -1,9 +1,6 @@
-// @ts-nocheck
-
 import {AuthRepository} from "@/repository/auth";
 import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
-import {TSignInResponse} from "@/types/auth";
 import {InvalidLoginError} from "@/utils/custom";
 import {shouldRefreshToken} from "@/utils/helper";
 import * as action from "@/actions"
@@ -20,8 +17,6 @@ export const { handlers, signIn, signOut, auth} = NextAuth({
                     // @ts-ignore
                     const response = await AuthRepository.signIn(username, password)
                     if (response.user) {
-                        // axios.defaults.headers.common["Authorization"] = `Bearer ${response.user.accessToken}`;
-                        // axios.defaults.headers.common["AuthorizationRefresh"] = `Bearer ${response.user.refreshToken}`;
                         return {
                             username: response.user.username,
                             roleName: response.user.roleName,
@@ -60,8 +55,6 @@ export const { handlers, signIn, signOut, auth} = NextAuth({
                             accessToken: newToken?.accessToken,
                             accessTokenExpiry: newToken?.accessTokenExpiry,
                         };
-                        // axios.defaults.headers.common["Authorization"] = `Bearer ${token.user.accessToken}`;
-                        // axios.defaults.headers.common["AuthorizationRefresh"] = `Bearer ${token.user.refreshToken}`;
                     } catch (error) {
                         console.error("Failed to refresh token:", error);
                     }
@@ -71,11 +64,7 @@ export const { handlers, signIn, signOut, auth} = NextAuth({
             return token;
         },
         async session({ session, token }) {
-            session.user = token.user as TSignInResponse["user"];
-
-            // axios.defaults.headers.common["Authorization"] = `Bearer ${token.user.accessToken}`;
-            // axios.defaults.headers.common["AuthorizationRefresh"] = `Bearer ${token.user.refreshToken}`;
-
+            session.user = token.user as any;
             return session;
         },
     },
