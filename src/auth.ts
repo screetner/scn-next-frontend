@@ -47,8 +47,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
 
       if (token.user) {
-        // @ts-ignore
         const shouldRefresh = shouldRefreshToken(
+          // @ts-ignore
           new Date(token.user.accessTokenExpiry),
           10,
         );
