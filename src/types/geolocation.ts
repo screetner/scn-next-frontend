@@ -1,8 +1,8 @@
 export interface GetGeolocation {
-    border: Border[]
+  border: Border[];
 }
 
 export interface Border {
-    longitude: number
-    latitude: number
+  longitude: number;
+  latitude: number;
 }

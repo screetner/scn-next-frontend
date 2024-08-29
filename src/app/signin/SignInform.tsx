@@ -1,102 +1,100 @@
-"use client"
+'use client';
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import {useForm} from "react-hook-form"
-import { z } from "zod"
-import { signInSchema } from "@/formSchemas/signin"
-import { zodResolver } from "@hookform/resolvers/zod"
-import {useRouter} from "next/navigation";
-import * as action from "@/actions"
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { signInSchema } from '@/formSchemas/signin';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
+import * as action from '@/actions';
 
 import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage
-} from "@/components/ui/form"
-import {useState} from "react";
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import { useState } from 'react';
 
 export function SignInForm() {
-    const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
-    const router = useRouter()
-    const form = useForm<z.infer<typeof signInSchema>>({
-        resolver: zodResolver(signInSchema),
-        defaultValues: {
-            username: "",
-            password: "",
-        }
-    })
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const router = useRouter();
+  const form = useForm<z.infer<typeof signInSchema>>({
+    resolver: zodResolver(signInSchema),
+    defaultValues: {
+      username: '',
+      password: '',
+    },
+  });
 
-    const handleSubmit = async (values: z.infer<typeof signInSchema>) => {
-        setIsSubmitting(true)
-        const data = await action.authenticate(values.username, values.password)
-        setIsSubmitting(false)
-        if (data.error) {
-            form.setError("root", {
-                type: "manual",
-                message: data.error,
-            })
-        }else{
-            router.push("/dashboard")
-        }
+  const handleSubmit = async (values: z.infer<typeof signInSchema>) => {
+    setIsSubmitting(true);
+    const data = await action.authenticate(values.username, values.password);
+    setIsSubmitting(false);
+    if (data.error) {
+      form.setError('root', {
+        type: 'manual',
+        message: data.error,
+      });
+    } else {
+      router.push('/dashboard');
     }
+  };
 
-    return (
-        <Form {...form}>
-            <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
-                <FormField
-                    control={form.control}
-                    name="username"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Username</FormLabel>
-                            <FormControl>
-                                <Input
-                                    {...field}
-                                    placeholder="Username"
-                                    type="text"
-                                    autoCapitalize="none"
-                                    autoComplete="username"
-                                    autoCorrect="off"
-                                />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
+        <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Username</FormLabel>
+              <FormControl>
+                <Input
+                  {...field}
+                  placeholder="Username"
+                  type="text"
+                  autoCapitalize="none"
+                  autoComplete="username"
+                  autoCorrect="off"
                 />
-                <FormField
-                    control={form.control}
-                    name="password"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Password</FormLabel>
-                            <FormControl>
-                                <Input
-                                    {...field}
-                                    placeholder="Password"
-                                    type="password"
-                                    autoCapitalize="none"
-                                    autoComplete="current-password"
-                                />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Password</FormLabel>
+              <FormControl>
+                <Input
+                  {...field}
+                  placeholder="Password"
+                  type="password"
+                  autoCapitalize="none"
+                  autoComplete="current-password"
                 />
-                <Button type="submit" className="w-full" disabled={isSubmitting}>
-                    {isSubmitting ? "Signing in..." : "Sign In"}
-                </Button>
-                {
-                    form.formState.errors && (
-                        <p className="text-red-500 text-sm">
-                            {form.formState.errors.root?.message}
-                        </p>
-                    )
-                }
-            </form>
-        </Form>
-    )
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit" className="w-full" disabled={isSubmitting}>
+          {isSubmitting ? 'Signing in...' : 'Sign In'}
+        </Button>
+        {form.formState.errors && (
+          <p className="text-red-500 text-sm">
+            {form.formState.errors.root?.message}
+          </p>
+        )}
+      </form>
+    </Form>
+  );
 }
