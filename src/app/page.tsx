@@ -1,23 +1,17 @@
-import { auth } from '@/auth';
-import Link from 'next/link';
-import React from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { cookies } from 'next/headers';
-import { TypographyH2 } from '@/components/typography/TypographyH2';
-import { TypographyP } from '@/components/typography/TypographyP';
+import { auth } from '@/auth'
+import Link from 'next/link'
+import React from 'react'
+import { Button } from '@/components/ui/button'
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { TypographyH2 } from '@/components/typography/TypographyH2'
+import { TypographyP } from '@/components/typography/TypographyP'
 
 export default async function Home() {
-  const session = await auth();
-  const cookieStore = cookies();
-  const theme = cookieStore.get('theme');
-  const isDarkTheme = theme?.value === 'dark';
+  const session = await auth()
 
   return (
-    <div
-      className={`min-h-screen flex flex-col ${isDarkTheme ? 'bg-gradient-to-b from-gray-900 to-black text-white' : 'bg-gradient-to-b from-gray-100 to-white text-gray-900'}`}
-    >
+    <div className={`min-h-screen flex flex-col`}>
       <header className="container mx-auto px-4 py-6">
         <nav className="flex justify-between items-center">
           <TypographyH2 text={'Screetner'} />
@@ -110,5 +104,5 @@ export default async function Home() {
         </div>
       </footer>
     </div>
-  );
+  )
 }
