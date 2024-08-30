@@ -43,7 +43,6 @@ export function DashboardMap({ data }: DashboardMapProps) {
       }}
       popupData={popUpData}
       locations={data?.border ?? []}
-      height="100%"
     />
   );
 }

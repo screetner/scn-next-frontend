@@ -10,7 +10,7 @@ import NavTree from '@/components/nav/NavTree';
 export function Nav({ children }: PropsWithChildren) {
   return (
     <TooltipProvider>
-      <div className="flex h-screen">
+      <div className="flex h-screen bg-muted/40">
         <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">
           <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
             {navList.map(nav => (

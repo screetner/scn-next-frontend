@@ -1,9 +1,8 @@
-import { AuthRepository } from '@/repository/auth';
-import NextAuth from 'next-auth';
-import Credentials from 'next-auth/providers/credentials';
-import { InvalidLoginError } from '@/utils/custom';
-import { shouldRefreshToken } from '@/utils/helper';
-import * as action from '@/actions';
+import { AuthRepository } from '@/repository/auth'
+import NextAuth from 'next-auth'
+import Credentials from 'next-auth/providers/credentials'
+import { InvalidLoginError } from '@/utils/custom'
+import { shouldRefreshToken } from '@/utils/helper'
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -15,7 +14,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       authorize: async ({ username, password }) => {
         try {
           // @ts-ignore
-          const response = await AuthRepository.signIn(username, password);
+          const response = await AuthRepository.signIn(username, password)
           if (response.user) {
             return {
               username: response.user.username,
@@ -25,55 +24,66 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
               organization_name: response.user.orgName,
               accessTokenExpiry: response.user.accessTokenExpiry,
               refreshToken: response.user.refreshToken,
-            };
+            }
           }
-          return null;
+          return null
         } catch (e: any) {
           throw new InvalidLoginError(
             e.response.data || 'An error occurred while trying to authenticate',
-          );
+          )
         }
       },
     }),
   ],
   callbacks: {
-    async jwt({ token, user, trigger, session }) {
-      if (user) {
-        token.user = user;
-      }
-
-      if (trigger === 'update' && session?.user) {
-        token.user = session.user;
+    async jwt({ token, account, user }) {
+      if (user && account) {
+        token.user = user
       }
 
       if (token.user) {
         const shouldRefresh = shouldRefreshToken(
           // @ts-ignore
           new Date(token.user.accessTokenExpiry),
-          10,
-        );
+          0,
+        )
+
         if (shouldRefresh) {
           try {
-            const newToken = await action.reFreshToken();
-            token.user = {
-              ...token.user,
-              accessToken: newToken?.accessToken,
-              accessTokenExpiry: newToken?.accessTokenExpiry,
-            };
+            console.log('refreshing token')
+            const res = await fetch(`${process.env.API_URL}/auth/refresh`, {
+              method: 'GET',
+              headers: {
+                // @ts-ignore
+                Authorization: `Bearer ${token.user.refreshToken}`,
+                // @ts-ignore
+                AuthorizationRefresh: `Bearer ${token.user.refreshToken}`,
+              },
+            })
+            const data = await res.json()
+            return {
+              ...token,
+              user: {
+                ...token.user,
+                accessToken: data.accessToken,
+                accessTokenExpiry: data.accessTokenExpiry,
+                refreshToken: data.refreshToken,
+              },
+            }
           } catch (error) {
-            console.error('Failed to refresh token:', error);
+            console.error('Failed to refresh token:', error)
           }
         }
       }
 
-      return token;
+      return token
     },
     async session({ session, token }) {
-      session.user = token.user as any;
-      return session;
+      session.user = token.user as any
+      return session
     },
   },
-  session: {
-    strategy: 'jwt',
-  },
-});
+  // session: {
+  //   strategy: 'jwt',
+  // },
+})

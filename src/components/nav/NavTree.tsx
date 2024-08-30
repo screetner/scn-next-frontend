@@ -26,11 +26,7 @@ export default function NavTree() {
             <Fragment key={index}>
               <BreadcrumbItem>
                 <BreadcrumbLink asChild>
-                  {index === pathArray.length - 1 ? (
-                    <BreadcrumbPage>{segment.toUpperCase()}</BreadcrumbPage>
-                  ) : (
-                    <Link href={href}>{segment.toUpperCase()}</Link>
-                  )}
+                  <Link href={href}>{segment.toUpperCase()}</Link>
                 </BreadcrumbLink>
               </BreadcrumbItem>
               {index !== pathArray.length - 1 && <BreadcrumbSeparator />}
