@@ -1,10 +1,11 @@
-'use client';
-
-import { useState, useMemo } from 'react';
-import Map, { Marker, Source, Layer, Popup } from 'react-map-gl';
-import { CustomMapProps, PopupData } from '@/types/map';
-import { Dot, MapPinCheckInside } from 'lucide-react';
-import { useTheme } from 'next-themes';
+'use client'
+import React, { useState, useMemo, useRef, useEffect } from 'react'
+import Map, { Marker, Source, Layer, Popup, MapRef } from 'react-map-gl'
+import { CustomMapProps, PopupData } from '@/types/map'
+import { Dot, MapPinIcon } from 'lucide-react'
+import { useTheme } from 'next-themes'
+import 'mapbox-gl/dist/mapbox-gl.css'
+import mapboxgl from 'mapbox-gl'
 
 function CustomMap({
   isSettingMode,
@@ -13,22 +14,21 @@ function CustomMap({
   locations,
   onLocationAdd,
   onLocationRemove,
-  width = '100%',
-  height = '600px',
   hoveredIndex,
 }: CustomMapProps) {
-  const { theme } = useTheme();
-  const mapboxAccessToken = process.env.NEXT_PUBLIC_MAP_API_KEY;
-  const [selectedPopup, setSelectedPopup] = useState<PopupData | null>(null);
+  const { theme } = useTheme()
+  const mapboxAccessToken = process.env.NEXT_PUBLIC_MAP_API_KEY
+  const [selectedPopup, setSelectedPopup] = useState<PopupData | null>(null)
+  const mapRef = useRef<MapRef>(null)
 
-  const handleMapClick = (event: any) => {
-    if (!isSettingMode || !onLocationAdd) return;
+  const handleMapClick = (event: mapboxgl.MapLayerMouseEvent) => {
+    if (!isSettingMode || !onLocationAdd) return
     const newLocation = {
       longitude: event.lngLat.lng,
       latitude: event.lngLat.lat,
-    };
-    onLocationAdd(newLocation);
-  };
+    }
+    onLocationAdd(newLocation)
+  }
 
   const polygonData = useMemo(
     () => ({
@@ -46,15 +46,30 @@ function CustomMap({
       },
     }),
     [locations],
-  );
+  )
+
+  useEffect(() => {
+    if (mapRef.current && locations.length > 0) {
+      const bounds = new mapboxgl.LngLatBounds()
+      locations.forEach(location => {
+        bounds.extend([location.longitude, location.latitude])
+      })
+      mapRef.current.fitBounds(bounds, { padding: 40, duration: 1000 })
+    }
+  }, [locations])
 
   if (!mapboxAccessToken) {
-    return <div>Loading map...</div>;
+    return (
+      <div className="flex items-center justify-center h-full">
+        Loading map...
+      </div>
+    )
   }
 
   return (
-    <div style={{ width: width, height: height }}>
+    <div className="w-full h-full">
       <Map
+        ref={mapRef}
         mapboxAccessToken={mapboxAccessToken}
         initialViewState={initialViewState}
         style={{ width: '100%', height: '100%' }}
@@ -92,26 +107,17 @@ function CustomMap({
               latitude={location.latitude}
             >
               <div
-                style={{
-                  color: hoveredIndex === index ? '#3b82f6' : '#ef4444',
-                  fontSize: '24px',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s',
-                  transform:
-                    hoveredIndex === index
-                      ? 'scale(1.2) translateY(-5px)'
-                      : 'scale(1)',
-                  filter:
-                    hoveredIndex === index
-                      ? 'drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06))'
-                      : 'none',
-                }}
+                className={`
+                  text-2xl cursor-pointer transition-all duration-300
+                  ${hoveredIndex === index ? 'text-blue-500 scale-125 -translate-y-1' : 'text-red-500'}
+                  ${hoveredIndex === index ? 'filter drop-shadow-md' : ''}
+                `}
                 onClick={e => {
-                  e.stopPropagation();
-                  if (onLocationRemove) onLocationRemove(index);
+                  e.stopPropagation()
+                  if (onLocationRemove) onLocationRemove(index)
                 }}
               >
-                <MapPinCheckInside />
+                <MapPinIcon />
               </div>
             </Marker>
           ))}
@@ -124,10 +130,10 @@ function CustomMap({
               longitude={data.location.longitude}
               latitude={data.location.latitude}
               onClick={() => {
-                setSelectedPopup(data);
+                setSelectedPopup(data)
               }}
             >
-              <Dot color={'red'} />
+              <Dot className="text-red-500" />
             </Marker>
           ))}
 
@@ -138,12 +144,12 @@ function CustomMap({
             onClose={() => setSelectedPopup(null)}
             closeOnClick={false}
           >
-            {selectedPopup.content}
+            <div className="p-2">{selectedPopup.content}</div>
           </Popup>
         )}
       </Map>
     </div>
-  );
+  )
 }
 
-export default CustomMap;
+export default CustomMap

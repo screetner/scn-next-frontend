@@ -1,18 +1,15 @@
-import { DashboardMap } from '@/app/(auth)/dashboard/DashboardMap';
-import * as actions from '@/actions';
+import { DashboardMap } from '@/app/(auth)/dashboard/DashboardMap'
+import * as actions from '@/actions'
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { TypographyP } from '@/components/typography/TypographyP';
-import { TypographyH2 } from '@/components/typography/TypographyH2';
+} from '@/components/ui/card'
 
 export default async function Dashboard() {
-  const assets = await actions.getAssets();
+  const assets = await actions.getAssets()
   return (
     <>
       <Card className={'h-full'}>
@@ -22,10 +19,12 @@ export default async function Dashboard() {
             Manage your assets and view their locations on the map.
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <DashboardMap data={assets} />
+        <CardContent className={'h-[90%]'}>
+          <Card className="h-full">
+            <DashboardMap data={assets} />
+          </Card>
         </CardContent>
       </Card>
     </>
-  );
+  )
 }

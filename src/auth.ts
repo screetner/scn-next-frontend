@@ -28,6 +28,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           }
           return null
         } catch (e: any) {
+          console.log(e)
           throw new InvalidLoginError(
             e.response.data || 'An error occurred while trying to authenticate',
           )
@@ -50,7 +51,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
         if (shouldRefresh) {
           try {
-            console.log('refreshing token')
             const res = await fetch(`${process.env.API_URL}/auth/refresh`, {
               method: 'GET',
               headers: {
@@ -71,7 +71,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
               },
             }
           } catch (error) {
-            console.error('Failed to refresh token:', error)
+            // refresh token failed
+            await signOut()
           }
         }
       }
