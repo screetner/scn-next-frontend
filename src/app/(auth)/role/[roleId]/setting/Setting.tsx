@@ -1,13 +1,13 @@
 'use client'
 import ListRole from '@/app/(auth)/role/[roleId]/setting/ListRole'
-import { RolesTable } from '@/types/role'
+import { RoleManagementResponse } from '@/types/role'
 import RoleSettings from '@/app/(auth)/role/[roleId]/setting/RoleSettings'
 import { useState } from 'react'
-import { Routes } from '@/routes'
+import { fillRoute, Routes } from '@/routes'
 import { useRouter } from 'next/navigation'
 
 interface SettingsProps {
-  data: RolesTable[]
+  data: RoleManagementResponse
   roleId: string
   initialTab: string
 }
@@ -17,7 +17,7 @@ export default function Settings({ initialTab, roleId, data }: SettingsProps) {
   const [activeTab, setActiveTab] = useState(initialTab)
 
   const handleRoleSelect = (roleId: string) => {
-    router.push(`${Routes.ROLE}/${roleId}?tab=${activeTab}`)
+    router.push(`${fillRoute(Routes.ROLE_SETTING, roleId)}?tab=${activeTab}`)
   }
 
   return (

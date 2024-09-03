@@ -1,5 +1,5 @@
-import { mockRoles } from '@/types/role'
 import Settings from '@/app/(auth)/role/[roleId]/setting/Setting'
+import { mockRoleManagementResponse } from '@/types/role'
 
 interface ManageRoleProps {
   params: { roleId: string }
@@ -11,7 +11,7 @@ export default function ManageRole({ params, searchParams }: ManageRoleProps) {
     <div className="flex flex-col xl:flex-row gap-4 h-[full]">
       <Settings
         roleId={params.roleId}
-        data={mockRoles}
+        data={mockRoleManagementResponse}
         initialTab={searchParams?.tab || 'display'}
       />
     </div>

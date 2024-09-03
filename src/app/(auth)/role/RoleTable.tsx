@@ -63,8 +63,8 @@ export default function RoleTable({ roles }: RoleTableProps) {
         <TableBody>
           {roles.map(role => (
             <TableRow
-              key={role.id}
-              onClick={() => onRowClick(role.id)}
+              key={role.roleId}
+              onClick={() => onRowClick(role.roleId)}
               className={'hover:cursor-pointer'}
             >
               <TableCell>{role.roleName}</TableCell>
@@ -74,7 +74,7 @@ export default function RoleTable({ roles }: RoleTableProps) {
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <User
-                        onClick={e => onClickViewMembers(e, role.id)}
+                        onClick={e => onClickViewMembers(e, role.roleId)}
                         className="hover:cursor-pointer"
                       />
                     </TooltipTrigger>

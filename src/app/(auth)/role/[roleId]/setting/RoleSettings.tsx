@@ -1,11 +1,12 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { mockPermissions, RolesTable } from '@/types/role'
+import { RoleManagementResponse } from '@/types/role'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { EditRoleNameForm } from '@/app/(auth)/role/[roleId]/setting/tabs/Display'
 import { RolePermissionsForm } from '@/app/(auth)/role/[roleId]/setting/tabs/Permission'
+import Member from '@/app/(auth)/role/[roleId]/setting/tabs/Member'
 
 interface RoleSettingsProps {
-  data: RolesTable[]
+  data: RoleManagementResponse
   roleId: string
   activeTab: string
   setActiveTab: (activeTab: string) => void
@@ -21,8 +22,7 @@ export default function RoleSettings({
     <Card className="flex-1">
       <CardHeader>
         <CardTitle>
-          EDIT ROLE —{' '}
-          {data.find(role => role.id === roleId)?.roleName.toLocaleUpperCase()}
+          EDIT ROLE — {data.roleInfo.roleName.toLocaleUpperCase()}
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -38,13 +38,16 @@ export default function RoleSettings({
             <TabsTrigger value="members">Members</TabsTrigger>
           </TabsList>
           <TabsContent value="display">
-            <EditRoleNameForm roleId={roleId} initialRoleName={'test'} />
+            <EditRoleNameForm
+              roleId={roleId}
+              initialRoleName={data.roleInfo.roleName}
+            />
           </TabsContent>
           <TabsContent value="permissions">
-            <RolePermissionsForm data={mockPermissions} />
+            <RolePermissionsForm data={data.rolePermissions} />
           </TabsContent>
           <TabsContent value="members">
-            <p>Manage members assigned to this role.</p>
+            <Member members={data.roleMembers} />
           </TabsContent>
         </Tabs>
       </CardContent>
