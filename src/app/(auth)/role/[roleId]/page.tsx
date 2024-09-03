@@ -1,19 +1,10 @@
-import { mockRoles } from '@/types/role'
-import Settings from '@/app/(auth)/role/[roleId]/Setting'
+import { redirect } from 'next/navigation'
+import { fillRoute, Routes } from '@/routes'
 
-interface ManageRoleProps {
+interface NotFoundProps {
   params: { roleId: string }
-  searchParams?: { tab: string | undefined }
 }
 
-export default function ManageRole({ params, searchParams }: ManageRoleProps) {
-  return (
-    <div className="flex flex-col xl:flex-row gap-4 h-[full]">
-      <Settings
-        roleId={params.roleId}
-        data={mockRoles}
-        initialTab={searchParams?.tab || 'display'}
-      />
-    </div>
-  )
+export default function Page({ params }: NotFoundProps) {
+  redirect(fillRoute(Routes.ROLE_SETTING, params.roleId))
 }

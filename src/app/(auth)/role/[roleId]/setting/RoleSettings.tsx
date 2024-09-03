@@ -1,8 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { mockPermissions, RolesTable } from '@/types/role'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { EditRoleNameForm } from '@/app/(auth)/role/[roleId]/tabs/Display'
-import { RolePermissionsForm } from '@/app/(auth)/role/[roleId]/tabs/Permission'
+import { EditRoleNameForm } from '@/app/(auth)/role/[roleId]/setting/tabs/Display'
+import { RolePermissionsForm } from '@/app/(auth)/role/[roleId]/setting/tabs/Permission'
 
 interface RoleSettingsProps {
   data: RolesTable[]

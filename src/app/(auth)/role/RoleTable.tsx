@@ -18,7 +18,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
-import { Routes } from '@/routes'
+import { fillRoute, Routes } from '@/routes'
 
 interface RoleTableProps {
   roles: RolesTable[]
@@ -34,11 +34,11 @@ export default function RoleTable({ roles }: RoleTableProps) {
 
   const onClickViewMembers = (e: React.MouseEvent, roleId: string) => {
     e.stopPropagation()
-    router.push(`${Routes.ROLE}/${roleId}?tab=members`)
+    router.push(`${fillRoute(Routes.ROLE_SETTING, roleId)}?tab=members`)
   }
 
   const onRowClick = (roleId: string) => {
-    router.push(`${Routes.ROLE}/${roleId}?tab=permissions`)
+    router.push(`${fillRoute(Routes.ROLE_SETTING, roleId)}?tab=permissions`)
   }
 
   return (

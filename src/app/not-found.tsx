@@ -1,7 +1,7 @@
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { TypographyP } from '@/components/typography/TypographyP';
-import Image from 'next/image';
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
+import { TypographyP } from '@/components/typography/TypographyP'
+import Image from 'next/image'
 
 export default function NotFound() {
   return (
@@ -15,5 +15,5 @@ export default function NotFound() {
         <Link href="/">Home</Link>
       </Button>
     </div>
-  );
+  )
 }
