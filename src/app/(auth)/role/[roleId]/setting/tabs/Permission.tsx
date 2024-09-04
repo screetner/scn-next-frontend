@@ -113,7 +113,9 @@ export function RolePermissionsForm({ data, roleId }: RolePermissionsProps) {
             </div>
           </div>
         ))}
-        <Button type="submit">Save Permissions</Button>
+        <div className={'flex justify-end'}>
+          <Button type="submit">Save Permissions</Button>
+        </div>
       </form>
     </Form>
   )

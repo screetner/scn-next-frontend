@@ -17,6 +17,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import React from 'react'
 import { toast } from 'sonner'
+import { useAlertDialog } from '@/context/AlertDialogContext'
 
 interface ListRoleProps {
   data: RoleManagementResponse
@@ -29,12 +30,15 @@ export default function ListRole({
   roleId,
   handleRoleSelect,
 }: ListRoleProps) {
+  const { showAlert } = useAlertDialog()
   const onDeleteRole = async (e: React.MouseEvent, userId: string) => {
     e.stopPropagation()
-    toast.promise(action.deleteRoleFromOrg(userId, roleId), {
-      loading: 'Deleting role...',
-      success: 'Role deleted successfully',
-      error: 'Failed to delete role',
+    showAlert('Are you sure you want to delete this role?', () => {
+      toast.promise(action.deleteRoleFromOrg(userId, roleId), {
+        loading: 'Deleting role...',
+        success: 'Role deleted successfully',
+        error: 'Failed to delete role',
+      })
     })
   }
 

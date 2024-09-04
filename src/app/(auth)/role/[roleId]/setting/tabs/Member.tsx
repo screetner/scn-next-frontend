@@ -21,6 +21,7 @@ import {
 import { Trash2, MoreVertical } from 'lucide-react'
 import { toast } from 'sonner'
 import * as action from '@/actions'
+import { useAlertDialog } from '@/context/AlertDialogContext'
 
 interface MemberProps {
   roleId: string
@@ -28,15 +29,19 @@ interface MemberProps {
 }
 
 const Member: React.FC<MemberProps> = ({ members, roleId }) => {
+  const { showAlert } = useAlertDialog()
+
   const onDeleteMember = useCallback(
     async (userId: string) => {
-      toast.promise(action.removeMemberFromRole(roleId, userId), {
-        loading: 'Removing member...',
-        success: 'Member removed successfully',
-        error: 'Failed to remove member',
+      showAlert('Are you sure you want to delete this member?', () => {
+        toast.promise(action.removeMemberFromRole(roleId, userId), {
+          loading: 'Removing member...',
+          success: 'Member removed successfully',
+          error: 'Failed to remove member',
+        })
       })
     },
-    [roleId],
+    [roleId, showAlert],
   )
 
   return (
