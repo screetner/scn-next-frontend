@@ -19,6 +19,8 @@ import {
 } from '@/schemas/rolePermissions'
 import { permissionsConfig } from '@/config/permissionsConfig'
 import { PermissionResponse } from '@/types/role'
+import { toast } from 'sonner'
+import * as action from '@/actions'
 
 const generateDefaultValues = (): RolePermissions => {
   const defaultValues = {} as RolePermissions
@@ -39,10 +41,11 @@ const generateDefaultValues = (): RolePermissions => {
 }
 
 interface RolePermissionsProps {
+  roleId: string
   data: PermissionResponse
 }
 
-export function RolePermissionsForm({ data }: RolePermissionsProps) {
+export function RolePermissionsForm({ data, roleId }: RolePermissionsProps) {
   const [defaultValues, setDefaultValues] = useState<RolePermissions | null>(
     null,
   )
@@ -64,8 +67,12 @@ export function RolePermissionsForm({ data }: RolePermissionsProps) {
     return <div>Loading...</div>
   }
 
-  function onSubmit(data: RolePermissions) {
-    console.log('Submitted data:', data)
+  async function onSubmit(data: RolePermissions) {
+    toast.promise(action.updateRolePermissions(roleId, data), {
+      loading: 'Updating permissions...',
+      success: 'Permissions updated successfully',
+      error: 'Failed to update',
+    })
   }
 
   return (

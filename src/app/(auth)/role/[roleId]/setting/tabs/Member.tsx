@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { RoleMember } from '@/types/role'
 import {
   Table,
@@ -19,16 +19,25 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Trash2, MoreVertical } from 'lucide-react'
+import { toast } from 'sonner'
+import * as action from '@/actions'
 
 interface MemberProps {
+  roleId: string
   members: RoleMember[]
 }
 
-const Member: React.FC<MemberProps> = ({ members }) => {
-  const onDeleteMember = (e: React.MouseEvent, userId: string) => {
-    e.stopPropagation()
-    console.log('Delete member:', userId)
-  }
+const Member: React.FC<MemberProps> = ({ members, roleId }) => {
+  const onDeleteMember = useCallback(
+    async (userId: string) => {
+      toast.promise(action.removeMemberFromRole(roleId, userId), {
+        loading: 'Removing member...',
+        success: 'Member removed successfully',
+        error: 'Failed to remove member',
+      })
+    },
+    [roleId],
+  )
 
   return (
     <Table>
@@ -57,12 +66,21 @@ const Member: React.FC<MemberProps> = ({ members }) => {
                   <DropdownMenuLabel>Actions</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup>
-                    <DropdownMenuItem
-                      onClick={e => onDeleteMember(e, member.userId)}
+                    <form
+                      onSubmit={async e => {
+                        e.preventDefault()
+                        await onDeleteMember(member.userId)
+                      }}
                     >
-                      <Trash2 className="mr-2 h-4 w-4 text-red-600" />
-                      <span>Delete Member</span>
-                    </DropdownMenuItem>
+                      <DropdownMenuItem
+                        onClick={() => onDeleteMember(member.userId)}
+                        className="w-full flex items-center"
+                      >
+                        <Trash2 className="mr-2 h-4 w-4 text-red-600" />
+                        <span>Delete Member</span>
+                      </DropdownMenuItem>
+                    </form>
+                    {/* Add more actions here */}
                   </DropdownMenuGroup>
                 </DropdownMenuContent>
               </DropdownMenu>

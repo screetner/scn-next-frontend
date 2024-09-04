@@ -44,10 +44,10 @@ export default function RoleSettings({
             />
           </TabsContent>
           <TabsContent value="permissions">
-            <RolePermissionsForm data={data.rolePermissions} />
+            <RolePermissionsForm data={data.rolePermissions} roleId={roleId} />
           </TabsContent>
           <TabsContent value="members">
-            <Member members={data.roleMembers} />
+            <Member members={data.roleMembers} roleId={roleId} />
           </TabsContent>
         </Tabs>
       </CardContent>
