@@ -3,10 +3,8 @@ import { RoleManagementResponse } from '@/types/role'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { EditRoleNameForm } from '@/app/(auth)/role/[roleId]/setting/tabs/Display'
 import { RolePermissionsForm } from '@/app/(auth)/role/[roleId]/setting/tabs/Permission'
-import MemberTable from '@/app/(auth)/role/[roleId]/setting/tabs/MemberTable'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { useSearchMemberTable } from '@/hooks/useSearchMemberTable'
+import React from 'react'
+import Member from '@/app/(auth)/role/[roleId]/setting/tabs/Member'
 
 interface RoleSettingsProps {
   data: RoleManagementResponse
@@ -21,10 +19,6 @@ export default function RoleSettings({
   setActiveTab,
   activeTab,
 }: RoleSettingsProps) {
-  const { membersList, setSearchValue, searchValue } = useSearchMemberTable(
-    data.roleMembers,
-  )
-
   return (
     <Card className="flex-1">
       <CardHeader>
@@ -54,15 +48,7 @@ export default function RoleSettings({
             <RolePermissionsForm data={data.rolePermissions} roleId={roleId} />
           </TabsContent>
           <TabsContent value="members">
-            <div className={'flex space-x-4 mb-2'}>
-              <Input
-                placeholder={'Search members'}
-                value={searchValue}
-                onChange={e => setSearchValue(e.target.value)}
-              />
-              <Button>Add Member</Button>
-            </div>
-            <MemberTable members={membersList} roleId={roleId} />
+            <Member roleId={roleId} roleMembers={data.roleMembers} />
           </TabsContent>
         </Tabs>
       </CardContent>

@@ -3,11 +3,14 @@
 import { PropsWithChildren } from 'react'
 import { SessionProvider } from 'next-auth/react'
 import { AlertDialogProvider } from '@/context/AlertDialogContext'
+import { DialogProvider } from '@/context/DialogProvider'
 
 export default function Provider({ children }: PropsWithChildren) {
   return (
     <SessionProvider>
-      <AlertDialogProvider>{children}</AlertDialogProvider>
+      <AlertDialogProvider>
+        <DialogProvider>{children}</DialogProvider>
+      </AlertDialogProvider>
     </SessionProvider>
   )
 }
