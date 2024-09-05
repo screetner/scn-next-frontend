@@ -15,7 +15,7 @@ interface MemberProps {
   members: RoleMember[]
 }
 
-const Member: React.FC<MemberProps> = ({ members, roleId }) => {
+const MemberTable: React.FC<MemberProps> = ({ members, roleId }) => {
   return (
     <Table>
       <TableHeader>
@@ -42,4 +42,4 @@ const Member: React.FC<MemberProps> = ({ members, roleId }) => {
   )
 }
 
-export default Member
+export default MemberTable
