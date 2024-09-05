@@ -1,23 +1,14 @@
 import { Card, CardHeader } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Plus, MoreVertical, Trash2 } from 'lucide-react'
+import { Plus } from 'lucide-react'
 import { Separator } from '@/components/ui/separator'
 import { RoleManagementResponse } from '@/types/role'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { cn } from '@/lib/utils'
 import * as action from '@/actions'
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-} from '@/components/ui/dropdown-menu'
-import React from 'react'
+import React, { useCallback } from 'react'
 import { toast } from 'sonner'
-import { useAlertDialog } from '@/context/AlertDialogContext'
+import RoleMenu from '@/app/(auth)/role/[roleId]/setting/menu/RoleMenu'
 
 interface ListRoleProps {
   data: RoleManagementResponse
@@ -30,25 +21,23 @@ export default function ListRole({
   roleId,
   handleRoleSelect,
 }: ListRoleProps) {
-  const { showAlert } = useAlertDialog()
-  const onDeleteRole = async (e: React.MouseEvent, userId: string) => {
-    e.stopPropagation()
-    showAlert('Are you sure you want to delete this role?', () => {
-      toast.promise(action.deleteRoleFromOrg(userId, roleId), {
-        loading: 'Deleting role...',
-        success: 'Role deleted successfully',
-        error: 'Failed to delete role',
-      })
+  const onCreateRole = useCallback(() => {
+    toast.promise(action.createRoleWithRedirect(), {
+      loading: 'Creating role...',
+      success: 'Role created successfully',
+      error: 'Failed to create role',
     })
-  }
+  }, [])
 
   return (
     <ScrollArea className="w-full xl:w-1/6">
       <Card className="p-2">
         <CardHeader>
-          <Button className="w-full" variant="default">
-            <Plus className="mr-2 h-4 w-4" /> New Role
-          </Button>
+          <form action={onCreateRole}>
+            <Button className="w-full" variant="default">
+              <Plus className="mr-2 h-4 w-4" /> Create Role
+            </Button>
+          </form>
         </CardHeader>
         <Separator className={'mt-2'} />
         {data.orgRole.map(role => (
@@ -63,25 +52,7 @@ export default function ListRole({
             onClick={() => handleRoleSelect(role.roleId)}
           >
             <div>{role.roleName}</div>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon">
-                  <MoreVertical className="h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-40">
-                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuGroup>
-                  <DropdownMenuItem
-                    onClick={e => onDeleteRole(e, 'userId')} // Replace 'userId' with the actual user ID
-                  >
-                    <Trash2 className="mr-2 h-4 w-4 text-red-600" />
-                    <span>Delete Role</span>
-                  </DropdownMenuItem>
-                </DropdownMenuGroup>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <RoleMenu roleId={role.roleId} />
           </div>
         ))}
       </Card>

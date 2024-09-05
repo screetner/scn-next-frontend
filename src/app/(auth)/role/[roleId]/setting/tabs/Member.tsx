@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React from 'react'
 import { RoleMember } from '@/types/role'
 import {
   Table,
@@ -8,20 +8,7 @@ import {
   TableBody,
   TableCell,
 } from '@/components/ui/table'
-import { Button } from '@/components/ui/button'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { Trash2, MoreVertical } from 'lucide-react'
-import { toast } from 'sonner'
-import * as action from '@/actions'
-import { useAlertDialog } from '@/context/AlertDialogContext'
+import MemberMenu from '@/app/(auth)/role/[roleId]/setting/menu/memberMenu'
 
 interface MemberProps {
   roleId: string
@@ -29,21 +16,6 @@ interface MemberProps {
 }
 
 const Member: React.FC<MemberProps> = ({ members, roleId }) => {
-  const { showAlert } = useAlertDialog()
-
-  const onDeleteMember = useCallback(
-    async (userId: string) => {
-      showAlert('Are you sure you want to delete this member?', () => {
-        toast.promise(action.removeMemberFromRole(roleId, userId), {
-          loading: 'Removing member...',
-          success: 'Member removed successfully',
-          error: 'Failed to remove member',
-        })
-      })
-    },
-    [roleId, showAlert],
-  )
-
   return (
     <Table>
       <TableHeader>
@@ -61,34 +33,7 @@ const Member: React.FC<MemberProps> = ({ members, roleId }) => {
               <div className="flex items-center gap-1">{member.email}</div>
             </TableCell>
             <TableCell>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost">
-                    <MoreVertical className="h-4 w-4" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-40">
-                  <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuGroup>
-                    <form
-                      onSubmit={async e => {
-                        e.preventDefault()
-                        await onDeleteMember(member.userId)
-                      }}
-                    >
-                      <DropdownMenuItem
-                        onClick={() => onDeleteMember(member.userId)}
-                        className="w-full flex items-center"
-                      >
-                        <Trash2 className="mr-2 h-4 w-4 text-red-600" />
-                        <span>Delete Member</span>
-                      </DropdownMenuItem>
-                    </form>
-                    {/* Add more actions here */}
-                  </DropdownMenuGroup>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <MemberMenu roleId={roleId} userId={member.userId} />
             </TableCell>
           </TableRow>
         ))}
