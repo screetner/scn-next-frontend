@@ -14,10 +14,15 @@ interface SettingsProps {
 
 export default function Settings({ initialTab, roleId, data }: SettingsProps) {
   const router = useRouter()
-  const [activeTab, setActiveTab] = useState(initialTab)
 
   const handleRoleSelect = (roleId: string) => {
-    router.push(`${fillRoute(Routes.ROLE_SETTING, roleId)}?tab=${activeTab}`)
+    router.replace(
+      `${fillRoute(Routes.ROLE_SETTING, roleId)}?tab=${initialTab}`,
+    )
+  }
+
+  const handleTabChange = (tab: string) => {
+    router.replace(`${fillRoute(Routes.ROLE_SETTING, roleId)}?tab=${tab}`)
   }
 
   return (
@@ -28,11 +33,10 @@ export default function Settings({ initialTab, roleId, data }: SettingsProps) {
         data={data}
       />
 
-      {/* Role Details Panel */}
       <RoleSettings
         roleId={roleId}
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
+        activeTab={initialTab}
+        setActiveTab={handleTabChange}
         data={data}
       />
     </>

@@ -7,13 +7,11 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
-import { Button } from '@/components/ui/button'
 
 interface DialogConfig {
   title: string
   description?: string
   content?: ReactNode
-  footer?: ReactNode
   onClose?: () => void
 }
 
@@ -56,9 +54,6 @@ export const DialogProvider: React.FC<{ children: ReactNode }> = ({
               <DialogDescription>{dialog.description}</DialogDescription>
             </DialogHeader>
             {dialog.content}
-            <DialogFooter>
-              {dialog.footer || <Button onClick={closeDialog}>Close</Button>}
-            </DialogFooter>
           </DialogContent>
         </Dialog>
       ))}

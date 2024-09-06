@@ -30,12 +30,12 @@ export default function Member({ roleMembers, roleId }: MemberProps) {
           variant="default"
           onClick={() =>
             showDialog({
-              title: 'Create Role',
+              title: 'Add Member',
               content: <AddMemberDialog />,
             })
           }
         >
-          <Plus className="mr-2 h-4 w-4" /> Add User
+          <Plus className="mr-2 h-4 w-4" /> Add Member
         </Button>{' '}
       </div>
       <MemberTable members={membersList} roleId={roleId} />

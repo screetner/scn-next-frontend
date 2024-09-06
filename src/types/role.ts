@@ -89,3 +89,16 @@ export const mockRoleManagementResponse: RoleManagementResponse = {
     },
   },
 }
+
+export const listOfUnRoleMembers: RoleMember[] = [
+  {
+    userId: 'cjld2ck8c0000qzrmn8j1i7rn',
+    email: 'xxx@example.com',
+    username: 'xxx',
+  },
+  {
+    userId: 'cjld2ck8c0001qzrmn8j1i7ry',
+    email: 'yyy@example.com',
+    username: 'yyy',
+  },
+]
