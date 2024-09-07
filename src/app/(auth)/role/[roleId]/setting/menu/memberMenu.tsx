@@ -28,7 +28,7 @@ export default function MemberMenu({ roleId, userId }: MemberMenuProps) {
         toast.promise(action.removeMemberFromRole(roleId, userId), {
           loading: 'Removing member...',
           success: 'Member removed successfully',
-          error: 'Failed to remove member',
+          error: err => err.message,
         })
       })
     },

@@ -13,7 +13,7 @@ interface MemberProps {
   roleMembers: RoleMember[]
 }
 
-export default function Member({ roleMembers, roleId }: MemberProps) {
+export default async function Member({ roleMembers, roleId }: MemberProps) {
   const { membersList, setSearchValue, searchValue } =
     useSearchMemberTable(roleMembers)
   const { showDialog } = useDialog()

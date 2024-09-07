@@ -2,7 +2,7 @@ import { Card, CardHeader } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Plus } from 'lucide-react'
 import { Separator } from '@/components/ui/separator'
-import { RoleManagementResponse } from '@/types/role'
+import { RoleInfo } from '@/types/role'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { cn } from '@/lib/utils'
 import * as action from '@/actions'
@@ -11,7 +11,7 @@ import { toast } from 'sonner'
 import RoleMenu from '@/app/(auth)/role/[roleId]/setting/menu/RoleMenu'
 
 interface ListRoleProps {
-  data: RoleManagementResponse
+  data: RoleInfo[]
   roleId: string
   handleRoleSelect: (roleId: string) => void
 }
@@ -40,7 +40,7 @@ export default function ListRole({
           </form>
         </CardHeader>
         <Separator className={'mt-2'} />
-        {data.orgRole.map(role => (
+        {data.map(role => (
           <div
             key={role.roleId}
             className={cn(

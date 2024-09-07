@@ -6,36 +6,51 @@ import { redirect } from 'next/navigation'
 import { fillRoute, Routes } from '@/routes'
 import { revalidatePath } from 'next/cache'
 import { RolePermissions } from '@/schemas/rolePermissions'
+import {
+  createRoleResponse,
+  RoleManagementResponse,
+  RoleMember,
+  RolesTable,
+} from '@/types/role'
 
 export async function getRolesTable() {
   try {
-    //TODO : Add get roles table Endpoint
-    const { data } = await axios.get(``)
+    const { data } = await axios.get<RolesTable[]>(`/role`)
     return data
   } catch (e) {
     CatchAxiosError(e)
+    return []
   }
 }
 
 export async function getRoleManagement(roleId: string) {
   try {
-    const { data } = await axios.get(``)
+    const { data } = await axios.get<RoleManagementResponse>(`/role/${roleId}`)
     return data
   } catch (e) {
     CatchAxiosError(e)
   }
 }
 
-export async function updateRoleName(roleName: string) {
+export async function getListOfUnRoleMembers() {
   try {
-    //TODO : Add update role name Endpoint
-    const { data } = await axios.put(``, {
-      roleName: roleName,
-    })
+    const { data } = await axios.get<RoleMember[]>(`/role/unassigned`)
     return data
   } catch (e) {
     CatchAxiosError(e)
   }
+}
+
+export async function updateRoleName(roleName: string, roleId: string) {
+  try {
+    await axios.patch(`/role/update-role-name`, {
+      roleId: roleId,
+      newName: roleName,
+    })
+  } catch (e) {
+    CatchAxiosError(e)
+  }
+  revalidatePath(`${fillRoute(Routes.ROLE_SETTING, roleId)}?tab=display`)
 }
 
 export async function updateRolePermissions(
@@ -43,19 +58,20 @@ export async function updateRolePermissions(
   permissions: RolePermissions,
 ) {
   try {
-    //TODO : Add update role permissions Endpoint
-    await axios.put(``)
+    await axios.put(`/role/permission`, {
+      roleId: roleId,
+      permission: permissions,
+    })
   } catch (e) {
     CatchAxiosError(e)
   }
-  revalidatePath(`${fillRoute(Routes.ROLE_SETTING, roleId)}`)
+  revalidatePath(`${fillRoute(Routes.ROLE_SETTING, roleId)}?tab=permissions`)
 }
 
 export async function createRoleWithRedirect() {
   let newRoleId = ''
   try {
-    //TODO : Add create role Endpoint
-    const { data } = await axios.post(``)
+    const { data } = await axios.post<createRoleResponse>(`/role/new-role`)
     newRoleId = data.roleId
   } catch (e) {
     CatchAxiosError(e)
@@ -66,14 +82,13 @@ export async function createRoleWithRedirect() {
 
 export async function removeMemberFromRole(roleId: string, userId: string) {
   try {
-    //TODO : Add remove member from role Endpoint
-    await axios.delete(``)
+    await axios.patch(`/role/unassign-role`, {
+      userId: userId,
+    })
   } catch (e) {
-    console.log(e)
     CatchAxiosError(e)
   }
-  revalidatePath(fillRoute(Routes.ROLE))
-  revalidatePath(`${fillRoute(Routes.ROLE_SETTING, roleId)}`)
+  revalidatePath(`${fillRoute(Routes.ROLE_SETTING, roleId)}?tab=members`)
 }
 
 export async function deleteRoleFromOrg(
@@ -81,8 +96,7 @@ export async function deleteRoleFromOrg(
   currentRoleId: string,
 ) {
   try {
-    //TODO : Add delete role from org Endpoint
-    await axios.delete(``)
+    await axios.delete(`/role/remove/${targetRoleId}`)
   } catch (e) {
     CatchAxiosError(e)
   }

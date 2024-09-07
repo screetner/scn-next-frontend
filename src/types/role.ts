@@ -35,16 +35,17 @@ export type RoleMember = {
   username: string
 }
 
-export type RoleInfo = {
-  roleId: string
-  roleName: string
-}
+export type RoleInfo = Omit<RolesTable, 'members'>
 
 export type RoleManagementResponse = {
-  orgRole: RoleInfo[]
   roleInfo: RoleInfo
   roleMembers: RoleMember[]
   rolePermissions: PermissionResponse
+}
+
+export type createRoleResponse = {
+  roleId: string
+  roleName: string
 }
 
 export const mockRoles: RolesTable[] = [
@@ -55,12 +56,6 @@ export const mockRoles: RolesTable[] = [
 ]
 
 export const mockRoleManagementResponse: RoleManagementResponse = {
-  orgRole: [
-    { roleId: 'cjld2cjxh0000qzrmn831i7rn', roleName: 'Admin' },
-    { roleId: 'cjld2cjxh0001qzrmn831i7ro', roleName: 'Editor' },
-    { roleId: 'cjld2cjxh0002qzrmn831i7rp', roleName: 'Viewer' },
-    { roleId: 'cjld2cjxh0003qzrmn831i7rq', roleName: 'Contributor' },
-  ],
   roleInfo: {
     roleId: 'cjld2cjxh0000qzrmn831i7rn', // Matches the 'Admin' role from mockRoles
     roleName: 'Admin',

@@ -33,10 +33,10 @@ export function EditRoleNameForm({ roleId, initialRoleName }: EditRoleProps) {
 
   const handleSubmit = async (values: RoleSchema) => {
     setIsSubmitting(true)
-    toast.promise(action.updateRoleName(values.roleName), {
+    toast.promise(action.updateRoleName(values.roleName, roleId), {
       loading: 'Saving...',
       success: 'Role name updated',
-      error: 'An error occurred while trying to update role name',
+      error: err => err.message,
     })
     setIsSubmitting(false)
   }

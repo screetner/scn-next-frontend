@@ -6,9 +6,11 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { mockRoles } from '@/types/role'
+import * as action from '@/actions'
 
-export default function RoleManagement() {
+export default async function RoleManagement() {
+  const roles = await action.getRolesTable()
+
   return (
     <>
       <Card>
@@ -20,7 +22,7 @@ export default function RoleManagement() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <RoleTable roles={mockRoles} />
+          <RoleTable roles={roles} />
         </CardContent>
       </Card>
     </>

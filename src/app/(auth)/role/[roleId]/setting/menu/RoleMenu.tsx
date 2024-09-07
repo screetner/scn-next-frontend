@@ -28,7 +28,7 @@ export default function RoleMenu({ roleId }: RoleActionProps) {
         toast.promise(action.deleteRoleFromOrg(roleId, roleId), {
           loading: 'Deleting role...',
           success: 'Role deleted successfully',
-          error: 'Failed to delete role',
+          error: err => err.message || 'An unexpected error occurred',
         })
       })
     },

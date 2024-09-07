@@ -46,7 +46,7 @@ export default function RoleTable({ roles }: RoleTableProps) {
   }
 
   const onRowClick = (roleId: string) => {
-    router.push(`${fillRoute(Routes.ROLE_SETTING, roleId)}?tab=permissions`)
+    router.push(`${fillRoute(Routes.ROLE_SETTING, roleId)}?tab=display`)
   }
 
   return (
