@@ -7,16 +7,18 @@ import { useSearchMemberTable } from '@/hooks/useSearchMemberTable'
 import { RoleMember } from '@/types/role'
 import { useDialog } from '@/context/DialogProvider'
 import AddMemberDialog from '@/app/(auth)/role/[roleId]/setting/dialogs/AddMemberDialog'
+import { useRoleSetting } from '@/context/RoleSettingContext'
 
 interface MemberProps {
   roleId: string
   roleMembers: RoleMember[]
 }
 
-export default async function Member({ roleMembers, roleId }: MemberProps) {
+export default function Member({ roleMembers, roleId }: MemberProps) {
   const { membersList, setSearchValue, searchValue } =
     useSearchMemberTable(roleMembers)
   const { showDialog } = useDialog()
+  const { listOfUnRoleMembers } = useRoleSetting()
 
   return (
     <>
@@ -31,7 +33,12 @@ export default async function Member({ roleMembers, roleId }: MemberProps) {
           onClick={() =>
             showDialog({
               title: 'Add Member',
-              content: <AddMemberDialog />,
+              content: (
+                <AddMemberDialog
+                  listOfUnRoleMembers={listOfUnRoleMembers}
+                  roleId={roleId}
+                />
+              ),
             })
           }
         >

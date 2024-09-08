@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { listOfUnRoleMembers, RoleMember } from '@/types/role'
+import { RoleMember } from '@/types/role'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
 import { X } from 'lucide-react'
@@ -14,10 +14,22 @@ import {
 import { Checkbox } from '@/components/ui/checkbox'
 import { DialogFooter } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
+import { toast } from 'sonner'
+import * as action from '@/actions'
+import { useDialog } from '@/context/DialogProvider'
 
-export default function AddMemberDialog() {
+interface AddMemberDialogProps {
+  roleId: string
+  listOfUnRoleMembers: RoleMember[]
+}
+
+export default function AddMemberDialog({
+  listOfUnRoleMembers,
+  roleId,
+}: AddMemberDialogProps) {
   const [selectedMembers, setSelectedMembers] = useState<RoleMember[]>([])
   const [searchValue, setSearchValue] = useState<string>('')
+  const { closeDialog } = useDialog()
 
   const handleToggleMember = (member: RoleMember) => {
     setSelectedMembers(prev =>
@@ -37,8 +49,18 @@ export default function AddMemberDialog() {
       member.email.toLowerCase().includes(searchValue.toLowerCase()),
   )
 
-  const handleSubmit = () => {
-    console.log('Selected members:', selectedMembers)
+  const handleSubmit = async () => {
+    const body = {
+      userId: selectedMembers.map(member => member.userId),
+      roleId: roleId,
+    }
+
+    toast.promise(action.assignRoleToMember(body), {
+      loading: 'Assigning role to member...',
+      success: 'Role assigned to member successfully',
+      error: 'Failed to assign role to member',
+    })
+    closeDialog()
   }
 
   return (

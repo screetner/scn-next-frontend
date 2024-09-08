@@ -48,6 +48,11 @@ export type createRoleResponse = {
   roleName: string
 }
 
+export type BodyAssignRole = {
+  userId: string[]
+  roleId: string
+}
+
 export const mockRoles: RolesTable[] = [
   { roleId: 'cjld2cjxh0000qzrmn831i7rn', roleName: 'Admin', members: 1 },
   { roleId: 'cjld2cjxh0001qzrmn831i7ro', roleName: 'Editor', members: 2 },

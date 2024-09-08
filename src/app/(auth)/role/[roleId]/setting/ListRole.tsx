@@ -2,25 +2,21 @@ import { Card, CardHeader } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Plus } from 'lucide-react'
 import { Separator } from '@/components/ui/separator'
-import { RoleInfo } from '@/types/role'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { cn } from '@/lib/utils'
 import * as action from '@/actions'
 import React, { useCallback } from 'react'
 import { toast } from 'sonner'
 import RoleMenu from '@/app/(auth)/role/[roleId]/setting/menu/RoleMenu'
+import { useRoleSetting } from '@/context/RoleSettingContext'
 
 interface ListRoleProps {
-  data: RoleInfo[]
-  roleId: string
   handleRoleSelect: (roleId: string) => void
 }
 
-export default function ListRole({
-  data,
-  roleId,
-  handleRoleSelect,
-}: ListRoleProps) {
+export default function ListRole({ handleRoleSelect }: ListRoleProps) {
+  const { roleId } = useRoleSetting()
+  const { roleList } = useRoleSetting()
   const onCreateRole = useCallback(() => {
     toast.promise(action.createRoleWithRedirect(), {
       loading: 'Creating role...',
@@ -40,7 +36,7 @@ export default function ListRole({
           </form>
         </CardHeader>
         <Separator className={'mt-2'} />
-        {data.map(role => (
+        {roleList.map(role => (
           <div
             key={role.roleId}
             className={cn(

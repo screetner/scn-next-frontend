@@ -7,6 +7,7 @@ import { fillRoute, Routes } from '@/routes'
 import { revalidatePath } from 'next/cache'
 import { RolePermissions } from '@/schemas/rolePermissions'
 import {
+  BodyAssignRole,
   createRoleResponse,
   RoleManagementResponse,
   RoleMember,
@@ -78,6 +79,15 @@ export async function createRoleWithRedirect() {
   }
   revalidatePath(fillRoute(Routes.ROLE))
   redirect(`${fillRoute(Routes.ROLE_SETTING, newRoleId)}?tab=permissions`)
+}
+
+export async function assignRoleToMember(body: BodyAssignRole) {
+  try {
+    await axios.patch(`/role/assign-role`, body)
+  } catch (e) {
+    CatchAxiosError(e)
+  }
+  revalidatePath(`${fillRoute(Routes.ROLE_SETTING, body.roleId)}?tab=members`)
 }
 
 export async function removeMemberFromRole(roleId: string, userId: string) {

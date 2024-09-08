@@ -1,5 +1,6 @@
 import Settings from '@/app/(auth)/role/[roleId]/setting/Setting'
 import * as action from '@/actions'
+import { RoleSettingProvider } from '@/context/RoleSettingContext'
 
 interface ManageRoleProps {
   params: { roleId: string }
@@ -10,18 +11,23 @@ export default async function ManageRole({
   params,
   searchParams,
 }: ManageRoleProps) {
-  const [roleList, RoleInfo] = await Promise.all([
+  const [roleList, RoleInfo, listOfUnRoleMembers] = await Promise.all([
     action.getRolesTable(),
     action.getRoleManagement(params.roleId),
+    action.getListOfUnRoleMembers(),
   ])
   return (
-    <div className="flex flex-col xl:flex-row gap-4 h-[full]">
-      <Settings
-        roleId={params.roleId}
-        roleList={roleList}
-        roleManageInfo={RoleInfo!}
-        initialTab={searchParams?.tab || 'display'}
-      />
-    </div>
+    <RoleSettingProvider
+      data={{
+        roleId: params.roleId,
+        roleList,
+        roleManageInfo: RoleInfo!,
+        listOfUnRoleMembers: listOfUnRoleMembers!,
+      }}
+    >
+      <div className="flex flex-col xl:flex-row gap-4 h-[full]">
+        <Settings initialTab={searchParams?.tab || 'display'} />
+      </div>
+    </RoleSettingProvider>
   )
 }

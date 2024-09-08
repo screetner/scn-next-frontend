@@ -1,29 +1,26 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { RoleManagementResponse } from '@/types/role'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { EditRoleNameForm } from '@/app/(auth)/role/[roleId]/setting/tabs/Display'
 import { RolePermissionsForm } from '@/app/(auth)/role/[roleId]/setting/tabs/Permission'
 import React from 'react'
 import Member from '@/app/(auth)/role/[roleId]/setting/tabs/Member'
+import { useRoleSetting } from '@/context/RoleSettingContext'
 
 interface RoleSettingsProps {
-  data: RoleManagementResponse
-  roleId: string
   activeTab: string
   setActiveTab: (activeTab: string) => void
 }
 
 export default function RoleSettings({
-  data,
-  roleId,
   setActiveTab,
   activeTab,
 }: RoleSettingsProps) {
+  const { roleManageInfo, roleId } = useRoleSetting()
   return (
     <Card className="flex-1">
       <CardHeader>
         <CardTitle>
-          EDIT ROLE — {data.roleInfo.roleName.toLocaleUpperCase()}
+          EDIT ROLE — {roleManageInfo.roleInfo.roleName.toLocaleUpperCase()}
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -41,14 +38,17 @@ export default function RoleSettings({
           <TabsContent value="display">
             <EditRoleNameForm
               roleId={roleId}
-              initialRoleName={data.roleInfo.roleName}
+              initialRoleName={roleManageInfo.roleInfo.roleName}
             />
           </TabsContent>
           <TabsContent value="permissions">
-            <RolePermissionsForm data={data.rolePermissions} roleId={roleId} />
+            <RolePermissionsForm
+              data={roleManageInfo.rolePermissions}
+              roleId={roleId}
+            />
           </TabsContent>
           <TabsContent value="members">
-            <Member roleId={roleId} roleMembers={data.roleMembers} />
+            <Member roleId={roleId} roleMembers={roleManageInfo.roleMembers} />
           </TabsContent>
         </Tabs>
       </CardContent>
