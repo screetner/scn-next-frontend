@@ -18,7 +18,7 @@ interface NavIconProps {
 
 export default function NavIcon({ nav }: NavIconProps) {
   const pathname = usePathname()
-  const active = pathname === nav.path
+  const active = new RegExp(`^${nav.path}`).test(pathname)
   const { theme, systemTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
 
