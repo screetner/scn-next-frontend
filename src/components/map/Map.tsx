@@ -75,8 +75,8 @@ function CustomMap({
         style={{ width: '100%', height: '100%' }}
         mapStyle={
           theme === 'dark'
-            ? 'mapbox://styles/mapbox/dark-v11'
-            : 'mapbox://styles/mapbox/light-v11'
+            ? 'mapbox://styles/mapbox/dark-v11?optimize=true'
+            : 'mapbox://styles/mapbox/light-v11?optimize=true'
         }
         onClick={handleMapClick}
       >
