@@ -21,7 +21,7 @@ import {
 import { fillRoute, Routes } from '@/routes'
 import * as action from '@/actions'
 import { toast } from 'sonner'
-import { useSearchRoleTable } from '@/hooks/useSearchRoleTable'
+import { useSearchRoleTable } from '@/hooks/role/useSearchRoleTable'
 
 interface RoleTableProps {
   roles: RolesTable[]

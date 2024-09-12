@@ -11,10 +11,9 @@ export default async function ManageRole({
   params,
   searchParams,
 }: ManageRoleProps) {
-  const [roleList, RoleInfo, listOfUnRoleMembers] = await Promise.all([
+  const [roleList, RoleInfo] = await Promise.all([
     action.getRolesTable(),
     action.getRoleManagement(params.roleId),
-    action.getListOfUnRoleMembers(),
   ])
   return (
     <RoleSettingProvider
@@ -22,7 +21,6 @@ export default async function ManageRole({
         roleId: params.roleId,
         roleList,
         roleManageInfo: RoleInfo!,
-        listOfUnRoleMembers: listOfUnRoleMembers!,
       }}
     >
       <div className="flex flex-col xl:flex-row gap-4 h-[full]">

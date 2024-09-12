@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { RoleMember } from '@/types/role'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
@@ -17,19 +17,17 @@ import { Button } from '@/components/ui/button'
 import { toast } from 'sonner'
 import * as action from '@/actions'
 import { useDialog } from '@/context/DialogProvider'
+import { UseFetchUnAssignUser } from '@/hooks/role/useFetchUnAssignUser'
 
 interface AddMemberDialogProps {
   roleId: string
-  listOfUnRoleMembers: RoleMember[]
 }
 
-export default function AddMemberDialog({
-  listOfUnRoleMembers,
-  roleId,
-}: AddMemberDialogProps) {
+export default function AddMemberDialog({ roleId }: AddMemberDialogProps) {
   const [selectedMembers, setSelectedMembers] = useState<RoleMember[]>([])
   const [searchValue, setSearchValue] = useState<string>('')
   const { closeDialog } = useDialog()
+  const { data: listOfUnRoleMembers, isLoading } = UseFetchUnAssignUser()
 
   const handleToggleMember = (member: RoleMember) => {
     setSelectedMembers(prev =>
@@ -43,7 +41,7 @@ export default function AddMemberDialog({
     setSelectedMembers(prev => prev.filter(m => m.userId !== member.userId))
   }
 
-  const filteredMembers = listOfUnRoleMembers.filter(
+  const filteredMembers = listOfUnRoleMembers?.filter(
     member =>
       member.username.toLowerCase().includes(searchValue.toLowerCase()) ||
       member.email.toLowerCase().includes(searchValue.toLowerCase()),
@@ -62,6 +60,8 @@ export default function AddMemberDialog({
     })
     closeDialog()
   }
+
+  if (isLoading) return <div>Loading...</div>
 
   return (
     <div className="space-y-4">
@@ -95,7 +95,7 @@ export default function AddMemberDialog({
             </TableRow>
           </TableHeader>
           <TableBody>
-            {filteredMembers.map(member => (
+            {filteredMembers?.map(member => (
               <TableRow key={member.userId}>
                 <TableCell>
                   <Checkbox

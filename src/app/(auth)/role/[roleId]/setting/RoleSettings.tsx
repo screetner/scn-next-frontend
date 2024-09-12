@@ -48,7 +48,11 @@ export default function RoleSettings({
             />
           </TabsContent>
           <TabsContent value="members">
-            <Member roleId={roleId} roleMembers={roleManageInfo.roleMembers} />
+            <Member
+              roleId={roleId}
+              roleMembers={roleManageInfo.roleMembers}
+              roleName={roleManageInfo.roleInfo.roleName}
+            />
           </TabsContent>
         </Tabs>
       </CardContent>

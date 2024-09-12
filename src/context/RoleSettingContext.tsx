@@ -6,7 +6,6 @@ interface RoleSettingData {
   roleId: string
   roleList: RoleInfo[]
   roleManageInfo: RoleManagementResponse
-  listOfUnRoleMembers: RoleMember[]
 }
 
 const RoleSettingContext = createContext<RoleSettingData | undefined>(undefined)
