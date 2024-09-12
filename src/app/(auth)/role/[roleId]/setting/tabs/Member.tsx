@@ -7,7 +7,6 @@ import { useSearchMemberTable } from '@/hooks/role/useSearchMemberTable'
 import { RoleMember } from '@/types/role'
 import { useDialog } from '@/context/DialogProvider'
 import AddMemberDialog from '@/app/(auth)/role/[roleId]/setting/dialogs/AddMemberDialog'
-import { cn } from '@/lib/utils'
 
 interface MemberProps {
   roleId: string
