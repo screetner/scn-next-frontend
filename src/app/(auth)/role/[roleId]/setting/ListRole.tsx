@@ -26,7 +26,7 @@ export default function ListRole({ handleRoleSelect }: ListRoleProps) {
   }, [])
 
   return (
-    <ScrollArea className="w-full xl:w-1/6">
+    <ScrollArea className="w-full xl:w-1/6 xl:h-screen-minus-heading">
       <Card className="p-2">
         <CardHeader>
           <form action={onCreateRole}>

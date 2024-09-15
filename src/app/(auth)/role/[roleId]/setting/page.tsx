@@ -1,6 +1,7 @@
 import Settings from '@/app/(auth)/role/[roleId]/setting/Setting'
 import * as action from '@/actions'
 import { RoleSettingProvider } from '@/context/RoleSettingContext'
+import { redirect } from 'next/navigation'
 
 interface ManageRoleProps {
   params: { roleId: string }
