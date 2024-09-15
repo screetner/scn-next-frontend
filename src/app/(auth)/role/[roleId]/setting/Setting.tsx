@@ -26,7 +26,6 @@ export default function Settings({ initialTab }: SettingsProps) {
   return (
     <>
       <ListRole handleRoleSelect={handleRoleSelect} />
-
       <RoleSettings activeTab={initialTab} setActiveTab={handleTabChange} />
     </>
   )
