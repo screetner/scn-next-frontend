@@ -1,12 +1,19 @@
+import React, { useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Plus } from 'lucide-react'
-import MemberTable from '@/app/(auth)/role/[roleId]/setting/tables/MemberTable'
-import React from 'react'
-import { useSearchMemberTable } from '@/hooks/role/useSearchMemberTable'
 import { RoleMember } from '@/types/role'
 import { useDialog } from '@/context/DialogProvider'
 import AddMemberDialog from '@/app/(auth)/role/[roleId]/setting/dialogs/AddMemberDialog'
+import {
+  ColumnFiltersState,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  useReactTable,
+} from '@tanstack/react-table'
+import { MemberTableColumn } from '@/app/(auth)/role/[roleId]/setting/tables/memberTableColumn'
+import TanStackDataTable from '@/components/TanStackDataTable'
 
 interface MemberProps {
   roleId: string
@@ -15,17 +22,39 @@ interface MemberProps {
 }
 
 export default function Member({ roleMembers, roleId, roleName }: MemberProps) {
-  const { membersList, setSearchValue, searchValue } =
-    useSearchMemberTable(roleMembers)
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
+  const [globalFilter, setGlobalFilter] = useState('')
   const { showDialog } = useDialog()
+
+  const table = useReactTable({
+    columns: MemberTableColumn({ roleId }),
+    data: roleMembers,
+    getCoreRowModel: getCoreRowModel(),
+    onColumnFiltersChange: setColumnFilters,
+    getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    state: {
+      columnFilters,
+      globalFilter,
+    },
+    onGlobalFilterChange: setGlobalFilter,
+    globalFilterFn: (row, columnId, filterValue) => {
+      const username = row.getValue('username') as string
+      const email = row.getValue('email') as string
+      return (
+        username.toLowerCase().includes(filterValue.toLowerCase()) ||
+        email.toLowerCase().includes(filterValue.toLowerCase())
+      )
+    },
+  })
 
   return (
     <>
-      <div className={'flex space-x-4 mb-2'}>
+      <div className="flex space-x-4 mb-2">
         <Input
-          placeholder={'Search members'}
-          value={searchValue}
-          onChange={e => setSearchValue(e.target.value)}
+          placeholder="Search members"
+          value={globalFilter}
+          onChange={e => setGlobalFilter(e.target.value)}
         />
         <Button
           variant="default"
@@ -38,9 +67,9 @@ export default function Member({ roleMembers, roleId, roleName }: MemberProps) {
           }
         >
           <Plus className="mr-2 h-4 w-4" /> Add Member
-        </Button>{' '}
+        </Button>
       </div>
-      <MemberTable members={membersList} roleId={roleId} />
+      <TanStackDataTable table={table} />
     </>
   )
 }
