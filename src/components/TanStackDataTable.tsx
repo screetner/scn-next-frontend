@@ -8,6 +8,7 @@ import {
 } from '@/components/ui/table'
 import { flexRender, Table as TanStackTable } from '@tanstack/react-table'
 import { Button } from '@/components/ui/button'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 interface TanStackDataTableProps<TData> {
   table: TanStackTable<TData>
@@ -77,7 +78,7 @@ export default function TanStackDataTable<TData>({
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
         >
-          Previous
+          <ChevronLeft /> Previous
         </Button>
         <Button
           variant="outline"
@@ -85,7 +86,7 @@ export default function TanStackDataTable<TData>({
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
         >
-          Next
+          Next <ChevronRight />
         </Button>
       </div>
     </div>
