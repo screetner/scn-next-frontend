@@ -1,8 +1,6 @@
 # Pull Request Title
 
 ## Description
-Please include a summary of the changes made in this pull request. Highlight the problem you're solving and the context for the changes.
-
 - **What feature/bug fix was implemented?**
 
 ## Type of Change
@@ -12,10 +10,7 @@ Please include a summary of the changes made in this pull request. Highlight the
 - [ ] Documentation update
 - [ ] Other (please describe):
 
-## How Has This Been Tested?
-Please describe the tests that you ran to verify your changes. Provide instructions so others can reproduce. Include details of your test environment.
-
-- **Test cases:**
+## Test cases
   - [ ] Unit tests
   - [ ] Integration tests
   - [ ] Manual tests
@@ -31,7 +26,3 @@ Please describe the tests that you ran to verify your changes. Provide instructi
 ## Screenshots/Recordings (if applicable)
 
 ## Related Issues
-- Link to any relevant issues or discussions, or reference `#issue_number`
-
-## Additional Notes
-Please add any additional context, questions, or concerns here.
