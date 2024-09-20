@@ -13,8 +13,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { Button } from '@/components/ui/button'
-import { SquareArrowOutUpRight } from 'lucide-react'
+import InviteButton from '@/app/(auth)/member/@inviteLink/InviteButton'
 
 export default function CreateInviteLink() {
   return (
@@ -27,9 +26,7 @@ export default function CreateInviteLink() {
               Create a new register URL for inviting new members
             </CardDescription>
           </div>
-          <Button size="sm" className="ml-auto gap-1">
-            <SquareArrowOutUpRight className={'w-4 h-4'} /> Invite
-          </Button>
+          <InviteButton />
         </CardHeader>
         <CardContent>
           <Table>
