@@ -19,6 +19,7 @@ import ToolTip from '@/components/ToolTip'
 import dayjs from 'dayjs'
 import { getRecentMembers } from '@/actions/member'
 import { revalidateTag } from 'next/cache'
+import { TypographyP } from '@/components/typography/TypographyP'
 
 export default async function RecentMember() {
   const { data: recentMember, error } = await getRecentMembers(8)
@@ -29,27 +30,31 @@ export default async function RecentMember() {
   }
 
   return (
-    <>
-      <Card>
-        <CardHeader className="flex flex-row items-center">
-          <div className="grid gap-2">
-            <CardTitle>Recent members</CardTitle>
-            <CardDescription>
-              Latest members who joined the organization
-            </CardDescription>
+    <Card>
+      <CardHeader className="flex flex-row items-center justify-between">
+        <div className="grid gap-1">
+          <CardTitle className="text-lg font-semibold">
+            Recent Members
+          </CardTitle>
+          <CardDescription className="text-sm text-gray-500">
+            Latest members who joined the organization
+          </CardDescription>
+        </div>
+        <ToolTip content={'Refresh'} side={'top'}>
+          <form action={revalidateRecentMember} className={'ml-4'}>
+            <Button size="icon" type={'submit'} variant={'ghost'}>
+              <RotateCcw className={'w-5 h-5'} />
+            </Button>
+          </form>
+        </ToolTip>
+      </CardHeader>
+      <CardContent>
+        {error ? (
+          <div className="text-red-500 text-sm">
+            Failed to load recent members.
           </div>
-          <ToolTip content={'Refresh'} side={'top'}>
-            <form action={revalidateRecentMember} className={'ml-auto gap-1'}>
-              <Button size="icon" type={'submit'} variant={'ghost'}>
-                <RotateCcw className={'w-5 h-5'} />
-              </Button>
-            </form>
-          </ToolTip>
-        </CardHeader>
-        <CardContent>
-          {error ? (
-            <div className="text-red-500">{error}</div>
-          ) : (
+        ) : (
+          <>
             <Table>
               <TableHeader>
                 <TableRow>
@@ -60,24 +65,29 @@ export default async function RecentMember() {
               <TableBody>
                 {recentMember.map((member, index) => (
                   <TableRow key={index}>
-                    <TableCell className={''}>
-                      <div className="font-medium">
-                        {member.userName} ({member.roleName})
-                      </div>
+                    <TableCell>
+                      <TypographyP
+                        text={member.userName}
+                        className={'font-semibold'}
+                      />
                       <div className="hidden text-sm text-muted-foreground md:inline">
                         {member.email}
                       </div>
                     </TableCell>
-                    <TableCell className="text-right">
+                    <TableCell className="text-right text-gray-500">
                       {dayjs(member.createdAt).format('DD MMM, YYYY')}
                     </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
             </Table>
-          )}
-        </CardContent>
-      </Card>
-    </>
+            <div className="mt-4 text-sm text-gray-500">
+              Last updated:{' '}
+              <strong>{dayjs().format('DD MMM, YYYY HH:mm')}</strong>
+            </div>
+          </>
+        )}
+      </CardContent>
+    </Card>
   )
 }

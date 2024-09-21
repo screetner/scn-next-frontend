@@ -7,3 +7,8 @@ export type Member = {
   roleName: string
   createdAt: string
 }
+
+export type TotalInvite = {
+  inviteTotal: number
+  inviteActivate: number
+}
