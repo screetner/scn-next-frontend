@@ -17,38 +17,9 @@ import {
 } from '@/components/ui/table'
 import ToolTip from '@/components/ToolTip'
 import dayjs from 'dayjs'
-
-export default function RecentMember() {
-  const recentMember = [
-    {
-      name: 'Liam Johnson',
-      email: 'liam@example.com',
-    },
-    {
-      name: 'Liam Johnson',
-      email: 'liam@example.com',
-    },
-    {
-      name: 'Liam Johnson',
-      email: 'liam@example.com',
-    },
-    {
-      name: 'Liam Johnson',
-      email: 'liam@example.com',
-    },
-    {
-      name: 'Liam Johnson',
-      email: 'liam@example.com',
-    },
-    {
-      name: 'Liam Johnson',
-      email: 'liam@example.com',
-    },
-    {
-      name: 'Liam Johnson',
-      email: 'liam@example.com',
-    },
-  ]
+import { getRecentMembers } from '@/actions/member'
+export default async function RecentMember() {
+  const recentMember = await getRecentMembers(8)
 
   return (
     <>
@@ -78,13 +49,13 @@ export default function RecentMember() {
               {recentMember.map((member, index) => (
                 <TableRow key={index}>
                   <TableCell className={''}>
-                    <div className="font-medium">{member.name}</div>
+                    <div className="font-medium">{member.userName}</div>
                     <div className="hidden text-sm text-muted-foreground md:inline">
                       {member.email}
                     </div>
                   </TableCell>
                   <TableCell className="text-right">
-                    {dayjs().format('DD MMM, YYYY')}
+                    {dayjs(member.createdAt).format('DD MMM, YYYY')}
                   </TableCell>
                 </TableRow>
               ))}

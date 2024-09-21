@@ -14,8 +14,8 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { roleSchema, RoleSchema } from '@/schemas/roleNameSchema'
-import * as action from '@/actions'
 import { toast } from 'sonner'
+import { updateRoleName } from '@/actions/role'
 
 interface EditRoleProps {
   roleId: string
@@ -33,7 +33,7 @@ export function EditRoleNameForm({ roleId, initialRoleName }: EditRoleProps) {
 
   const handleSubmit = async (values: RoleSchema) => {
     setIsSubmitting(true)
-    toast.promise(action.updateRoleName(values.roleName, roleId), {
+    toast.promise(updateRoleName(values.roleName, roleId), {
       loading: 'Saving...',
       success: 'Role name updated',
       error: err => err.message,

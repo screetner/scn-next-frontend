@@ -5,7 +5,6 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
 import { fillRoute, Routes } from '@/routes'
-import * as action from '@/actions'
 import { toast } from 'sonner'
 import {
   ColumnFiltersState,
@@ -16,6 +15,7 @@ import {
 } from '@tanstack/react-table'
 import { roleTableColumn } from '@/app/(auth)/role/table/roleTableColumn'
 import TanStackDataTable from '@/components/TanStackDataTable'
+import { createRoleWithRedirect } from '@/actions/role'
 
 interface RoleTableProps {
   roles: RolesTable[]
@@ -27,7 +27,7 @@ export default function RoleTable({ roles }: RoleTableProps) {
 
   const handleCreateRole = (e: React.FormEvent) => {
     e.preventDefault()
-    toast.promise(action.createRoleWithRedirect(), {
+    toast.promise(createRoleWithRedirect(), {
       loading: 'Creating role...',
       success: 'Role created successfully',
       error: 'Failed to create role',

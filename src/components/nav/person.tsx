@@ -5,15 +5,15 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Button } from '@/components/ui/button';
-import { get2CapitalizedWords } from '@/utils/helper';
-import { auth } from '@/auth';
-import { signOut } from '@/actions';
-import { LogOut } from 'lucide-react';
+} from '@/components/ui/dropdown-menu'
+import { Button } from '@/components/ui/button'
+import { get2CapitalizedWords } from '@/utils/helper'
+import { auth } from '@/auth'
+import { LogOut } from 'lucide-react'
+import { signOut } from '@/actions/auth'
 
 export async function Person() {
-  const session = await auth();
+  const session = await auth()
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -45,5 +45,5 @@ export async function Person() {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  );
+  )
 }

@@ -7,7 +7,6 @@ import { z } from 'zod'
 import { signInSchema } from '@/schemas/signin'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
-import * as action from '@/actions'
 
 import {
   Form,
@@ -18,6 +17,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { useState } from 'react'
+import { authenticate } from '@/actions/auth'
 
 export function SignInForm() {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
@@ -32,7 +32,7 @@ export function SignInForm() {
 
   const handleSubmit = async (values: z.infer<typeof signInSchema>) => {
     setIsSubmitting(true)
-    const data = await action.authenticate(values.username, values.password)
+    const data = await authenticate(values.username, values.password)
     setIsSubmitting(false)
     if (data.error) {
       form.setError('root', {

@@ -20,7 +20,7 @@ import {
 import { permissionsConfig } from '@/config/permissionsConfig'
 import { PermissionResponse } from '@/types/role'
 import { toast } from 'sonner'
-import * as action from '@/actions'
+import { updateRolePermissions } from '@/actions/role'
 
 const generateDefaultValues = (): RolePermissions => {
   const defaultValues = {} as RolePermissions
@@ -68,7 +68,7 @@ export function RolePermissionsForm({ data, roleId }: RolePermissionsProps) {
   }
 
   async function onSubmit(data: RolePermissions) {
-    toast.promise(action.updateRolePermissions(roleId, data), {
+    toast.promise(updateRolePermissions(roleId, data), {
       loading: 'Updating permissions...',
       success: 'Permissions updated successfully',
       error: 'Failed to update',
