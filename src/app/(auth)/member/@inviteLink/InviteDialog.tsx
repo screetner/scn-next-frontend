@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import MultipleSelector, { Option } from '@/components/ui/MultipleSelector'
+import MultipleSelector from '@/components/ui/MultipleSelector'
 import {
   Select,
   SelectContent,
@@ -19,36 +19,44 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { InviteFormData, inviteSchema } from '@/schemas/InviteMemberSchema'
-
-const OPTIONS: Option[] = [
-  { value: '1', label: 'Admin' },
-  { value: '2', label: 'Default' },
-]
+import { toast } from 'sonner'
+import { inviteMembers } from '@/actions/member'
+import { useDialog } from '@/context/DialogProvider'
+import { useFetchRoleOptions } from '@/hooks/role/useFetchRoleOptions'
+import { SkeletonCard } from '@/components/SkeletonCard'
 
 export default function InviteDialog() {
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const { data: OPTIONS, isLoading } = useFetchRoleOptions()
+  const { closeDialog } = useDialog()
 
   const form = useForm<InviteFormData>({
     resolver: zodResolver(inviteSchema),
     defaultValues: {
-      DefaultRoleId: '',
+      defaultRoleId: '',
       emails: [],
     },
   })
 
   const onSubmit = async (data: InviteFormData) => {
     setIsSubmitting(true)
-    console.log(data)
-    await new Promise(resolve => setTimeout(resolve, 1000))
+    toast.promise(inviteMembers(data), {
+      loading: 'Inviting users...',
+      success: 'Users invited successfully',
+      error: 'Failed to invite users. Please try again.',
+    })
     setIsSubmitting(false)
+    closeDialog()
   }
+
+  if (isLoading) return <SkeletonCard />
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <FormField
           control={form.control}
-          name="DefaultRoleId"
+          name="defaultRoleId"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Default role for users</FormLabel>
@@ -59,7 +67,7 @@ export default function InviteDialog() {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {OPTIONS.map(option => (
+                  {OPTIONS?.map(option => (
                     <SelectItem key={option.value} value={option.value}>
                       {option.label}
                     </SelectItem>

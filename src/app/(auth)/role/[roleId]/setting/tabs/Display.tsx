@@ -57,9 +57,15 @@ export function EditRoleNameForm({ roleId, initialRoleName }: EditRoleProps) {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full" disabled={isSubmitting}>
-          {isSubmitting ? 'Saving...' : 'Save Changes'}
-        </Button>
+        <div className="flex justify-end">
+          <Button
+            type="submit"
+            className="max-w-xs"
+            disabled={isSubmitting || initialRoleName === 'Default'}
+          >
+            {isSubmitting ? 'Saving...' : 'Save Changes'}
+          </Button>
+        </div>
         {form.formState.errors && (
           <p className="text-red-500 text-sm">
             {form.formState.errors.root?.message}

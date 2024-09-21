@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 export const inviteSchema = z.object({
-  DefaultRoleId: z.string().min(1, 'Please select a role'),
+  defaultRoleId: z.string().min(1, 'Please select a role'),
   emails: z
     .array(z.string().email('Invalid email address'))
     .min(1, 'Please enter at least one email address')

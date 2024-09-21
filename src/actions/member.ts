@@ -3,6 +3,8 @@
 import axios from '@/lib/axios'
 import { RecentMember, TotalInvite } from '@/types/member'
 import { actionResponse } from '@/types/reponse'
+import { InviteFormData } from '@/schemas/InviteMemberSchema'
+import { CatchAxiosError } from '@/utils/CatchAxiosError'
 
 export const getRecentMembers = async (
   limit: number,
@@ -43,5 +45,13 @@ export const getTotalInvitees = async (): Promise<
       data: { inviteTotal: 0, inviteActivate: 0 },
       error: 'Failed to fetch total invitees. Please try again.',
     }
+  }
+}
+
+export const inviteMembers = async (body: InviteFormData): Promise<void> => {
+  try {
+    await axios.post('/member/invite', body)
+  } catch (e) {
+    CatchAxiosError(e)
   }
 }

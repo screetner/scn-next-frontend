@@ -18,6 +18,7 @@ import { toast } from 'sonner'
 import { useDialog } from '@/context/DialogProvider'
 import { UseFetchUnAssignUser } from '@/hooks/role/useFetchUnAssignUser'
 import { assignRoleToMember } from '@/actions/role'
+import { SkeletonCard } from '@/components/SkeletonCard'
 
 interface AddMemberDialogProps {
   roleId: string
@@ -61,7 +62,7 @@ export default function AddMemberDialog({ roleId }: AddMemberDialogProps) {
     closeDialog()
   }
 
-  if (isLoading) return <div>Loading...</div>
+  if (isLoading) return <SkeletonCard />
 
   return (
     <div className="space-y-4">
