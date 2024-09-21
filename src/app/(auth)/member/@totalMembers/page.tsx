@@ -2,18 +2,12 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Users, TrendingUp, TrendingDown } from 'lucide-react'
 import { TypographyH2 } from '@/components/typography/TypographyH2'
 import dayjs from 'dayjs'
+import { getTotalMembers } from '@/actions/member'
 
 export default async function TotalMembersPage() {
-  const { data, error } = {
-    data: {
-      totalMembers: 1523,
-      growthRate: 0,
-      lastUpdated: dayjs().format('DD MMM YYYY'),
-    },
-    error: null,
-  }
+  const { data, error } = await getTotalMembers()
 
-  const growthPositive = data.growthRate >= 0
+  const growthPositive = data.percentageIncrease > 0
 
   return (
     <Card>
@@ -26,7 +20,7 @@ export default async function TotalMembersPage() {
           <div className="text-red-500 text-sm">Failed to load member data</div>
         ) : (
           <div className="space-y-2">
-            <TypographyH2 text={`+${data.totalMembers}`} />
+            <TypographyH2 text={`+${data.allMembers}`} />
             <div className="text-sm text-gray-500">
               Members in the organization
             </div>
@@ -40,13 +34,13 @@ export default async function TotalMembersPage() {
                 ) : (
                   <TrendingDown className="w-4 h-4 mr-1" />
                 )}
-                {Math.abs(data.growthRate)}%{' '}
+                {Math.abs(data.percentageIncrease)}%{' '}
                 {growthPositive ? 'increase' : 'decrease'} since last month
               </span>
             </div>
 
             <div className="text-xs text-gray-400 mt-2">
-              Last updated: {data.lastUpdated}
+              Last updated: {dayjs().format('DD MMM YYYY')}
             </div>
           </div>
         )}

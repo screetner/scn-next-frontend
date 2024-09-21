@@ -8,6 +8,11 @@ export type Member = {
   createdAt: string
 }
 
+export type TotalMember = {
+  allMembers: number
+  percentageIncrease: number
+}
+
 export type TotalInvite = {
   inviteTotal: number
   inviteActivate: number

@@ -1,7 +1,7 @@
 'use server'
 
 import axios from '@/lib/axios'
-import { RecentMember, TotalInvite } from '@/types/member'
+import { RecentMember, TotalInvite, TotalMember } from '@/types/member'
 import { actionResponse } from '@/types/reponse'
 import { InviteFormData } from '@/schemas/InviteMemberSchema'
 import { CatchAxiosError } from '@/utils/CatchAxiosError'
@@ -22,13 +22,15 @@ export const getRecentMembers = async (
   }
 }
 
-export const getTotalMembers = async (): Promise<actionResponse<number>> => {
+export const getTotalMembers = async (): Promise<
+  actionResponse<TotalMember>
+> => {
   try {
-    const { data } = await axios.get<number>('/dashboard/member')
+    const { data } = await axios.get<TotalMember>('/dashboard/member')
     return { data, error: null }
   } catch (e) {
     return {
-      data: 0,
+      data: { allMembers: 0, percentageIncrease: 0 },
       error: 'Failed to fetch total members. Please try again.',
     }
   }
