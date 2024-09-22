@@ -14,8 +14,8 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { roleSchema, RoleSchema } from '@/schemas/roleNameSchema'
-import * as action from '@/actions'
 import { toast } from 'sonner'
+import { updateRoleName } from '@/actions/role'
 
 interface EditRoleProps {
   roleId: string
@@ -33,7 +33,7 @@ export function EditRoleNameForm({ roleId, initialRoleName }: EditRoleProps) {
 
   const handleSubmit = async (values: RoleSchema) => {
     setIsSubmitting(true)
-    toast.promise(action.updateRoleName(values.roleName, roleId), {
+    toast.promise(updateRoleName(values.roleName, roleId), {
       loading: 'Saving...',
       success: 'Role name updated',
       error: err => err.message,
@@ -57,9 +57,15 @@ export function EditRoleNameForm({ roleId, initialRoleName }: EditRoleProps) {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full" disabled={isSubmitting}>
-          {isSubmitting ? 'Saving...' : 'Save Changes'}
-        </Button>
+        <div className="flex justify-end">
+          <Button
+            type="submit"
+            className="max-w-xs"
+            disabled={isSubmitting || initialRoleName === 'Default'}
+          >
+            {isSubmitting ? 'Saving...' : 'Save Changes'}
+          </Button>
+        </div>
         {form.formState.errors && (
           <p className="text-red-500 text-sm">
             {form.formState.errors.root?.message}

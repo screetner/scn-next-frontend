@@ -1,5 +1,4 @@
 import { DashboardMap } from '@/app/(auth)/dashboard/DashboardMap'
-import * as actions from '@/actions'
 import {
   Card,
   CardContent,
@@ -7,9 +6,10 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import { getAssets } from '@/actions/dashboard'
 
 export default async function Dashboard() {
-  const assets = await actions.getAssets()
+  const assets = await getAssets()
   return (
     <>
       <Card className={'h-full'}>

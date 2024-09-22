@@ -1,7 +1,6 @@
 import Settings from '@/app/(auth)/role/[roleId]/setting/Setting'
-import * as action from '@/actions'
 import { RoleSettingProvider } from '@/context/RoleSettingContext'
-import { redirect } from 'next/navigation'
+import { getRoleManagement, getRolesTable } from '@/actions/role'
 
 interface ManageRoleProps {
   params: { roleId: string }
@@ -13,8 +12,8 @@ export default async function ManageRole({
   searchParams,
 }: ManageRoleProps) {
   const [roleList, RoleInfo] = await Promise.all([
-    action.getRolesTable(),
-    action.getRoleManagement(params.roleId),
+    getRolesTable(),
+    getRoleManagement(params.roleId),
   ])
   return (
     <RoleSettingProvider

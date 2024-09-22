@@ -4,11 +4,11 @@ import { Plus } from 'lucide-react'
 import { Separator } from '@/components/ui/separator'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { cn } from '@/lib/utils'
-import * as action from '@/actions'
 import React, { useCallback } from 'react'
 import { toast } from 'sonner'
 import RoleMenu from '@/app/(auth)/role/[roleId]/setting/menu/RoleMenu'
 import { useRoleSetting } from '@/context/RoleSettingContext'
+import { createRoleWithRedirect } from '@/actions/role'
 
 interface ListRoleProps {
   handleRoleSelect: (roleId: string) => void
@@ -18,7 +18,7 @@ export default function ListRole({ handleRoleSelect }: ListRoleProps) {
   const { roleId } = useRoleSetting()
   const { roleList } = useRoleSetting()
   const onCreateRole = useCallback(() => {
-    toast.promise(action.createRoleWithRedirect(), {
+    toast.promise(createRoleWithRedirect(), {
       loading: 'Creating role...',
       success: 'Role created successfully',
       error: 'Failed to create role',

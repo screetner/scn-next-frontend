@@ -6,13 +6,15 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import * as action from '@/actions'
+import { AddMemberAlert } from '@/app/(auth)/role/AddMemberAlert'
+import { getRolesTable } from '@/actions/role'
 
 export default async function RoleManagement() {
-  const roles = await action.getRolesTable()
+  const roles = await getRolesTable()
 
   return (
     <>
+      <AddMemberAlert className={'mb-3'} />
       <Card>
         <CardHeader>
           <CardTitle>Roles</CardTitle>

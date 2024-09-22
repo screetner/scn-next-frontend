@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { RoleMember } from '@/types/role'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
@@ -15,9 +15,10 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { DialogFooter } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { toast } from 'sonner'
-import * as action from '@/actions'
 import { useDialog } from '@/context/DialogProvider'
 import { UseFetchUnAssignUser } from '@/hooks/role/useFetchUnAssignUser'
+import { assignRoleToMember } from '@/actions/role'
+import { SkeletonCard } from '@/components/SkeletonCard'
 
 interface AddMemberDialogProps {
   roleId: string
@@ -53,7 +54,7 @@ export default function AddMemberDialog({ roleId }: AddMemberDialogProps) {
       roleId: roleId,
     }
 
-    toast.promise(action.assignRoleToMember(body), {
+    toast.promise(assignRoleToMember(body), {
       loading: 'Assigning role to member...',
       success: 'Role assigned to member successfully',
       error: 'Failed to assign role to member',
@@ -61,7 +62,7 @@ export default function AddMemberDialog({ roleId }: AddMemberDialogProps) {
     closeDialog()
   }
 
-  if (isLoading) return <div>Loading...</div>
+  if (isLoading) return <SkeletonCard />
 
   return (
     <div className="space-y-4">

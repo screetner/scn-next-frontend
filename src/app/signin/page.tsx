@@ -1,17 +1,17 @@
-import { Metadata } from 'next';
-import { SignInForm } from './SignInform';
-import { auth } from '@/auth';
-import { redirect } from 'next/navigation';
+import { Metadata } from 'next'
+import { SignInForm } from './SignInform'
+import { auth } from '@/auth'
+import { redirect } from 'next/navigation'
 
 export const metadata: Metadata = {
   title: 'Sign In',
   description: 'Sign in to your account',
-};
+}
 
 export default async function SignInPage() {
-  const session = await auth();
+  const session = await auth()
   if (session) {
-    redirect('/dashboard');
+    redirect('/dashboard')
   }
 
   return (
@@ -45,5 +45,5 @@ export default async function SignInPage() {
         </p>
       </div>
     </div>
-  );
+  )
 }
