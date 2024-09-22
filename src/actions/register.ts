@@ -6,8 +6,7 @@ export async function checkRegisterToken(
   token: string,
 ): Promise<actionResponse<boolean>> {
   try {
-    await new Promise(resolve => setTimeout(resolve, 50000))
-    console.log('token', token)
+    await new Promise(resolve => setTimeout(resolve, 2000))
     // await axios.get<boolean>('/register/check', {
     //   headers: {
     //     AuthorizationRegister: `Bearer ${token}`,
