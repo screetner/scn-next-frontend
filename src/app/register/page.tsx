@@ -1,8 +1,22 @@
 import Image from 'next/image'
 import RegisterForm from '@/app/register/RegisterForm'
+import { checkRegisterToken } from '@/actions/register'
+import { redirect } from 'next/navigation'
 
-export default function RegisterPage() {
-  //TODO checking register token
+interface RegisterPageProps {
+  searchParams: { token: string }
+}
+
+export default async function RegisterPage({
+  searchParams,
+}: RegisterPageProps) {
+  const { token } = searchParams
+
+  const { error } = await checkRegisterToken(token)
+
+  if (error) {
+    redirect('/')
+  }
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
