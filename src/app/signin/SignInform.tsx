@@ -18,6 +18,7 @@ import {
 } from '@/components/ui/form'
 import { useState } from 'react'
 import { authenticate } from '@/actions/auth'
+import { PasswordInput } from '@/components/input/PasswordInput'
 
 export function SignInForm() {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
@@ -74,13 +75,7 @@ export function SignInForm() {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input
-                  {...field}
-                  placeholder="Password"
-                  type="password"
-                  autoCapitalize="none"
-                  autoComplete="current-password"
-                />
+                <PasswordInput field={field} />
               </FormControl>
               <FormMessage />
             </FormItem>
