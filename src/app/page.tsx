@@ -6,6 +6,7 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { TypographyH2 } from '@/components/typography/TypographyH2'
 import { TypographyP } from '@/components/typography/TypographyP'
+import { LayoutDashboard, LogIn } from 'lucide-react'
 
 export default async function Home() {
   const session = await auth()
@@ -16,12 +17,14 @@ export default async function Home() {
         <nav className="flex justify-between items-center">
           <TypographyH2 text={'Screetner'} />
           {session ? (
-            <Button asChild>
+            <Button className={'space-x-1'}>
               <Link href="/dashboard">Dashboard</Link>
+              <LayoutDashboard className={'w-5 h-5'} />
             </Button>
           ) : (
-            <Button asChild>
+            <Button className={'space-x-1'}>
               <Link href="/signin">Login</Link>
+              <LogIn className={'w-5 h-5'} />
             </Button>
           )}
         </nav>
