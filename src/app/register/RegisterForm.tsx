@@ -26,8 +26,10 @@ import {
 } from '@/schemas/registerSchema'
 import { getStrengthColor } from '@/utils/helper'
 import PasswordCriteriaItem from '@/app/register/PasswordCriteriaItem'
+import { toast } from 'sonner'
+import { registerUser } from '@/actions/register'
 
-export default function RegisterForm() {
+export default function RegisterForm({ token }: { token: string }) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [showCriteria, setShowCriteria] = useState(false)
   const [passwordStrength, setPasswordStrength] = useState(0)
@@ -51,7 +53,11 @@ export default function RegisterForm() {
 
   const handleSubmit = async (values: RegisterFormValues) => {
     setIsSubmitting(true)
-    console.log('Submitting form:', values)
+    toast.promise(registerUser(token, values.username, values.password), {
+      loading: 'Registering...',
+      success: 'Account registered successfully.',
+      error: 'Failed to register account. Please try again.',
+    })
     setIsSubmitting(false)
   }
 

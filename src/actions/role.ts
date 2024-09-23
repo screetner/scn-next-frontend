@@ -10,13 +10,15 @@ import {
   BodyAssignRole,
   createRoleResponse,
   RoleManagementResponse,
-  RoleMember,
   RolesTable,
 } from '@/types/role'
+import apiEndpoints from '@/config/apiEndpoints'
 
 export async function getRolesTable() {
   try {
-    const { data } = await axios.get<RolesTable[]>(`/role`)
+    const { data } = await axios.get<RolesTable[]>(
+      `${apiEndpoints.role.getRolesTable}`,
+    )
     return data
   } catch (e) {
     CatchAxiosError(e)
@@ -26,16 +28,9 @@ export async function getRolesTable() {
 
 export async function getRoleManagement(roleId: string) {
   try {
-    const { data } = await axios.get<RoleManagementResponse>(`/role/${roleId}`)
-    return data
-  } catch (e) {
-    CatchAxiosError(e)
-  }
-}
-
-export async function getListOfUnRoleMembers() {
-  try {
-    const { data } = await axios.get<RoleMember[]>(`/role/unassigned`)
+    const { data } = await axios.get<RoleManagementResponse>(
+      `${apiEndpoints.role.getRoleManagement(roleId)}`,
+    )
     return data
   } catch (e) {
     CatchAxiosError(e)
@@ -44,7 +39,7 @@ export async function getListOfUnRoleMembers() {
 
 export async function updateRoleName(roleName: string, roleId: string) {
   try {
-    await axios.patch(`/role/update-role-name`, {
+    await axios.patch(`${apiEndpoints.role.updateRoleName}`, {
       roleId: roleId,
       newName: roleName,
     })
@@ -59,7 +54,7 @@ export async function updateRolePermissions(
   permissions: RolePermissions,
 ) {
   try {
-    await axios.put(`/role/permission`, {
+    await axios.put(`${apiEndpoints.role.updateRolePermissions}`, {
       roleId: roleId,
       permission: permissions,
     })
@@ -72,7 +67,9 @@ export async function updateRolePermissions(
 export async function createRoleWithRedirect() {
   let newRoleId = ''
   try {
-    const { data } = await axios.post<createRoleResponse>(`/role/new-role`)
+    const { data } = await axios.post<createRoleResponse>(
+      `${apiEndpoints.role.createRole}`,
+    )
     newRoleId = data.roleId
   } catch (e) {
     CatchAxiosError(e)
@@ -83,7 +80,7 @@ export async function createRoleWithRedirect() {
 
 export async function assignRoleToMember(body: BodyAssignRole) {
   try {
-    await axios.patch(`/role/assign-role`, body)
+    await axios.patch(`${apiEndpoints.role.assignRole}`, body)
   } catch (e) {
     CatchAxiosError(e)
   }
@@ -92,7 +89,7 @@ export async function assignRoleToMember(body: BodyAssignRole) {
 
 export async function removeMemberFromRole(roleId: string, userId: string) {
   try {
-    await axios.patch(`/role/unassign-role`, {
+    await axios.patch(`${apiEndpoints.role.unassignRole}`, {
       userId: userId,
     })
   } catch (e) {
@@ -106,7 +103,7 @@ export async function deleteRoleFromOrg(
   currentRoleId: string,
 ) {
   try {
-    await axios.delete(`/role/remove/${targetRoleId}`)
+    await axios.delete(`${apiEndpoints.role.deleteRole(targetRoleId)}`)
   } catch (e) {
     CatchAxiosError(e)
   }

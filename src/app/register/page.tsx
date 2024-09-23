@@ -14,6 +14,10 @@ export default async function RegisterPage({
 }: RegisterPageProps) {
   const { token } = searchParams
 
+  if (!token) {
+    redirect('/')
+  }
+
   const { error } = await checkRegisterToken(token)
 
   if (error) {
@@ -48,7 +52,7 @@ export default async function RegisterPage({
           <CardTitle>Register</CardTitle>
         </CardHeader>
         <CardContent>
-          <RegisterForm />
+          <RegisterForm token={token} />
         </CardContent>
       </Card>
 

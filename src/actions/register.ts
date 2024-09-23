@@ -1,17 +1,17 @@
 import { actionResponse } from '@/types/reponse'
 import axios from '@/lib/axios'
 import { CatchAxiosError } from '@/utils/CatchAxiosError'
+import apiEndpoints from '@/config/apiEndpoints'
 
 export async function checkRegisterToken(
   token: string,
 ): Promise<actionResponse<boolean>> {
   try {
-    await new Promise(resolve => setTimeout(resolve, 2000))
-    // await axios.get<boolean>('/register/check', {
-    //   headers: {
-    //     AuthorizationRegister: `Bearer ${token}`,
-    //   },
-    // })
+    await axios.get<boolean>(`${apiEndpoints.register.checkRegisterToken}`, {
+      headers: {
+        AuthorizationRegister: `Bearer ${token}`,
+      },
+    })
     return {
       data: true,
       error: null,
@@ -31,7 +31,7 @@ export async function registerUser(
 ): Promise<void> {
   try {
     await axios.post(
-      '/register',
+      `${apiEndpoints.register.registerUser}`,
       {
         username,
         password,
