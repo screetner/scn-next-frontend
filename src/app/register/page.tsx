@@ -2,7 +2,13 @@ import Image from 'next/image'
 import RegisterForm from '@/app/register/RegisterForm'
 import { checkRegisterToken } from '@/actions/register'
 import { redirect } from 'next/navigation'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 
 interface RegisterPageProps {
@@ -18,7 +24,7 @@ export default async function RegisterPage({
     redirect('/')
   }
 
-  const { error } = await checkRegisterToken(token)
+  const { data, error } = await checkRegisterToken(token)
 
   if (error) {
     redirect('/')
@@ -46,10 +52,13 @@ export default async function RegisterPage({
           </Button>
         </p>
       </div>
-
       <Card className="mt-8 mx-auto w-full max-w-md">
         <CardHeader>
           <CardTitle>Register</CardTitle>
+          <CardDescription>
+            Please fill in the form to create your account. Your token will
+            expire on <strong>{data}</strong>
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <RegisterForm token={token} />

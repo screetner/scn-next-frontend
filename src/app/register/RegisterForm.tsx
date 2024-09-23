@@ -56,9 +56,10 @@ export default function RegisterForm({ token }: { token: string }) {
     toast.promise(registerUser(token, values.username, values.password), {
       loading: 'Registering...',
       success: 'Account registered successfully.',
-      error: 'Failed to register account. Please try again.',
+      error: error => error.message,
     })
     setIsSubmitting(false)
+    router.push('/signin')
   }
 
   const calculatePasswordStrength = (password: string) => {
@@ -85,8 +86,7 @@ export default function RegisterForm({ token }: { token: string }) {
   }, [form])
 
   return (
-    <div className="max-w-md mx-auto mt-8">
-      <h1 className="text-2xl font-bold mb-4">Register</h1>
+    <div className="max-w-md mx-auto">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
           <FormField

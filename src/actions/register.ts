@@ -1,24 +1,31 @@
+'use server'
+
 import { actionResponse } from '@/types/reponse'
 import axios from '@/lib/axios'
 import { CatchAxiosError } from '@/utils/CatchAxiosError'
 import apiEndpoints from '@/config/apiEndpoints'
+import { CheckRegisterTokenResponse } from '@/types/register'
+import dayjs from 'dayjs'
 
 export async function checkRegisterToken(
   token: string,
-): Promise<actionResponse<boolean>> {
+): Promise<actionResponse<string | null>> {
   try {
-    await axios.get<boolean>(`${apiEndpoints.register.checkRegisterToken}`, {
-      headers: {
-        AuthorizationRegister: `Bearer ${token}`,
+    const { data } = await axios.get<CheckRegisterTokenResponse>(
+      `${apiEndpoints.register.checkRegisterToken}`,
+      {
+        headers: {
+          AuthorizationRegister: `Bearer ${token}`,
+        },
       },
-    })
+    )
     return {
-      data: true,
+      data: dayjs(data.exp * 1000).format('DD MMMM YYYY HH:mm'),
       error: null,
     }
   } catch (error) {
     return {
-      data: false,
+      data: null,
       error: 'Failed to check register token. Please try again.',
     }
   }
