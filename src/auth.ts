@@ -3,6 +3,7 @@ import NextAuth from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
 import { InvalidLoginError } from '@/utils/custom'
 import { shouldRefreshToken } from '@/utils/helper'
+import { redirect } from 'next/navigation'
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -38,19 +39,19 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   ],
   callbacks: {
     async jwt({ token, account, user }) {
-      if (user && account) {
-        token.user = user
-      }
+      try {
+        if (user && account) {
+          token.user = user
+        }
 
-      if (token.user) {
-        const shouldRefresh = shouldRefreshToken(
-          // @ts-ignore
-          new Date(token.user.accessTokenExpiry),
-          0,
-        )
+        if (token.user) {
+          const shouldRefresh = shouldRefreshToken(
+            // @ts-ignore
+            new Date(token.user.accessTokenExpiry),
+            10,
+          )
 
-        if (shouldRefresh) {
-          try {
+          if (shouldRefresh) {
             const res = await fetch(`${process.env.API_URL}/auth/refresh`, {
               method: 'GET',
               headers: {
@@ -70,14 +71,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 refreshToken: data.refreshToken,
               },
             }
-          } catch (error) {
-            // refresh token failed
-            await signOut()
           }
         }
-      }
 
-      return token
+        return token
+      } catch (e) {
+        await signOut()
+        redirect('/')
+      }
     },
     async session({ session, token }) {
       session.user = token.user as any
