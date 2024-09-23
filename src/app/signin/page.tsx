@@ -29,7 +29,7 @@ export default async function SignInPage() {
         <p className="px-8 text-center text-sm text-muted-foreground">
           By clicking continue, you agree to our{' '}
           <a
-            href="/terms"
+            href="/terms-of-service"
             className="underline underline-offset-4 hover:text-primary"
           >
             Terms of Service
