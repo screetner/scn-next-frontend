@@ -26,8 +26,10 @@ import {
 } from '@/schemas/registerSchema'
 import { getStrengthColor } from '@/utils/helper'
 import PasswordCriteriaItem from '@/app/register/PasswordCriteriaItem'
+import { toast } from 'sonner'
+import { registerUser } from '@/actions/register'
 
-export default function RegisterForm() {
+export default function RegisterForm({ token }: { token: string }) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [showCriteria, setShowCriteria] = useState(false)
   const [passwordStrength, setPasswordStrength] = useState(0)
@@ -51,8 +53,13 @@ export default function RegisterForm() {
 
   const handleSubmit = async (values: RegisterFormValues) => {
     setIsSubmitting(true)
-    console.log('Submitting form:', values)
+    toast.promise(registerUser(token, values.username, values.password), {
+      loading: 'Registering...',
+      success: 'Account registered successfully.',
+      error: error => error.message,
+    })
     setIsSubmitting(false)
+    router.push('/signin')
   }
 
   const calculatePasswordStrength = (password: string) => {
@@ -79,8 +86,7 @@ export default function RegisterForm() {
   }, [form])
 
   return (
-    <div className="max-w-md mx-auto mt-8">
-      <h1 className="text-2xl font-bold mb-4">Register</h1>
+    <div className="max-w-md mx-auto">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
           <FormField

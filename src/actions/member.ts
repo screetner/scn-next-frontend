@@ -5,13 +5,14 @@ import { RecentMember, TotalInvite, TotalMember } from '@/types/member'
 import { actionResponse } from '@/types/reponse'
 import { InviteFormData } from '@/schemas/InviteMemberSchema'
 import { CatchAxiosError } from '@/utils/CatchAxiosError'
+import apiEndpoints from '@/config/apiEndpoints'
 
 export const getRecentMembers = async (
   limit: number,
 ): Promise<actionResponse<RecentMember>> => {
   try {
     const { data } = await axios.get<RecentMember>(
-      `/member/recent?limit=${limit}`,
+      `${apiEndpoints.member.getRecentMembers(limit)}`,
     )
     return { data, error: null }
   } catch (e) {
@@ -26,7 +27,9 @@ export const getTotalMembers = async (): Promise<
   actionResponse<TotalMember>
 > => {
   try {
-    const { data } = await axios.get<TotalMember>('/dashboard/member')
+    const { data } = await axios.get<TotalMember>(
+      `${apiEndpoints.member.getTotalMembers}`,
+    )
     return { data, error: null }
   } catch (e) {
     return {
@@ -40,7 +43,9 @@ export const getTotalInvitees = async (): Promise<
   actionResponse<TotalInvite>
 > => {
   try {
-    const { data } = await axios.get<TotalInvite>('/dashboard/invite')
+    const { data } = await axios.get<TotalInvite>(
+      `${apiEndpoints.member.getTotalInvitees}`,
+    )
     return { data, error: null }
   } catch (e) {
     return {
@@ -52,7 +57,7 @@ export const getTotalInvitees = async (): Promise<
 
 export const inviteMembers = async (body: InviteFormData): Promise<void> => {
   try {
-    await axios.post('/member/invite', body)
+    await axios.post(`${apiEndpoints.member.inviteMembers}`, body)
   } catch (e) {
     CatchAxiosError(e)
   }
