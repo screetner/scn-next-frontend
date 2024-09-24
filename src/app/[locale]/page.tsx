@@ -10,6 +10,7 @@ import { GithubSVG } from '@/components/svg/githubSVG'
 import { ModeToggle } from '@/components/ModeToggle'
 import { Link } from '@/i18n/routing'
 import { getTranslations } from 'next-intl/server'
+import { LanguageChange } from '@/components/LanguageChange'
 
 export default async function Home() {
   const session = await auth()
@@ -24,6 +25,7 @@ export default async function Home() {
             <Link href="https://github.com/screetner" target="_blank">
               <GithubSVG />
             </Link>
+            <LanguageChange side={'bottom'} />
             <ModeToggle />
           </div>
         </nav>
