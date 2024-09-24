@@ -1,10 +1,12 @@
 'use client'
 
-import { PropsWithChildren } from 'react'
+import React, { PropsWithChildren } from 'react'
 import { SessionProvider } from 'next-auth/react'
 import { AlertDialogProvider } from '@/context/AlertDialogContext'
 import { DialogProvider } from '@/context/DialogProvider'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { TooltipProvider } from '@/components/ui/tooltip'
+import { Toaster } from '@/components/ui/sonner'
 
 export default function Provider({ children }: PropsWithChildren) {
   const queryClient = new QueryClient()
@@ -12,7 +14,12 @@ export default function Provider({ children }: PropsWithChildren) {
     <SessionProvider>
       <QueryClientProvider client={queryClient}>
         <AlertDialogProvider>
-          <DialogProvider>{children}</DialogProvider>
+          <DialogProvider>
+            <TooltipProvider delayDuration={100}>
+              {children}
+              <Toaster />
+            </TooltipProvider>
+          </DialogProvider>
         </AlertDialogProvider>
       </QueryClientProvider>
     </SessionProvider>

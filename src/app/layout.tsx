@@ -7,7 +7,6 @@ import Provider from '@/provider'
 const inter = Inter({ subsets: ['latin'] })
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { Toaster } from '@/components/ui/sonner'
-import { TooltipProvider } from '@/components/ui/tooltip'
 
 export const metadata: Metadata = {
   title: 'Screetner',
@@ -35,7 +34,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Provider>
-            <TooltipProvider>{children}</TooltipProvider>
+            {children}
             <Toaster />
           </Provider>
         </ThemeProvider>
