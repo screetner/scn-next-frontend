@@ -20,5 +20,17 @@
     },
     "contributorsTitle": "ทีมผู้พัฒนา",
     "footerText": "© 2024 Screetner. สงวนลิขสิทธิ์"
+  },
+  "SignInPage": {
+      "title": "เข้าสู่ระบบ",
+      "description": "เข้าสู่ระบบเพื่อเข้าใช้งานเว็บไซต์",
+      "footer": "กดเพื่อดูเงื่อนไขการใช้งาน",
+      "TermsOfService": "ข้อกำหนดการให้บริการ",
+      "form": {
+          "username": "ชื่อผู้ใช้",
+          "password": "รหัสผ่าน",
+          "signInButton": "เข้าสู่ระบบ",
+          "submitting": "กำลังเข้าสู่ระบบ..."
+      }
   }
 }

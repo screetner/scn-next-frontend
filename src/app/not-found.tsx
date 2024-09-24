@@ -10,7 +10,7 @@ export default function NotFound() {
   const router = useRouter()
 
   return (
-    <html lang="en">
+    <html>
       <body className="bg-gradient-to-br from-blue-100 to-purple-100 min-h-screen flex items-center justify-center p-4">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}

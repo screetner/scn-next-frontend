@@ -19,8 +19,10 @@ import { useState } from 'react'
 import { authenticate } from '@/actions/auth'
 import { PasswordInput } from '@/components/input/PasswordInput'
 import { useRouter } from '@/i18n/routing'
+import { useTranslations } from 'next-intl'
 
 export function SignInForm() {
+  const t = useTranslations('SignInPage')
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
   const router = useRouter()
   const form = useForm<z.infer<typeof signInSchema>>({
@@ -53,11 +55,11 @@ export function SignInForm() {
           name="username"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Username</FormLabel>
+              <FormLabel>{t('form.username')}</FormLabel>
               <FormControl>
                 <Input
                   {...field}
-                  placeholder="Username"
+                  placeholder={t('form.username')}
                   type="text"
                   autoCapitalize="none"
                   autoComplete="username"
@@ -73,16 +75,18 @@ export function SignInForm() {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Password</FormLabel>
+              <FormLabel>{t('form.password')}</FormLabel>
               <FormControl>
-                <PasswordInput field={field} />
+                <PasswordInput field={field} placeholder={t('form.password')} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
         <Button type="submit" className="w-full" disabled={isSubmitting}>
-          {isSubmitting ? 'Signing in...' : 'Sign In'}
+          {isSubmitting
+            ? `${t('form.submitting')}`
+            : `${t('form.signInButton')}`}
         </Button>
         {form.formState.errors && (
           <p className="text-red-500 text-sm">

@@ -20,5 +20,17 @@
     },
     "contributorsTitle": "Our Contributors",
     "footerText": "© 2024 Screetner. All rights reserved."
+  },
+  "SignInPage": {
+    "title": "Sign In",
+    "description": "Sign in to your account to access the dashboard.",
+    "footer": "By clicking continue, you agree to our",
+    "TermsOfService": "Terms of Service",
+    "form": {
+      "username": "Username",
+      "password": "Password",
+      "signInButton": "Sign In",
+      "submitting": "Signing in..."
+    }
   }
 }
