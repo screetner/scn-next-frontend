@@ -1,0 +1,24 @@
+{
+  "HomePage": {
+    "title": "Screetner: Urban Asset Management Made Simple",
+    "description": "A cutting-edge street scanning system to help cities manage their infrastructure effortlessly.",
+    "dashboardButton": "Go to Dashboard",
+    "loginButton": "Login",
+    "features": {
+      "urbanAssetTracking": {
+        "title": "Urban Asset Tracking",
+        "description": "Monitor and manage urban infrastructure such as roads, signs, and utilities using our real-time tracking system."
+      },
+      "streetScanning": {
+        "title": "Street Scanning",
+        "description": "Our system uses advanced scanning technology to collect detailed street-level imagery for analysis."
+      },
+      "reportingAnalytics": {
+        "title": "Reporting & Analytics",
+        "description": "Generate comprehensive reports and insights to help you plan and prioritize infrastructure maintenance."
+      }
+    },
+    "contributorsTitle": "Our Contributors",
+    "footerText": "© 2024 Screetner. All rights reserved."
+  }
+}
