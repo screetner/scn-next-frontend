@@ -43,7 +43,7 @@ export default function InviteDialog() {
     toast.promise(inviteMembers(data), {
       loading: 'Inviting users...',
       success: 'Users invited successfully',
-      error: 'Failed to invite users. Please try again.',
+      error: err => err.message,
     })
     setIsSubmitting(false)
     closeDialog()
