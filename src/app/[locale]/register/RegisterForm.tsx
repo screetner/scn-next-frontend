@@ -27,8 +27,10 @@ import PasswordCriteriaItem from '@/app/[locale]/register/PasswordCriteriaItem'
 import { toast } from 'sonner'
 import { registerUser } from '@/actions/register'
 import { Link, useRouter } from '@/i18n/routing'
+import { useTranslations } from 'next-intl'
 
 export default function RegisterForm({ token }: { token: string }) {
+  const t = useTranslations('RegisterPage.form')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [showCriteria, setShowCriteria] = useState(false)
   const [passwordStrength, setPasswordStrength] = useState(0)
@@ -93,11 +95,11 @@ export default function RegisterForm({ token }: { token: string }) {
             name="username"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Username</FormLabel>
+                <FormLabel>{t('username')}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
-                    placeholder="Username"
+                    placeholder={t('username')}
                     type="text"
                     autoCapitalize="none"
                     autoComplete="username"
@@ -113,12 +115,13 @@ export default function RegisterForm({ token }: { token: string }) {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Password</FormLabel>
+                <FormLabel>{t('password')}</FormLabel>
                 <FormControl>
                   <PasswordInput
                     field={field}
                     autoComplete="new-password"
                     onChange={() => setShowCriteria(true)}
+                    placeholder={t('password')}
                   />
                 </FormControl>
                 {showCriteria && (
@@ -129,23 +132,23 @@ export default function RegisterForm({ token }: { token: string }) {
                     />
                     <ul className="mt-2 space-y-1">
                       <PasswordCriteriaItem
-                        label="At least 8 characters long"
+                        label={t('passwordHint.char')}
                         isMet={passwordCriteria.length}
                       />
                       <PasswordCriteriaItem
-                        label="At least one lowercase letter"
+                        label={t('passwordHint.lower')}
                         isMet={passwordCriteria.lowercase}
                       />
                       <PasswordCriteriaItem
-                        label="At least one uppercase letter"
+                        label={t('passwordHint.upper')}
                         isMet={passwordCriteria.uppercase}
                       />
                       <PasswordCriteriaItem
-                        label="At least one number"
+                        label={t('passwordHint.number')}
                         isMet={passwordCriteria.number}
                       />
                       <PasswordCriteriaItem
-                        label="At least one special character"
+                        label={t('passwordHint.special')}
                         isMet={passwordCriteria.special}
                       />
                     </ul>
@@ -160,9 +163,12 @@ export default function RegisterForm({ token }: { token: string }) {
             name="confirmPassword"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Confirm Password</FormLabel>
+                <FormLabel>{t('confirmPassword')}</FormLabel>
                 <FormControl>
-                  <PasswordInput field={field} placeholder="Confirm Password" />
+                  <PasswordInput
+                    field={field}
+                    placeholder={t('confirmPassword')}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -181,12 +187,12 @@ export default function RegisterForm({ token }: { token: string }) {
                 </FormControl>
                 <div className="space-y-1 leading-none">
                   <FormLabel>
-                    I accept the{' '}
+                    {t('terms.agree')}{' '}
                     <Link
                       href="/terms"
                       className="text-blue-600 hover:underline"
                     >
-                      terms of service
+                      {t('terms.terms')}
                     </Link>
                   </FormLabel>
                 </div>
@@ -194,7 +200,9 @@ export default function RegisterForm({ token }: { token: string }) {
             )}
           />
           <Button type="submit" className="w-full" disabled={isSubmitting}>
-            {isSubmitting ? 'Registering...' : 'Register'}
+            {isSubmitting
+              ? `${t('registerButton.loading')}`
+              : `${t('registerButton.default')}`}
           </Button>
           {form.formState.errors.root && (
             <p className="text-red-500 text-sm">
@@ -204,9 +212,9 @@ export default function RegisterForm({ token }: { token: string }) {
         </form>
       </Form>
       <p className="mt-4 text-center">
-        Already have an account?{' '}
+        {t('alreadyHaveAccount.text')}{' '}
         <Link href="/signin" className="text-blue-600 hover:underline">
-          Sign in
+          {t('alreadyHaveAccount.link')}
         </Link>
       </p>
     </div>
