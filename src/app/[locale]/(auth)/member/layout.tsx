@@ -10,6 +10,7 @@ interface LayoutProps {
 }
 
 export default function Layout({
+  children,
   totalMembers,
   totalInviteURL,
   totalAdmin,
@@ -27,6 +28,7 @@ export default function Layout({
         {inviteLink}
         {recentMember}
       </div>
+      {children}
     </div>
   )
 }
