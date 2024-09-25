@@ -1,5 +1,5 @@
-import Link from 'next/link';
-import { TNav } from '@/types/navList';
+import { TNav } from '@/types/navList'
+import { Link } from '@/i18n/routing'
 
 export default function SmallNavItem({ nav }: { nav: TNav }) {
   return (
@@ -10,5 +10,5 @@ export default function SmallNavItem({ nav }: { nav: TNav }) {
       {nav.icon}
       {nav.label}
     </Link>
-  );
+  )
 }

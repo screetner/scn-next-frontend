@@ -1,0 +1,72 @@
+{
+  "HomePage": {
+    "title": "Screetner: Urban Asset Management Made Simple",
+    "description": "A cutting-edge street scanning system to help cities manage their infrastructure effortlessly.",
+    "dashboardButton": "Go to Dashboard",
+    "loginButton": "Login",
+    "features": {
+      "urbanAssetTracking": {
+        "title": "Urban Asset Tracking",
+        "description": "Monitor and manage urban infrastructure such as roads, signs, and utilities using our real-time tracking system."
+      },
+      "streetScanning": {
+        "title": "Street Scanning",
+        "description": "Our system uses advanced scanning technology to collect detailed street-level imagery for analysis."
+      },
+      "reportingAnalytics": {
+        "title": "Reporting & Analytics",
+        "description": "Generate comprehensive reports and insights to help you plan and prioritize infrastructure maintenance."
+      }
+    },
+    "contributorsTitle": "Our Contributors",
+    "footerText": "© 2024 Screetner. All rights reserved."
+  },
+  "SignInPage": {
+    "title": "Sign In",
+    "description": "Sign in to your account to access the dashboard.",
+    "footer": "By clicking continue, you agree to our",
+    "TermsOfService": "Terms of Service",
+    "form": {
+      "username": "Username",
+      "password": "Password",
+      "signInButton": "Sign In",
+      "submitting": "Signing in..."
+    }
+  },
+  "RegisterPage": {
+    "title": {
+      "createAccount": "Create your account",
+      "or": "Or",
+      "signIn": "sign in to your existing account"
+    },
+    "Card": {
+      "title": "Register",
+      "description": "Please fill in the form to create your account. Your token will expire on"
+    },
+    "form": {
+      "username": "Username",
+      "password": "Password",
+      "passwordHint": {
+        "char": "At least 8 characters",
+        "lower": "At least one lowercase letter",
+        "upper": "At least one uppercase letter",
+        "number": "At least one number",
+        "special": "At least one special character"
+      },
+      "confirmPassword": "Confirm Password",
+      "terms": {
+        "agree": "I agree to the",
+        "terms": "terms of service"
+      },
+      "registerButton": {
+        "default": "Register",
+        "loading": "Registering..."
+      },
+      "alreadyHaveAccount": {
+        "text": "Already have an account?",
+        "link": "Sign in"
+      }
+    },
+    "footer": "© 2024 Screetner. All rights reserved."
+  }
+}

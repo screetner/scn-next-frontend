@@ -3,7 +3,7 @@ import NextAuth from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
 import { InvalidLoginError } from '@/utils/custom'
 import { shouldRefreshToken } from '@/utils/helper'
-import { redirect } from 'next/navigation'
+import { redirect } from '@/i18n/routing'
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -78,6 +78,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       } catch (e) {
         await signOut()
         redirect('/')
+        return token
       }
     },
     async session({ session, token }) {

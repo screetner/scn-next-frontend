@@ -1,11 +1,12 @@
-import { TooltipProvider } from '@/components/ui/tooltip';
-import { ModeToggle } from '@/components/ModeToggle';
-import { Person } from '@/components/nav/person';
-import { PropsWithChildren } from 'react';
-import { navList } from '@/utils/navlist';
-import NavIcon from '@/components/nav/navIcon';
-import SideNav from '@/components/nav/SideNav';
-import NavTree from '@/components/nav/NavTree';
+import { TooltipProvider } from '@/components/ui/tooltip'
+import { ModeToggle } from '@/components/ModeToggle'
+import { Person } from '@/components/nav/person'
+import { PropsWithChildren } from 'react'
+import { navList } from '@/utils/navlist'
+import NavIcon from '@/components/nav/navIcon'
+import SideNav from '@/components/nav/SideNav'
+import NavTree from '@/components/nav/NavTree'
+import { LanguageChange } from '@/components/LanguageChange'
 
 export function Nav({ children }: PropsWithChildren) {
   return (
@@ -18,6 +19,7 @@ export function Nav({ children }: PropsWithChildren) {
             ))}
           </nav>
           <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-5">
+            <LanguageChange />
             <ModeToggle />
           </nav>
         </aside>
@@ -31,5 +33,5 @@ export function Nav({ children }: PropsWithChildren) {
         </div>
       </div>
     </TooltipProvider>
-  );
+  )
 }
