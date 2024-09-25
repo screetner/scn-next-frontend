@@ -2,7 +2,6 @@
 
 import { CatchAxiosError } from '@/utils/CatchAxiosError'
 import axios from '@/lib/axios'
-import { redirect } from 'next/navigation'
 import { fillRoute, Routes } from '@/routes'
 import { revalidatePath } from 'next/cache'
 import { RolePermissions } from '@/schemas/rolePermissions'
@@ -13,6 +12,7 @@ import {
   RolesTable,
 } from '@/types/role'
 import apiEndpoints from '@/config/apiEndpoints'
+import { redirect } from '@/i18n/routing'
 
 export async function getRolesTable() {
   try {

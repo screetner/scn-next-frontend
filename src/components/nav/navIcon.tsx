@@ -6,11 +6,11 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
-import Link from 'next/link'
 import { TNav } from '@/types/navList'
 import { usePathname } from 'next/navigation'
 import { useTheme } from 'next-themes'
 import { cn } from '@/lib/utils'
+import { Link } from '@/i18n/routing'
 
 interface NavIconProps {
   nav: TNav

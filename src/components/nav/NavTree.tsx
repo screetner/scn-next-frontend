@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import {
   Breadcrumb,
@@ -6,22 +6,20 @@ import {
   BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbSeparator,
-  BreadcrumbPage,
-} from '@/components/ui/breadcrumb';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { Fragment } from 'react';
+} from '@/components/ui/breadcrumb'
+import { Fragment } from 'react'
+import { Link, usePathname } from '@/i18n/routing'
 
 export default function NavTree() {
-  const path = usePathname();
-  const pathArray = path.split('/').filter(Boolean);
+  const path = usePathname()
+  const pathArray = path.split('/').filter(Boolean)
 
   return (
     <Breadcrumb className="hidden sm:flex">
       <BreadcrumbList>
         <BreadcrumbSeparator />
         {pathArray.map((segment, index) => {
-          const href = `/${pathArray.slice(0, index + 1).join('/')}`;
+          const href = `/${pathArray.slice(0, index + 1).join('/')}`
           return (
             <Fragment key={index}>
               <BreadcrumbItem>
@@ -31,9 +29,9 @@ export default function NavTree() {
               </BreadcrumbItem>
               {index !== pathArray.length - 1 && <BreadcrumbSeparator />}
             </Fragment>
-          );
+          )
         })}
       </BreadcrumbList>
     </Breadcrumb>
-  );
+  )
 }
