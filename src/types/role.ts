@@ -26,7 +26,7 @@ export type PermissionField = {
 }
 
 export type PermissionSection = {
-  [key: string]: PermissionField
+  [key: string]: PermissionField | PermissionSection
 }
 
 export type RoleMember = {
