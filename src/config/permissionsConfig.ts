@@ -20,9 +20,29 @@ export const permissionsConfig: Record<string, PermissionSection> = {
       defaultValue: false,
       description: 'Allow managing geometry on Web.',
     },
-    roleSetting: {
-      defaultValue: false,
-      description: 'Allow role setting on Web.',
+    member: {
+      invite: {
+        defaultValue: false,
+        description: 'Allow inviting members.',
+      },
+    },
+    role: {
+      create: {
+        defaultValue: false,
+        description: 'Allow creating roles.',
+      },
+      delete: {
+        defaultValue: false,
+        description: 'Allow deleting roles.',
+      },
+      managePermission: {
+        defaultValue: false,
+        description: 'Allow managing role permissions.',
+      },
+      manageMember: {
+        defaultValue: false,
+        description: 'Allow managing role members.',
+      },
     },
   },
 }
