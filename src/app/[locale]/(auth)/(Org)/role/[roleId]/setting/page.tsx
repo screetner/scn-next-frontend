@@ -1,4 +1,4 @@
-import Settings from '@/app/[locale]/(auth)/role/[roleId]/setting/Setting'
+import Settings from '@/app/[locale]/(auth)/(Org)/role/[roleId]/setting/Setting'
 import { RoleSettingProvider } from '@/context/RoleSettingContext'
 import { getRoleManagement, getRolesTable } from '@/actions/role'
 

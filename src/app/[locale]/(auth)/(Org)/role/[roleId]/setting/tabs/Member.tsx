@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Plus } from 'lucide-react'
 import { RoleMember } from '@/types/role'
 import { useDialog } from '@/context/DialogProvider'
-import AddMemberDialog from '@/app/[locale]/(auth)/role/[roleId]/setting/dialogs/AddMemberDialog'
+import AddMemberDialog from '@/app/[locale]/(auth)/(Org)/role/[roleId]/setting/dialogs/AddMemberDialog'
 import {
   ColumnFiltersState,
   getCoreRowModel,
@@ -12,7 +12,7 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import { MemberTableColumn } from '@/app/[locale]/(auth)/role/[roleId]/setting/tables/memberTableColumn'
+import { MemberTableColumn } from '@/app/[locale]/(auth)/(Org)/role/[roleId]/setting/tables/memberTableColumn'
 import TanStackDataTable from '@/components/TanStackDataTable'
 
 interface MemberProps {

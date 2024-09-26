@@ -40,7 +40,7 @@ export default async function Home() {
             className="text-lg mb-8 max-w-2xl mx-auto"
           />
           {session ? (
-            <Link href={'/dashboard'}>
+            <Link href={'/admin'}>
               <Button
                 size="lg"
                 className="px-6 py-3 space-x-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-full transition-colors duration-300 shadow-lg hover:shadow-xl"

@@ -1,4 +1,4 @@
-import { DashboardMap } from '@/app/[locale]/(auth)/dashboard/DashboardMap'
+import { DashboardMap } from '@/app/[locale]/(auth)/(Org)/dashboard/DashboardMap'
 import {
   Card,
   CardContent,

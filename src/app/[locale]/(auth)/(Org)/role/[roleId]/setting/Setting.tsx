@@ -1,6 +1,6 @@
 'use client'
-import ListRole from '@/app/[locale]/(auth)/role/[roleId]/setting/ListRole'
-import RoleSettings from '@/app/[locale]/(auth)/role/[roleId]/setting/RoleSettings'
+import ListRole from '@/app/[locale]/(auth)/(Org)/role/[roleId]/setting/ListRole'
+import RoleSettings from '@/app/[locale]/(auth)/(Org)/role/[roleId]/setting/RoleSettings'
 import { fillRoute, Routes } from '@/routes'
 import { useRoleSetting } from '@/context/RoleSettingContext'
 import { useRouter } from '@/i18n/routing'

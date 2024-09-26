@@ -1,9 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { EditRoleNameForm } from '@/app/[locale]/(auth)/role/[roleId]/setting/tabs/Display'
-import { RolePermissionsForm } from '@/app/[locale]/(auth)/role/[roleId]/setting/tabs/Permission'
+import { EditRoleNameForm } from '@/app/[locale]/(auth)/(Org)/role/[roleId]/setting/tabs/Display'
+import { RolePermissionsForm } from '@/app/[locale]/(auth)/(Org)/role/[roleId]/setting/tabs/Permission'
 import React from 'react'
-import Member from '@/app/[locale]/(auth)/role/[roleId]/setting/tabs/Member'
+import Member from '@/app/[locale]/(auth)/(Org)/role/[roleId]/setting/tabs/Member'
 import { useRoleSetting } from '@/context/RoleSettingContext'
 
 interface RoleSettingsProps {

@@ -1,6 +1,6 @@
 import { ColumnDef } from '@tanstack/table-core'
 import { RoleMember } from '@/types/role'
-import MemberMenu from '@/app/[locale]/(auth)/role/[roleId]/setting/menu/memberMenu'
+import MemberMenu from '@/app/[locale]/(auth)/(Org)/role/[roleId]/setting/menu/memberMenu'
 import React from 'react'
 
 interface MemberTableColumnProps {

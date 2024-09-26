@@ -1,5 +1,5 @@
 'use server'
-import EditGeolocation from '@/app/[locale]/(auth)/geometry/editGeolocation'
+import EditGeolocation from '@/app/[locale]/(auth)/(Org)/geometry/editGeolocation'
 import { getGeolocationOrganizationBorder } from '@/actions/geolocation'
 
 export default async function Geometry() {

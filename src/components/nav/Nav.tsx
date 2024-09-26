@@ -1,14 +1,20 @@
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { ModeToggle } from '@/components/ModeToggle'
 import { Person } from '@/components/nav/person'
-import { PropsWithChildren } from 'react'
-import { navList } from '@/utils/navlist'
+import React from 'react'
+import { orgNavLists, adminNavLists } from '@/utils/NavLists'
 import NavIcon from '@/components/nav/navIcon'
 import SideNav from '@/components/nav/SideNav'
 import NavTree from '@/components/nav/NavTree'
 import { LanguageChange } from '@/components/LanguageChange'
 
-export function Nav({ children }: PropsWithChildren) {
+interface NavProps {
+  children: React.ReactNode
+  isAdmin: boolean
+}
+
+export function Nav({ children, isAdmin }: NavProps) {
+  const navList = isAdmin ? adminNavLists : orgNavLists
   return (
     <TooltipProvider>
       <div className="flex h-screen bg-muted/40">

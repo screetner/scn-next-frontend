@@ -13,7 +13,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import InviteButton from '@/app/[locale]/(auth)/member/@inviteLink/InviteButton'
+import InviteButton from '@/app/[locale]/(auth)/(Org)/member/@inviteLink/InviteButton'
 
 export default function CreateInviteLink() {
   return (

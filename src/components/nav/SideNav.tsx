@@ -4,12 +4,12 @@ import {
   SheetDescription,
   SheetTitle,
   SheetTrigger,
-} from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
-import { PanelLeft } from 'lucide-react';
-import { ModeToggle } from '@/components/ModeToggle';
-import { navList } from '@/utils/navlist';
-import SmallNavItem from '@/components/nav/smallNavItem';
+} from '@/components/ui/sheet'
+import { Button } from '@/components/ui/button'
+import { PanelLeft } from 'lucide-react'
+import { ModeToggle } from '@/components/ModeToggle'
+import { orgNavLists } from '@/utils/NavLists'
+import SmallNavItem from '@/components/nav/smallNavItem'
 
 export default function SideNav() {
   return (
@@ -25,11 +25,11 @@ export default function SideNav() {
         <SheetDescription />
         <nav className="grid gap-6 text-lg font-medium">
           <ModeToggle />
-          {navList.map(nav => {
-            return <SmallNavItem nav={nav} key={nav.label} />;
+          {orgNavLists.map(nav => {
+            return <SmallNavItem nav={nav} key={nav.label} />
           })}
         </nav>
       </SheetContent>
     </Sheet>
-  );
+  )
 }
