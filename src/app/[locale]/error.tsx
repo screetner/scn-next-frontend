@@ -14,7 +14,7 @@ export default function Error() {
         className={'text-xl mb-8'}
       />
       <Button asChild size="lg">
-        <Link href="/public">Home</Link>
+        <Link href="/">Home</Link>
       </Button>
     </div>
   )
