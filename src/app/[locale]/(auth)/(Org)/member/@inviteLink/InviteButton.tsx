@@ -3,7 +3,7 @@
 import { SquareArrowOutUpRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useDialog } from '@/context/DialogProvider'
-import InviteDialog from '@/app/[locale]/(auth)/member/@inviteLink/InviteDialog'
+import InviteDialog from '@/app/[locale]/(auth)/(Org)/member/@inviteLink/InviteDialog'
 
 export default function InviteButton() {
   const { showDialog } = useDialog()

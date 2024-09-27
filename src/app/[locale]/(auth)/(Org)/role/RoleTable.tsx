@@ -12,7 +12,7 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import { roleTableColumn } from '@/app/[locale]/(auth)/role/table/roleTableColumn'
+import { roleTableColumn } from '@/app/[locale]/(auth)/(Org)/role/table/roleTableColumn'
 import TanStackDataTable from '@/components/TanStackDataTable'
 import { createRoleWithRedirect } from '@/actions/role'
 import { useRouter } from '@/i18n/routing'

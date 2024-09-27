@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { AddMemberAlert } from '@/app/[locale]/(auth)/role/AddMemberAlert'
+import { AddMemberAlert } from '@/app/[locale]/(auth)/(Org)/role/AddMemberAlert'
 import { getRolesTable } from '@/actions/role'
 
 export default async function RoleManagement() {

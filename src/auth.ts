@@ -25,6 +25,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
               organization_name: response.user.orgName,
               accessTokenExpiry: response.user.accessTokenExpiry,
               refreshToken: response.user.refreshToken,
+              isOwner: response.user.isOwner,
             }
           }
           return null

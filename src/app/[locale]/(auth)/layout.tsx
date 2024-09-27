@@ -1,12 +1,13 @@
-import { PropsWithChildren } from 'react';
-import { auth } from '@/auth';
-import { redirect } from 'next/navigation';
-import { Nav } from '@/components/nav/Nav';
+import { PropsWithChildren } from 'react'
+import { auth } from '@/auth'
+import { redirect } from 'next/navigation'
+import { Nav } from '@/components/nav/Nav'
 
 export default async function AuthLayout({ children }: PropsWithChildren) {
-  const session = await auth();
+  const session = await auth()
   if (!session) {
-    redirect('/');
+    redirect('/')
   }
-  return <>{session && <Nav>{children}</Nav>}</>;
+  const isAdmin = session.user.isOwner
+  return <>{session && <Nav isAdmin={isAdmin}>{children}</Nav>}</>
 }

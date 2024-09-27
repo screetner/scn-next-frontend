@@ -6,7 +6,7 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { cn } from '@/lib/utils'
 import React, { useCallback } from 'react'
 import { toast } from 'sonner'
-import RoleMenu from '@/app/[locale]/(auth)/role/[roleId]/setting/menu/RoleMenu'
+import RoleMenu from '@/app/[locale]/(auth)/(Org)/role/[roleId]/setting/menu/RoleMenu'
 import { useRoleSetting } from '@/context/RoleSettingContext'
 import { createRoleWithRedirect } from '@/actions/role'
 
