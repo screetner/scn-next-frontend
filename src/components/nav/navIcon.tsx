@@ -7,10 +7,9 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 import { TNav } from '@/types/navList'
-import { usePathname } from 'next/navigation'
 import { useTheme } from 'next-themes'
 import { cn } from '@/lib/utils'
-import { Link } from '@/i18n/routing'
+import { Link, usePathname } from '@/i18n/routing'
 
 interface NavIconProps {
   nav: TNav
@@ -18,7 +17,7 @@ interface NavIconProps {
 
 export default function NavIcon({ nav }: NavIconProps) {
   const pathname = usePathname()
-  const active = new RegExp(`^${nav.path}`).test(pathname)
+  const active = new RegExp(`^${nav.path}$`).test(pathname)
   const { theme, systemTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
 

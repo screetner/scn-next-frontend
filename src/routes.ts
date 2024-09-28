@@ -5,7 +5,8 @@ export enum Routes {
   ROLE,
   ROLE_SETTING,
 
-  TEST,
+  OWNER_DASHBOARD,
+  OWNER_ORGANIZATION,
 }
 
 export function fillRoute(route: Routes, roleId?: string) {
@@ -17,10 +18,12 @@ export function fillRoute(route: Routes, roleId?: string) {
     case Routes.MEMBER:
       return '/member'
     case Routes.ROLE:
-      return `/role/`
+      return `/role`
     case Routes.ROLE_SETTING:
       return `/role/${roleId}/setting`
-    case Routes.TEST:
-      return '/admin/test'
+    case Routes.OWNER_DASHBOARD:
+      return '/owner'
+    case Routes.OWNER_ORGANIZATION:
+      return '/owner/organization'
   }
 }

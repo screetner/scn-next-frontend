@@ -68,7 +68,7 @@ export const mockRoleManagementResponse: RoleManagementResponse = {
   roleMembers: [
     {
       userId: 'cjld2ck8c0000qzrmn8j1i7rn',
-      email: 'admin@example.com',
+      email: 'owner@example.com',
       username: 'adminUser',
     },
     {
