@@ -14,6 +14,7 @@ import { signOut } from '@/actions/auth'
 
 export async function Person() {
   const session = await auth()
+  const user = session?.user
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -22,14 +23,17 @@ export async function Person() {
           size="icon"
           className="overflow-hidden rounded-full"
         >
-          {get2CapitalizedWords(session?.user.username)}
+          {get2CapitalizedWords(user?.username)}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuLabel className={'text-center'}>
+          {user?.organization_name}
+        </DropdownMenuLabel>
+        <DropdownMenuLabel>{user?.email}</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Settings</DropdownMenuItem>
-        <DropdownMenuItem>Support</DropdownMenuItem>
+        {/*<DropdownMenuItem>Settings</DropdownMenuItem>*/}
+        {/*<DropdownMenuItem>Support</DropdownMenuItem>*/}
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
           <form action={signOut}>
