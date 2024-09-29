@@ -8,10 +8,11 @@ import {
 import { Button } from '@/components/ui/button'
 import { PanelLeft } from 'lucide-react'
 import { ModeToggle } from '@/components/ModeToggle'
-import { orgNavLists } from '@/utils/NavLists'
+import { adminNavLists, orgNavLists } from '@/utils/NavLists'
 import SmallNavItem from '@/components/nav/smallNavItem'
 
-export default function SideNav() {
+export default function SideNav({ isAdmin }: { isAdmin: boolean }) {
+  const navList = isAdmin ? adminNavLists : orgNavLists
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -25,7 +26,7 @@ export default function SideNav() {
         <SheetDescription />
         <nav className="grid gap-6 text-lg font-medium">
           <ModeToggle />
-          {orgNavLists.map(nav => {
+          {navList.map(nav => {
             return <SmallNavItem nav={nav} key={nav.label} />
           })}
         </nav>
