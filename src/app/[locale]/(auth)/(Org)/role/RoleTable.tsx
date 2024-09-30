@@ -2,7 +2,6 @@
 import { RolesTable } from '@/types/role'
 import React, { useState } from 'react'
 import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
 import { fillRoute, Routes } from '@/routes'
 import { toast } from 'sonner'
 import {
