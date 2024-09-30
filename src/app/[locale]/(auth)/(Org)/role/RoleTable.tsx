@@ -17,6 +17,7 @@ import TanStackDataTable from '@/components/TanStackDataTable'
 import { createRoleWithRedirect } from '@/actions/role'
 import { useRouter } from '@/i18n/routing'
 import { Plus } from 'lucide-react'
+import ActionButton from '@/components/Button/ActionButton'
 
 interface RoleTableProps {
   roles: RolesTable[]
@@ -68,12 +69,11 @@ export default function RoleTable({ roles }: RoleTableProps) {
             table.getColumn('roleName')?.setFilterValue(event.target.value)
           }
         />
-        <form onSubmit={handleCreateRole}>
-          <Button type="submit" className={'space-x-2'}>
-            <Plus className={'w-5 h-5'} />
-            Create Role
-          </Button>
-        </form>
+        <ActionButton
+          onSubmit={handleCreateRole}
+          icon={<Plus />}
+          text={'Create Role'}
+        />
       </div>
       <TanStackDataTable table={table} onRowClick={onRowClick} />
     </>
