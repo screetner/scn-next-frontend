@@ -1,5 +1,4 @@
 import { Card, CardHeader } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
 import { Plus } from 'lucide-react'
 import { Separator } from '@/components/ui/separator'
 import { ScrollArea } from '@/components/ui/scroll-area'
@@ -9,6 +8,7 @@ import { toast } from 'sonner'
 import RoleMenu from '@/app/[locale]/(auth)/(Org)/role/[roleId]/setting/menu/RoleMenu'
 import { useRoleSetting } from '@/context/RoleSettingContext'
 import { createRoleWithRedirect } from '@/actions/role'
+import ActionButton from '@/components/Button/ActionButton'
 
 interface ListRoleProps {
   handleRoleSelect: (roleId: string) => void
@@ -29,11 +29,12 @@ export default function ListRole({ handleRoleSelect }: ListRoleProps) {
     <ScrollArea className="w-full xl:w-1/6 xl:h-screen-minus-heading">
       <Card className="p-2">
         <CardHeader>
-          <form action={onCreateRole}>
-            <Button className="w-full" variant="default">
-              <Plus className="mr-2 h-4 w-4" /> Create Role
-            </Button>
-          </form>
+          <ActionButton
+            onSubmit={onCreateRole}
+            icon={<Plus />}
+            text={'Create Role'}
+            className={'w-full'}
+          />
         </CardHeader>
         <Separator className={'mt-2'} />
         {roleList.map(role => (
