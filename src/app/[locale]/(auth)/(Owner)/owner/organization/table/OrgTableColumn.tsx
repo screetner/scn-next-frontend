@@ -14,10 +14,10 @@ export const OrgTableColumn = (): ColumnDef<OrgTableColumnI>[] => [
   },
   {
     accessorKey: 'orgMembers',
-    header: 'Members',
+    header: '# Members',
   },
   {
     accessorKey: 'orgAssets',
-    header: 'Assets',
+    header: '# Assets',
   },
 ]
