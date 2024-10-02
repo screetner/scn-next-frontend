@@ -18,7 +18,7 @@ import { useDialog } from '@/context/DialogProvider'
 import { UseFetchUnAssignUser } from '@/hooks/role/useFetchUnAssignUser'
 import { assignRoleToMember } from '@/actions/role'
 import { SkeletonCard } from '@/components/SkeletonCard'
-import ActionButton from '@/components/Button/ActionButton'
+import FormButton from '@/components/Button/FormButton'
 
 interface AddMemberDialogProps {
   roleId: string
@@ -125,7 +125,7 @@ export default function AddMemberDialog({ roleId }: AddMemberDialogProps) {
         {/*<Button type="submit" onClick={handleSubmit}>*/}
         {/*  Add*/}
         {/*</Button>*/}
-        <ActionButton onSubmit={handleSubmit} icon={<Plus />} text={'Add'} />
+        <FormButton onSubmit={handleSubmit} icon={<Plus />} text={'Add'} />
       </DialogFooter>
     </div>
   )

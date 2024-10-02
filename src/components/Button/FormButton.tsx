@@ -2,19 +2,19 @@ import React from 'react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
-interface ActionButtonProps {
+interface FormButtonProps {
   onSubmit: React.FormEventHandler<HTMLFormElement> | undefined
   icon: React.ReactNode
   text: string
   className?: string
 }
 
-export default function ActionButton({
+export default function FormButton({
   icon,
   text,
   onSubmit,
   className,
-}: ActionButtonProps) {
+}: FormButtonProps) {
   return (
     <form onSubmit={onSubmit}>
       <Button

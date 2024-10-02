@@ -8,7 +8,7 @@ import { toast } from 'sonner'
 import RoleMenu from '@/app/[locale]/(auth)/(Org)/role/[roleId]/setting/menu/RoleMenu'
 import { useRoleSetting } from '@/context/RoleSettingContext'
 import { createRoleWithRedirect } from '@/actions/role'
-import ActionButton from '@/components/Button/ActionButton'
+import FormButton from '@/components/Button/FormButton'
 
 interface ListRoleProps {
   handleRoleSelect: (roleId: string) => void
@@ -29,7 +29,7 @@ export default function ListRole({ handleRoleSelect }: ListRoleProps) {
     <ScrollArea className="w-full xl:w-1/6 xl:h-screen-minus-heading">
       <Card className="p-2">
         <CardHeader>
-          <ActionButton
+          <FormButton
             onSubmit={onCreateRole}
             icon={<Plus />}
             text={'Create Role'}
