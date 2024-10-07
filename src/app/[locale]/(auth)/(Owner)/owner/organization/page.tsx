@@ -7,7 +7,7 @@ import {
 } from '@/components/ui/card'
 import OrgTable from '@/app/[locale]/(auth)/(Owner)/owner/organization/table/OrgTable'
 import { getAllOrganization } from '@/actions/owner/organization'
-import ErrorComponent from '@/components/Error'
+import ErrorComponent from '@/components/ErrorComponent'
 
 export default async function Page() {
   const { data, error } = await getAllOrganization()

@@ -28,6 +28,12 @@ const apiEndpoints = {
     deleteRole: (targetRoleId: string) => `/role/remove/${targetRoleId}`,
     getRoleOptions: `/role/option`,
   },
+  owner: {
+    org: {
+      getAllOrganization: `/organization/all`,
+      createOrganization: `/organization/create`,
+    },
+  },
 }
 
 export default apiEndpoints

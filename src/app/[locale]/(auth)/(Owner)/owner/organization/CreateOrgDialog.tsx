@@ -18,12 +18,7 @@ import {
   CreateOrgFormData,
   createOrgSchema,
 } from '@/schemas/OwnerCreateOrgnization'
-
-const createOrganization = async (data: CreateOrgFormData) => {
-  await new Promise(resolve => setTimeout(resolve, 1000))
-  console.log('Organization created:', data)
-  return data
-}
+import { createOrganization } from '@/actions/owner/organization'
 
 export default function CreateOrganizationDialog() {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -32,8 +27,8 @@ export default function CreateOrganizationDialog() {
   const form = useForm<CreateOrgFormData>({
     resolver: zodResolver(createOrgSchema),
     defaultValues: {
-      name: '',
-      adminEmails: [],
+      orgName: '',
+      adminEmail: [],
     },
   })
 
@@ -42,7 +37,7 @@ export default function CreateOrganizationDialog() {
     toast.promise(createOrganization(data), {
       loading: 'Creating organization...',
       success: 'Organization created successfully',
-      error: 'Failed to create organization',
+      error: err => err.message,
     })
     setIsSubmitting(false)
     closeDialog()
@@ -53,7 +48,7 @@ export default function CreateOrganizationDialog() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <FormField
           control={form.control}
-          name="name"
+          name="orgName"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Organization Name</FormLabel>
@@ -66,13 +61,13 @@ export default function CreateOrganizationDialog() {
         />
         <FormField
           control={form.control}
-          name="adminEmails"
+          name="adminEmail"
           render={({}) => (
             <FormItem>
               <FormLabel>Admin Email Addresses</FormLabel>
               <FormControl>
                 <Controller
-                  name="adminEmails"
+                  name="adminEmail"
                   control={form.control}
                   render={({ field }) => (
                     <MultipleSelector

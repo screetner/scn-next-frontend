@@ -1,8 +1,8 @@
 import { z } from 'zod'
 
 export const createOrgSchema = z.object({
-  name: z.string().min(1, 'Organization name is required'),
-  adminEmails: z
+  orgName: z.string().min(1, 'Organization name is required'),
+  adminEmail: z
     .array(z.string().email('Invalid email address'))
     .min(1, 'Please enter at least one admin email')
     .refine(
