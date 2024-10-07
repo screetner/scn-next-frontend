@@ -14,20 +14,18 @@ import { Input } from '@/components/ui/input'
 import { Plus } from 'lucide-react'
 import DialogButton from '@/components/Button/DialogButton'
 import CreateOrganizationDialog from '@/app/[locale]/(auth)/(Owner)/owner/organization/CreateOrgDialog'
+import { OrganizationAll } from '@/types/owner/organization'
 
-export default function OrgTable() {
+interface OrgTableProps {
+  data: OrganizationAll[]
+}
+
+export default function OrgTable({ data }: OrgTableProps) {
   const [orgNameFilter, setOrgNameFilter] = useState<ColumnFiltersState>([])
 
   const table = useReactTable({
     columns: OrgTableColumn(),
-    data: [
-      {
-        orgId: '1',
-        orgName: 'Org 1',
-        orgMembers: 10,
-        orgAssets: 20,
-      },
-    ],
+    data: data,
     getCoreRowModel: getCoreRowModel(),
     onColumnFiltersChange: setOrgNameFilter,
     getFilteredRowModel: getFilteredRowModel(),

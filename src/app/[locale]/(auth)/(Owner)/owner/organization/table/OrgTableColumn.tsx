@@ -1,19 +1,13 @@
 import { ColumnDef } from '@tanstack/table-core'
+import { OrganizationAll } from '@/types/owner/organization'
 
-export interface OrgTableColumnI {
-  orgId: string
-  orgName: string
-  orgMembers: number
-  orgAssets: number
-}
-
-export const OrgTableColumn = (): ColumnDef<OrgTableColumnI>[] => [
+export const OrgTableColumn = (): ColumnDef<OrganizationAll>[] => [
   {
     accessorKey: 'orgName',
     header: 'Organization Name',
   },
   {
-    accessorKey: 'orgMembers',
+    accessorKey: 'orgMember',
     header: '# Members',
   },
   {

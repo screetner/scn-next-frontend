@@ -6,8 +6,12 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import OrgTable from '@/app/[locale]/(auth)/(Owner)/owner/organization/table/OrgTable'
+import { getAllOrganization } from '@/actions/owner/organization'
+import ErrorComponent from '@/components/Error'
 
-export default function Page() {
+export default async function Page() {
+  const { data, error } = await getAllOrganization()
+
   return (
     <>
       <Card>
@@ -16,7 +20,7 @@ export default function Page() {
           <CardDescription>Create Edit Organization</CardDescription>
         </CardHeader>
         <CardContent>
-          <OrgTable />
+          {error ? <ErrorComponent /> : <OrgTable data={data!} />}
         </CardContent>
       </Card>
     </>
