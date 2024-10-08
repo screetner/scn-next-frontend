@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { RoleMember } from '@/types/role'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
-import { X } from 'lucide-react'
+import { Plus, X } from 'lucide-react'
 import {
   Table,
   TableBody,
@@ -13,12 +13,12 @@ import {
 } from '@/components/ui/table'
 import { Checkbox } from '@/components/ui/checkbox'
 import { DialogFooter } from '@/components/ui/dialog'
-import { Button } from '@/components/ui/button'
 import { toast } from 'sonner'
 import { useDialog } from '@/context/DialogProvider'
 import { UseFetchUnAssignUser } from '@/hooks/role/useFetchUnAssignUser'
 import { assignRoleToMember } from '@/actions/role'
 import { SkeletonCard } from '@/components/SkeletonCard'
+import FormButton from '@/components/Button/FormButton'
 
 interface AddMemberDialogProps {
   roleId: string
@@ -122,9 +122,10 @@ export default function AddMemberDialog({ roleId }: AddMemberDialogProps) {
         </Table>
       </div>
       <DialogFooter>
-        <Button type="submit" onClick={handleSubmit}>
-          Add
-        </Button>
+        {/*<Button type="submit" onClick={handleSubmit}>*/}
+        {/*  Add*/}
+        {/*</Button>*/}
+        <FormButton onSubmit={handleSubmit} icon={<Plus />} text={'Add'} />
       </DialogFooter>
     </div>
   )

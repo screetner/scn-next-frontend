@@ -1,5 +1,11 @@
 import { TNav } from '@/types/navList'
-import { Home, LocateFixed, UserRoundCog, UsersRound } from 'lucide-react'
+import {
+  Building2,
+  Home,
+  LocateFixed,
+  UserRoundCog,
+  UsersRound,
+} from 'lucide-react'
 import { fillRoute, Routes } from '@/routes'
 
 export const orgNavLists: TNav[] = [
@@ -27,9 +33,14 @@ export const orgNavLists: TNav[] = [
 
 export const adminNavLists: TNav[] = [
   {
-    label: 'test',
-    path: fillRoute(Routes.TEST),
+    label: 'Dashboard',
+    path: fillRoute(Routes.OWNER_DASHBOARD),
     icon: <Home className={'h-5 w-5'} />,
+  },
+  {
+    label: 'Organization',
+    path: fillRoute(Routes.OWNER_ORGANIZATION),
+    icon: <Building2 className={'h-5 w-5'} />,
   },
 ]
 

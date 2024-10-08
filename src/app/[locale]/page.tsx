@@ -1,3 +1,5 @@
+'use server'
+
 import { auth } from '@/auth'
 import React from 'react'
 import { Button } from '@/components/ui/button'
@@ -11,9 +13,12 @@ import { ModeToggle } from '@/components/ModeToggle'
 import { Link } from '@/i18n/routing'
 import { getTranslations } from 'next-intl/server'
 import { LanguageChange } from '@/components/LanguageChange'
+import { Person } from '@/components/nav/person'
 
 export default async function Home() {
   const session = await auth()
+  const isOwner = session?.user.isOwner
+  const dashboardPath = isOwner ? '/owner' : '/dashboard'
   const t = await getTranslations('HomePage')
 
   return (
@@ -27,6 +32,7 @@ export default async function Home() {
             </Link>
             <LanguageChange side={'bottom'} />
             <ModeToggle />
+            {session && <Person />}
           </div>
         </nav>
       </header>
@@ -40,7 +46,7 @@ export default async function Home() {
             className="text-lg mb-8 max-w-2xl mx-auto"
           />
           {session ? (
-            <Link href={'/admin'}>
+            <Link href={dashboardPath}>
               <Button
                 size="lg"
                 className="px-6 py-3 space-x-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-full transition-colors duration-300 shadow-lg hover:shadow-xl"

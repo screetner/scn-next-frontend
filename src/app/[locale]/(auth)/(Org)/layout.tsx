@@ -6,7 +6,7 @@ export default async function OrgLayout({ children }: PropsWithChildren) {
   const session = await auth()
   const isAdmin = session?.user.isOwner
   if (isAdmin) {
-    redirect('/admin')
+    redirect('/owner')
   }
   return children
 }
