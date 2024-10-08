@@ -51,7 +51,7 @@ export default function CreateOrganizationDialog() {
           name="orgName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Organization Name</FormLabel>
+              <FormLabel>Organization Name * </FormLabel>
               <FormControl>
                 <Input placeholder="Enter organization name" {...field} />
               </FormControl>
