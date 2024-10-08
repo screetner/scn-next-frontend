@@ -7,7 +7,7 @@ import { getTotalMembers } from '@/actions/member'
 export default async function TotalMembersPage() {
   const { data, error } = await getTotalMembers()
 
-  const growthPositive = data.percentageIncrease > 0
+  const growthPositive = data!.percentageIncrease > 0
 
   return (
     <Card>
@@ -20,7 +20,7 @@ export default async function TotalMembersPage() {
           <div className="text-red-500 text-sm">Failed to load member data</div>
         ) : (
           <div className="space-y-2">
-            <TypographyH2 text={`+${data.allMembers}`} />
+            <TypographyH2 text={`+${data!.allMembers}`} />
             <div className="text-sm text-gray-500">
               Members in the organization
             </div>
@@ -34,7 +34,7 @@ export default async function TotalMembersPage() {
                 ) : (
                   <TrendingDown className="w-4 h-4 mr-1" />
                 )}
-                {Math.abs(data.percentageIncrease)}%{' '}
+                {Math.abs(data!.percentageIncrease)}%{' '}
                 {growthPositive ? 'increase' : 'decrease'} since last month
               </span>
             </div>

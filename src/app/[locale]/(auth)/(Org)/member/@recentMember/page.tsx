@@ -63,7 +63,7 @@ export default async function RecentMember() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {recentMember.map((member, index) => (
+                {recentMember?.map((member, index) => (
                   <TableRow key={index}>
                     <TableCell>
                       <TypographyP

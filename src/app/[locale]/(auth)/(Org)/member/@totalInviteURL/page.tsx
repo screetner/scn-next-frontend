@@ -19,20 +19,20 @@ export default async function TotalInviteURLPage() {
           <div className="text-red-500 text-sm">Failed to load invite data</div>
         ) : (
           <div className="space-y-2">
-            <TypographyH2 text={`${data.inviteTotal} Total Invites`} />
+            <TypographyH2 text={`${data?.inviteTotal} Total Invites`} />
             <div className="flex items-center text-xl">
               <span className="font-semibold text-green-600">
-                {data.inviteActivate} Activated
+                {data?.inviteActivate} Activated
               </span>
               <span className="ml-2 text-gray-500 text-sm">
-                {data.inviteTotal > 0
-                  ? `(${((data.inviteActivate / data.inviteTotal) * 100).toFixed(1)}%)`
+                {data!.inviteTotal > 0
+                  ? `(${((data!.inviteActivate / data!.inviteTotal) * 100).toFixed(1)}%)`
                   : 'N/A'}
               </span>
             </div>
 
             <div className="text-sm text-gray-500 mt-2">
-              {data.inviteTotal > 0 && (
+              {data!.inviteTotal > 0 && (
                 <span>
                   Last updated:{' '}
                   <strong>{new Date().toLocaleDateString()}</strong>
