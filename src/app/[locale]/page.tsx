@@ -27,7 +27,11 @@ export default async function Home() {
         <nav className="flex justify-between items-center">
           <TypographyH2 text="Screetner" className="text-2xl font-bold" />
           <div className="flex space-x-4 items-center">
-            <Link href="https://github.com/screetner" target="_blank">
+            <Link
+              href="https://github.com/screetner"
+              target="_blank"
+              aria-label={'github'}
+            >
               <GithubSVG />
             </Link>
             <LanguageChange side={'bottom'} />
