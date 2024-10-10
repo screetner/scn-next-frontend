@@ -63,10 +63,10 @@ export default async function Home() {
             <Link href={'/signin'}>
               <Button
                 size="lg"
-                className="px-6 py-3 space-x-2 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-full transition-colors duration-300 shadow-lg hover:shadow-xl"
+                className="px-6 py-3 space-x-2 bg-green-700 hover:bg-green-800 text-white font-semibold rounded-full transition-colors duration-300 shadow-lg hover:shadow-xl"
               >
                 <span>{t('loginButton')}</span>
-                <LogIn className={'w-5 h-5'} />
+                <LogIn className="w-5 h-5" />
               </Button>
             </Link>
           )}
