@@ -7,6 +7,7 @@ import NavIcon from '@/components/nav/navIcon'
 import SideNav from '@/components/nav/SideNav'
 import NavTree from '@/components/nav/NavTree'
 import { LanguageChange } from '@/components/LanguageChange'
+import { TypographyP } from '@/components/typography/TypographyP'
 
 interface NavProps {
   children: React.ReactNode
@@ -36,6 +37,12 @@ export function Nav({ children, isAdmin }: NavProps) {
             <Person />
           </header>
           <main className="flex-1 overflow-auto p-2 md:px-6">{children}</main>
+          <footer className="bg-background py-1 pr-5 flex justify-end">
+            <TypographyP
+              text={'© 2024 Screetner. All rights reserved.'}
+              className="text-gray-400"
+            />
+          </footer>
         </div>
       </div>
     </TooltipProvider>
