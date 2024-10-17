@@ -44,7 +44,10 @@ export default async function Home() {
       <main className="container mx-auto px-6 py-16 flex-grow">
         {/* Hero Section */}
         <section className="text-center mb-12">
-          <TypographyH2 text={t('title')} className="text-4xl font-bold mb-4" />
+          <TypographyH2
+            text={t('title')}
+            className="md:text-4xl font-bold mb-4"
+          />
           <TypographyP
             text={t('description')}
             className="text-lg mb-8 max-w-2xl mx-auto"
