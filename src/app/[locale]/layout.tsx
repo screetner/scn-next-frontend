@@ -8,7 +8,6 @@ const sarabun = Sarabun({
   subsets: ['thai', 'latin'],
   weight: ['400', '500', '700'],
 })
-import 'mapbox-gl/dist/mapbox-gl.css'
 import { Toaster } from '@/components/ui/sonner'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
