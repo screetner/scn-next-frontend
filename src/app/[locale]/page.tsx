@@ -46,11 +46,11 @@ export default async function Home() {
         <section className="text-center mb-12">
           <TypographyH2
             text={t('title')}
-            className="md:text-4xl font-bold mb-4"
+            className="sm:text-4xl font-bold mb-4"
           />
           <TypographyP
             text={t('description')}
-            className="md:text-lg mb-8 max-w-2xl mx-auto"
+            className="sm:text-lg mb-8 max-w-2xl mx-auto"
           />
           {session ? (
             <Link href={dashboardPath}>
