@@ -50,7 +50,7 @@ export default async function Home() {
           />
           <TypographyP
             text={t('description')}
-            className="text-lg mb-8 max-w-2xl mx-auto"
+            className="md:text-lg mb-8 max-w-2xl mx-auto"
           />
           {session ? (
             <Link href={dashboardPath}>
