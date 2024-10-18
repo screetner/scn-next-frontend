@@ -26,7 +26,7 @@ export default function ListRole({ handleRoleSelect }: ListRoleProps) {
   }, [])
 
   return (
-    <ScrollArea className="w-full xl:w-1/6 xl:h-screen-minus-heading">
+    <ScrollArea className="w-full md:w-1/3 lg:w-1/4 xl:w-1/6 h-screen-minus-heading">
       <Card className="p-2">
         <CardHeader>
           <FormButton

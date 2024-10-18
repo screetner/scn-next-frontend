@@ -1,20 +1,20 @@
 import { cn } from '@/lib/utils' // Assuming you're using classnames utility
 import React from 'react'
 
-interface TypographyH1Props {
+interface TypographyH2Props {
   text: string
   className?: string
 }
 
-export function TypographyH1({ className, text }: TypographyH1Props) {
+export function TypographyH3({ className, text }: TypographyH2Props) {
   return (
-    <h1
+    <h2
       className={cn(
-        'scroll-m-20 text-4xl font-extra bold tracking-tight lg:text-5xl',
+        'scroll-m-20 text-2xl tracking-tight first:mt-0',
         className,
       )}
     >
       {text}
-    </h1>
+    </h2>
   )
 }

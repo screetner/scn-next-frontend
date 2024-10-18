@@ -30,7 +30,7 @@ export default async function RootLayout({
 }>) {
   const messages = await getMessages()
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning={true}>
       <body className={sarabun.className}>
         <ThemeProvider
           attribute="class"

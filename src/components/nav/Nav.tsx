@@ -18,7 +18,7 @@ export function Nav({ children, isAdmin }: NavProps) {
   const navList = isAdmin ? adminNavLists : orgNavLists
   return (
     <TooltipProvider>
-      <div className="flex h-screen bg-muted/40">
+      <div className="flex h-svh bg-muted/40">
         <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">
           <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
             {navList.map(nav => (
@@ -36,7 +36,7 @@ export function Nav({ children, isAdmin }: NavProps) {
             <NavTree />
             <Person />
           </header>
-          <main className="flex-1 overflow-auto p-2 md:px-6">{children}</main>
+          <main className="flex-1 overflow-scroll p-2 md:px-6">{children}</main>
           <footer className="bg-background py-1 pr-5 flex justify-end">
             <TypographyP
               text={'© 2024 Screetner. All rights reserved.'}

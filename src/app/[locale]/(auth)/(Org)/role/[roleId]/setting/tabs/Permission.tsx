@@ -151,7 +151,11 @@ export function RolePermissionsForm({ data, roleId }: RolePermissionsProps) {
           </div>
         ))}
         <div className="flex justify-end">
-          <Button type="submit" className="mt-4">
+          <Button
+            type="submit"
+            className="mt-4"
+            disabled={!form.formState.isDirty || !form.formState.isValid}
+          >
             Save Permissions
           </Button>
         </div>

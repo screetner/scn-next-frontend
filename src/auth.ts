@@ -22,7 +22,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
               roleName: response.user.roleName,
               email: response.user.email,
               accessToken: response.user.accessToken,
-              organization_name: response.user.organization_name,
+              orgName: response.user.orgName,
               accessTokenExpiry: response.user.accessTokenExpiry,
               refreshToken: response.user.refreshToken,
               isOwner: response.user.isOwner,

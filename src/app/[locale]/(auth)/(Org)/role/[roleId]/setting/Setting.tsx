@@ -25,8 +25,10 @@ export default function Settings({ initialTab }: SettingsProps) {
 
   return (
     <>
-      <ListRole handleRoleSelect={handleRoleSelect} />
-      <RoleSettings activeTab={initialTab} setActiveTab={handleTabChange} />
+      <div className={'flex flex-col md:flex-row gap-4'}>
+        <ListRole handleRoleSelect={handleRoleSelect} />
+        <RoleSettings activeTab={initialTab} setActiveTab={handleTabChange} />
+      </div>
     </>
   )
 }

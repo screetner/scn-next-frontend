@@ -8,7 +8,7 @@ type TUser = {
   username: string
   roleName: string
   email: string
-  organization_name: string
+  orgName: string
   accessTokenExpiry: string
   refreshToken: string
   isOwner: boolean
