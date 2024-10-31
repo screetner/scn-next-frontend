@@ -25,6 +25,7 @@ import {
 } from '@/types/role'
 import { toast } from 'sonner'
 import { updateRolePermissions } from '@/actions/role'
+import { ScrollArea } from '@/components/ui/scroll-area'
 
 type NestedDefaults = {
   [key: string]: boolean | NestedDefaults
@@ -142,20 +143,26 @@ export function RolePermissionsForm({ data, roleId }: RolePermissionsProps) {
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        {Object.keys(permissionsConfig).map(sectionKey => (
-          <div key={sectionKey} className="space-y-4">
-            <h3 className="text-lg font-semibold text-foreground capitalize">{`${sectionKey.replace('_', ' ')} Permissions`}</h3>
-            {renderPermissions(sectionKey, permissionsConfig[sectionKey])}
+    <ScrollArea>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          {Object.keys(permissionsConfig).map(sectionKey => (
+            <div key={sectionKey} className="space-y-4">
+              <h3 className="text-lg font-semibold text-foreground capitalize">{`${sectionKey.replace('_', ' ')} Permissions`}</h3>
+              {renderPermissions(sectionKey, permissionsConfig[sectionKey])}
+            </div>
+          ))}
+          <div className="flex justify-end">
+            <Button
+              type="submit"
+              className="mt-4"
+              disabled={!form.formState.isDirty || !form.formState.isValid}
+            >
+              Save Permissions
+            </Button>
           </div>
-        ))}
-        <div className="flex justify-end">
-          <Button type="submit" className="mt-4">
-            Save Permissions
-          </Button>
-        </div>
-      </form>
-    </Form>
+        </form>
+      </Form>
+    </ScrollArea>
   )
 }

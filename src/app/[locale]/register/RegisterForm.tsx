@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 
@@ -15,32 +15,16 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-import { Progress } from '@/components/ui/progress'
-import { PasswordInput } from '@/components/input/PasswordInput'
-import {
-  passwordStrengthRegex,
-  RegisterFormValues,
-  registerSchema,
-} from '@/schemas/registerSchema'
-import { getStrengthColor } from '@/utils/helper'
-import PasswordCriteriaItem from '@/app/[locale]/register/PasswordCriteriaItem'
+import { RegisterFormValues, registerSchema } from '@/schemas/registerSchema'
 import { toast } from 'sonner'
 import { registerUser } from '@/actions/register'
 import { Link, useRouter } from '@/i18n/routing'
 import { useTranslations } from 'next-intl'
+import { PasswordAndConfirmPassword } from '@/components/input/PasswordAndConfirmPassword'
 
 export default function RegisterForm({ token }: { token: string }) {
   const t = useTranslations('RegisterPage.form')
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [showCriteria, setShowCriteria] = useState(false)
-  const [passwordStrength, setPasswordStrength] = useState(0)
-  const [passwordCriteria, setPasswordCriteria] = useState({
-    length: false,
-    lowercase: false,
-    uppercase: false,
-    number: false,
-    special: false,
-  })
   const router = useRouter()
   const form = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
@@ -62,29 +46,6 @@ export default function RegisterForm({ token }: { token: string }) {
     setIsSubmitting(false)
     router.push('/signin')
   }
-
-  const calculatePasswordStrength = (password: string) => {
-    const criteria = {
-      length: password.length >= 8,
-      lowercase: passwordStrengthRegex.lowercase.test(password),
-      uppercase: passwordStrengthRegex.uppercase.test(password),
-      number: passwordStrengthRegex.number.test(password),
-      special: passwordStrengthRegex.special.test(password),
-    }
-    setPasswordCriteria(criteria)
-
-    const strength = Object.values(criteria).filter(Boolean).length
-    return (strength / 5) * 100
-  }
-
-  useEffect(() => {
-    const subscription = form.watch((value, { name }) => {
-      if (name === 'password') {
-        setPasswordStrength(calculatePasswordStrength(value.password || ''))
-      }
-    })
-    return () => subscription.unsubscribe()
-  }, [form])
 
   return (
     <div className="max-w-md mx-auto">
@@ -110,70 +71,7 @@ export default function RegisterForm({ token }: { token: string }) {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t('password')}</FormLabel>
-                <FormControl>
-                  <PasswordInput
-                    field={field}
-                    autoComplete="new-password"
-                    onChange={() => setShowCriteria(true)}
-                    placeholder={t('password')}
-                  />
-                </FormControl>
-                {showCriteria && (
-                  <>
-                    <Progress
-                      value={passwordStrength}
-                      className={`mt-2 ${getStrengthColor(passwordStrength)}`}
-                    />
-                    <ul className="mt-2 space-y-1">
-                      <PasswordCriteriaItem
-                        label={t('passwordHint.char')}
-                        isMet={passwordCriteria.length}
-                      />
-                      <PasswordCriteriaItem
-                        label={t('passwordHint.lower')}
-                        isMet={passwordCriteria.lowercase}
-                      />
-                      <PasswordCriteriaItem
-                        label={t('passwordHint.upper')}
-                        isMet={passwordCriteria.uppercase}
-                      />
-                      <PasswordCriteriaItem
-                        label={t('passwordHint.number')}
-                        isMet={passwordCriteria.number}
-                      />
-                      <PasswordCriteriaItem
-                        label={t('passwordHint.special')}
-                        isMet={passwordCriteria.special}
-                      />
-                    </ul>
-                  </>
-                )}
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="confirmPassword"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t('confirmPassword')}</FormLabel>
-                <FormControl>
-                  <PasswordInput
-                    field={field}
-                    placeholder={t('confirmPassword')}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <PasswordAndConfirmPassword form={form} showStrengthMeter={true} />
           <FormField
             control={form.control}
             name="termsOfService"

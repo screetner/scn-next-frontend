@@ -26,8 +26,8 @@ export default function ListRole({ handleRoleSelect }: ListRoleProps) {
   }, [])
 
   return (
-    <ScrollArea className="w-full xl:w-1/6 xl:h-screen-minus-heading">
-      <Card className="p-2">
+    <div className={'w-full md:w-1/3 lg:w-1/4 xl:w-1/6'}>
+      <Card>
         <CardHeader>
           <FormButton
             onSubmit={onCreateRole}
@@ -36,23 +36,25 @@ export default function ListRole({ handleRoleSelect }: ListRoleProps) {
             className={'w-full'}
           />
         </CardHeader>
-        <Separator className={'mt-2'} />
-        {roleList.map(role => (
-          <div
-            key={role.roleId}
-            className={cn(
-              'cursor-pointer mt-2 w-full px-4 py-2 text-left rounded flex justify-between items-center',
-              roleId === role.roleId
-                ? 'bg-secondary text-secondary-foreground'
-                : 'hover:bg-gray-100',
-            )}
-            onClick={() => handleRoleSelect(role.roleId)}
-          >
-            <div>{role.roleName}</div>
-            <RoleMenu roleId={role.roleId} />
-          </div>
-        ))}
+        <Separator />
+        <ScrollArea className={'h-[200px] md:h-[750px]'}>
+          {roleList.map(role => (
+            <div
+              key={role.roleId}
+              className={cn(
+                'cursor-pointer mt-2 w-full px-4 py-2 text-left rounded flex justify-between items-center',
+                roleId === role.roleId
+                  ? 'bg-secondary text-secondary-foreground'
+                  : 'hover:bg-gray-100',
+              )}
+              onClick={() => handleRoleSelect(role.roleId)}
+            >
+              <div>{role.roleName}</div>
+              <RoleMenu roleId={role.roleId} />
+            </div>
+          ))}
+        </ScrollArea>
       </Card>
-    </ScrollArea>
+    </div>
   )
 }

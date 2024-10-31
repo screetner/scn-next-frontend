@@ -81,7 +81,7 @@ const config = {
         'accordion-up': 'accordion-up 0.2s ease-out',
       },
       height: {
-        'screen-minus-heading': 'calc(100vh - 55px)',
+        'screen-minus-heading': 'calc(100vh - 57px - 36px)',
       },
     },
   },

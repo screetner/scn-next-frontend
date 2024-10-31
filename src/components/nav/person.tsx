@@ -2,15 +2,15 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
 import { get2CapitalizedWords } from '@/utils/helper'
 import { auth } from '@/auth'
-import { LogOut } from 'lucide-react'
+import { LogOut, Settings2 } from 'lucide-react'
 import { signOut } from '@/actions/auth'
+import { Link } from '@/i18n/routing'
 
 export async function Person() {
   const session = await auth()
@@ -27,13 +27,17 @@ export async function Person() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuLabel className={'text-center'}>
-          {user?.organization_name}
-        </DropdownMenuLabel>
-        <DropdownMenuLabel>{user?.email}</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        {/*<DropdownMenuItem>Settings</DropdownMenuItem>*/}
-        {/*<DropdownMenuItem>Support</DropdownMenuItem>*/}
+        <DropdownMenuItem asChild>
+          <div>
+            <Link
+              href={'/user-setting'}
+              className={'space-x-1 flex items-center'}
+            >
+              <Settings2 size={'15'} />
+              <span>User Settings</span>
+            </Link>
+          </div>
+        </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
           <form action={signOut}>

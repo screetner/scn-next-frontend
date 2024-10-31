@@ -61,7 +61,11 @@ export function EditRoleNameForm({ roleId, initialRoleName }: EditRoleProps) {
           <Button
             type="submit"
             className="max-w-xs"
-            disabled={isSubmitting || initialRoleName === 'Default'}
+            disabled={
+              isSubmitting ||
+              initialRoleName === 'Default' ||
+              !form.formState.isValid
+            }
           >
             {isSubmitting ? 'Saving...' : 'Save Changes'}
           </Button>
