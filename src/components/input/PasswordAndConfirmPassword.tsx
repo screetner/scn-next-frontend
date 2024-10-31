@@ -88,6 +88,9 @@ export function PasswordAndConfirmPassword({
                 onChange={e => {
                   field.onChange(e)
                   setShowCriteria(true)
+                  if(e.target.value === '') {
+                    setShowCriteria(false)
+                  }
                 }}
                 placeholder={t('password')}
               />

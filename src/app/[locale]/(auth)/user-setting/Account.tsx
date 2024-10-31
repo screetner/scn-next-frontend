@@ -4,7 +4,6 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import {
   Form,
   FormControl,
@@ -18,17 +17,12 @@ import { TypographyH3 } from '@/components/typography/TypographyH3'
 import { Separator } from '@/components/ui/separator'
 import { PasswordChangeSchema } from '@/schemas/PasswordChange'
 import { PasswordAndConfirmPassword } from '@/components/input/PasswordAndConfirmPassword'
-
-const changePassword = async (data: PasswordChangeSchema) => {
-  // Simulate API call
-  await new Promise(resolve => setTimeout(resolve, 1000))
-  // In a real scenario, you'd make an API call here
-  console.log('Password change data:', data)
-  return { success: true }
-}
+import { changePassword } from '@/actions/user'
+import { PasswordInput } from '@/components/input/PasswordInput'
 
 export default function Account() {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
+
   const form = useForm<PasswordChangeSchema>({
     resolver: zodResolver(PasswordChangeSchema),
     defaultValues: {
@@ -43,7 +37,7 @@ export default function Account() {
     toast.promise(changePassword(values), {
       loading: 'Changing password...',
       success: 'Password changed successfully',
-      error: 'Failed to change password',
+      error: (err) => err.message,
     })
     setIsSubmitting(false)
     form.reset()
@@ -66,11 +60,7 @@ export default function Account() {
                 <FormItem>
                   <FormLabel>Current Password</FormLabel>
                   <FormControl>
-                    <Input
-                      {...field}
-                      type="password"
-                      placeholder="Enter current password"
-                    />
+                    <PasswordInput field={field} placeholder="Enter current password" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
