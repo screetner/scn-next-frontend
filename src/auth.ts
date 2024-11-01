@@ -4,6 +4,7 @@ import Credentials from 'next-auth/providers/credentials'
 import { InvalidLoginError } from '@/utils/custom'
 import { shouldRefreshToken } from '@/utils/helper'
 import { redirect } from '@/i18n/routing'
+import apiEndpoints from '@/config/apiEndpoints'
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -53,7 +54,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           )
 
           if (shouldRefresh) {
-            const res = await fetch(`${process.env.API_URL}/auth/refresh`, {
+            const res = await fetch(`${apiEndpoints.auth.refresh}`, {
               method: 'GET',
               headers: {
                 // @ts-ignore
@@ -74,7 +75,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             }
           }
         }
-
         return token
       } catch (e) {
         await signOut()
