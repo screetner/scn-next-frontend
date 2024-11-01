@@ -1,9 +1,10 @@
 const main_service = '/main'
+const logs_service = '/log-sv'
 
 const apiEndpoints = {
   auth: {
     signIn: `${main_service}/auth/login`,
-    refresh: `${main_service}/auth/refresh`,
+    refresh: `${process.env.API_URL}${main_service}/auth/refresh`,
   },
   dashboard: {
     getAssets: `${main_service}/assets/orgId`,
@@ -36,6 +37,9 @@ const apiEndpoints = {
   },
   user: {
     changePassword: `${main_service}/user/change-password`,
+  },
+  logs: {
+    getUserActivityLogs: (userId : string) => `${logs_service}/logs/user/${userId}`,
   },
   owner: {
     org: {

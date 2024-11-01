@@ -28,6 +28,8 @@
     --warning-foreground: 39 89% 15%; /* Darker orange */
     --information: 200 98% 46%; /* Sky color */
     --information-foreground: 200 98% 16%; /* Darker sky */
+    --success: 142.1 76.2% 36.3%; /* Green color */
+    --success-foreground: 355.7 100% 97.3%; /* Lighter green */
   }
 
   .dark {
@@ -54,6 +56,8 @@
     --warning-foreground: 39 89% 90%; /* Lighter orange for dark mode */
     --information: 200 98% 60%; /* Brighter sky color for dark mode */
     --information-foreground: 200 98% 90%; /* Lighter sky for dark mode */
+    --success: 142.1 70.6% 45.3%; /* Brighter green color for dark mode */
+    --success-foreground: 144.9 80.4% 10%; /* Lighter green for dark mode */
   }
 }
 

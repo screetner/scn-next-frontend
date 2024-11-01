@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import { useSession } from 'next-auth/react'
 import { User, Briefcase, Building2, AtSign } from 'lucide-react'
@@ -49,7 +51,7 @@ function ProfileItem({
 }) {
   return (
     <div className="flex items-center space-x-3">
-      <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-100">
+      <div className="flex items-center justify-center w-10 h-10 rounded-full">
         {icon}
       </div>
       <div>
