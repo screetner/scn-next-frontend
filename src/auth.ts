@@ -32,7 +32,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           }
           return null
         } catch (e: any) {
-          console.log(e)
           throw new InvalidLoginError(
             e.response.data || 'An error occurred while trying to authenticate',
           )
@@ -64,7 +63,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 AuthorizationRefresh: `Bearer ${token.user.refreshToken}`,
               },
             })
-            console.log('res', res)
             const data = await res.json()
             return {
               ...token,
