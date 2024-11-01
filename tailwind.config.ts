@@ -60,6 +60,10 @@ const config = {
           DEFAULT: 'hsl(var(--information))',
           foreground: 'hsl(var(--information-foreground))',
         },
+        success: {
+          DEFAULT: 'hsl(var(--success))',
+          foreground: 'hsl(var(--success-foreground))',
+        }
       },
       borderRadius: {
         lg: 'var(--radius)',

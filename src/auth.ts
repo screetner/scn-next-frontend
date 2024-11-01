@@ -22,6 +22,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
               username: response.user.username,
               roleName: response.user.roleName,
               email: response.user.email,
+              userId: response.user.userId,
               accessToken: response.user.accessToken,
               orgName: response.user.orgName,
               accessTokenExpiry: response.user.accessTokenExpiry,
@@ -63,6 +64,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 AuthorizationRefresh: `Bearer ${token.user.refreshToken}`,
               },
             })
+            console.log('res', res)
             const data = await res.json()
             return {
               ...token,

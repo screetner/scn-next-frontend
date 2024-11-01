@@ -5,6 +5,7 @@ import React, { useState } from 'react'
 import { Logs, Settings, UserPen } from 'lucide-react'
 import Profile from '@/app/[locale]/(auth)/user-setting/Profile'
 import Account from '@/app/[locale]/(auth)/user-setting/Account'
+import ActivityLogs from '@/app/[locale]/(auth)/user-setting/ActivityLogs'
 
 export default function UserSettingTabs() {
   const [activeTab, setActiveTab] = useState('profile')
@@ -34,7 +35,7 @@ export default function UserSettingTabs() {
           <Account />
         </TabsContent>
         <TabsContent value="Activity">
-          <div>Activity Logs</div>
+          <ActivityLogs/>
         </TabsContent>
       </Tabs>
     </>

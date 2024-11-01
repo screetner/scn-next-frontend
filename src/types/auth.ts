@@ -12,6 +12,7 @@ type TUser = {
   accessTokenExpiry: string
   refreshToken: string
   isOwner: boolean
+  userId: string
 }
 
 export type TSignInResponse = {
