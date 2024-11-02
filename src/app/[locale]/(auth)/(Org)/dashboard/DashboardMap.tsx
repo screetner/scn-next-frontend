@@ -19,11 +19,6 @@ export function DashboardMap({ data }: DashboardMapProps) {
             latitude: asset.geoCoordinate[0],
             longitude: asset.geoCoordinate[1],
           },
-          content: (
-            <div>
-              <h1>{asset.assetId}</h1>
-            </div>
-          ),
         };
       });
     }
