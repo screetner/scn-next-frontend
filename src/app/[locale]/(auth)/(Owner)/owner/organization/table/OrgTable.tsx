@@ -15,6 +15,8 @@ import { Plus } from 'lucide-react'
 import DialogButton from '@/components/Button/DialogButton'
 import CreateOrganizationDialog from '@/app/[locale]/(auth)/(Owner)/owner/organization/CreateOrgDialog'
 import { OrganizationAll } from '@/types/owner/organization'
+import { useRouter } from '@/i18n/routing'
+import { fillRoute, Routes } from '@/routes'
 
 interface OrgTableProps {
   data: OrganizationAll[]
@@ -22,6 +24,7 @@ interface OrgTableProps {
 
 export default function OrgTable({ data }: OrgTableProps) {
   const [orgNameFilter, setOrgNameFilter] = useState<ColumnFiltersState>([])
+  const router = useRouter()
 
   const table = useReactTable({
     columns: OrgTableColumn(),
@@ -34,6 +37,13 @@ export default function OrgTable({ data }: OrgTableProps) {
       columnFilters: orgNameFilter,
     },
   })
+
+  const onOrgClick = (org: OrganizationAll) => {
+    router.push(
+      `${fillRoute(Routes.OWNER_ORGANIZATION_MNG, undefined, org.orgId)}`,
+    )
+  }
+
   return (
     <>
       <div className="flex space-x-4 py-4">
@@ -51,7 +61,7 @@ export default function OrgTable({ data }: OrgTableProps) {
           text={'Create Organization'}
         />
       </div>
-      <TanStackDataTable table={table} />
+      <TanStackDataTable table={table} onRowClick={onOrgClick} />
     </>
   )
 }
