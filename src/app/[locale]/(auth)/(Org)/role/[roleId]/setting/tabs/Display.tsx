@@ -64,7 +64,7 @@ export function EditRoleNameForm({ roleId, initialRoleName }: EditRoleProps) {
             disabled={
               isSubmitting ||
               initialRoleName === 'Default' ||
-              !form.formState.isValid
+              !form.formState.isDirty
             }
           >
             {isSubmitting ? 'Saving...' : 'Save Changes'}

@@ -156,7 +156,7 @@ export function RolePermissionsForm({ data, roleId }: RolePermissionsProps) {
             <Button
               type="submit"
               className="mt-4"
-              disabled={!form.formState.isDirty || !form.formState.isValid}
+              disabled={!form.formState.isDirty}
             >
               Save Permissions
             </Button>

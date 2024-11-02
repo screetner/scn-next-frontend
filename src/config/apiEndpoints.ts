@@ -28,7 +28,7 @@ const apiEndpoints = {
     getRoleManagement: (roleId: string) => `${main_service}/role/${roleId}`,
     getListOfUnRoleMembers: `${main_service}/role/unassigned`,
     updateRoleName: `${main_service}/role/update-role-name`,
-    updateRolePermissions: `/role/permission`,
+    updateRolePermissions: `${main_service}/role/permission`,
     createRole: `${main_service}/role/new-role`,
     assignRole: `${main_service}/role/assign-role`,
     unassignRole: `${main_service}/role/unassign-role`,
