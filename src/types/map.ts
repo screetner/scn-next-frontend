@@ -1,5 +1,3 @@
-import React from 'react';
-
 export interface Location {
   latitude: number;
   longitude: number;
@@ -7,7 +5,6 @@ export interface Location {
 
 export interface PopupData {
   location: Location;
-  content: React.ReactNode;
 }
 
 export interface CustomMapProps {
