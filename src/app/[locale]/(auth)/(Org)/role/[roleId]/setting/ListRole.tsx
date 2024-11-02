@@ -15,7 +15,7 @@ interface ListRoleProps {
 }
 
 export default function ListRole({ handleRoleSelect }: ListRoleProps) {
-  const { roleId } = useRoleSetting()
+  const { roleId : selectedRoleId } = useRoleSetting()
   const { roleList } = useRoleSetting()
   const onCreateRole = useCallback(() => {
     toast.promise(createRoleWithRedirect(), {
@@ -43,14 +43,14 @@ export default function ListRole({ handleRoleSelect }: ListRoleProps) {
               key={role.roleId}
               className={cn(
                 'cursor-pointer mt-2 w-full px-4 py-2 text-left rounded flex justify-between items-center',
-                roleId === role.roleId
+                selectedRoleId === role.roleId
                   ? 'bg-secondary text-secondary-foreground'
                   : 'hover:bg-gray-100',
               )}
               onClick={() => handleRoleSelect(role.roleId)}
             >
               <div>{role.roleName}</div>
-              <RoleMenu roleId={role.roleId} />
+              <RoleMenu currentRoleId={selectedRoleId} targetRoleId={role.roleId} />
             </div>
           ))}
         </ScrollArea>

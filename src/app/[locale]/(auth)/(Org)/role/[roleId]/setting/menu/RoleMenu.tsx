@@ -15,24 +15,25 @@ import { useAlertDialog } from '@/context/AlertDialogContext'
 import { deleteRoleFromOrg } from '@/actions/role'
 
 interface RoleActionProps {
-  roleId: string
+  currentRoleId: string
+  targetRoleId: string
 }
 
-export default function RoleMenu({ roleId }: RoleActionProps) {
+export default function RoleMenu({ currentRoleId,targetRoleId }: RoleActionProps) {
   const { showAlert } = useAlertDialog()
 
   const onDeleteRole = useCallback(
-    async (e: React.MouseEvent, roleId: string) => {
+    async (e: React.MouseEvent, targetRoleId: string) => {
       e.stopPropagation()
       showAlert('Are you sure you want to delete this role?', () => {
-        toast.promise(deleteRoleFromOrg(roleId, roleId), {
+        toast.promise(deleteRoleFromOrg(targetRoleId, currentRoleId), {
           loading: 'Deleting role...',
           success: 'Role deleted successfully',
           error: err => err.message || 'An unexpected error occurred',
         })
       })
     },
-    [showAlert],
+    [currentRoleId, showAlert],
   )
 
   return (
@@ -46,7 +47,7 @@ export default function RoleMenu({ roleId }: RoleActionProps) {
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem onClick={e => onDeleteRole(e, roleId)}>
+          <DropdownMenuItem onClick={e => onDeleteRole(e, targetRoleId)}>
             <Trash2 className="mr-2 h-4 w-4 text-red-600" />
             <span>Delete Role</span>
           </DropdownMenuItem>
