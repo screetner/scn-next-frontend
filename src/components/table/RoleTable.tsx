@@ -11,7 +11,7 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import { roleTableColumn } from '@/app/[locale]/(auth)/(Org)/role/table/roleTableColumn'
+import { roleTableColumn } from '@/components/table/columnDef/roleTableColumn'
 import TanStackDataTable from '@/components/TanStackDataTable'
 import { createRoleWithRedirect } from '@/actions/role'
 import { useRouter } from '@/i18n/routing'
@@ -20,9 +20,13 @@ import FormButton from '@/components/Button/FormButton'
 
 interface RoleTableProps {
   roles: RolesTable[]
+  ownerView?: boolean
 }
 
-export default function RoleTable({ roles }: RoleTableProps) {
+export default function RoleTable({
+  roles,
+  ownerView = false,
+}: RoleTableProps) {
   const router = useRouter()
   const [roleNameFilter, setRoleNameFilter] = useState<ColumnFiltersState>([])
 
@@ -41,6 +45,7 @@ export default function RoleTable({ roles }: RoleTableProps) {
   }
 
   const onRowClick = (row: RolesTable) => {
+    if (ownerView) return
     router.push(`${fillRoute(Routes.ROLE_SETTING, row.roleId)}?tab=display`)
   }
 
@@ -58,7 +63,7 @@ export default function RoleTable({ roles }: RoleTableProps) {
 
   return (
     <>
-      <div className="flex space-x-4 py-4">
+      <div className="flex space-x-4 mb-2">
         <Input
           placeholder="Search roles"
           value={
@@ -68,11 +73,14 @@ export default function RoleTable({ roles }: RoleTableProps) {
             table.getColumn('roleName')?.setFilterValue(event.target.value)
           }
         />
-        <FormButton
-          onSubmit={handleCreateRole}
-          icon={<Plus />}
-          text={'Create Role'}
-        />
+        {!ownerView && (
+          <FormButton
+            onSubmit={handleCreateRole}
+            disabled={ownerView}
+            icon={<Plus />}
+            text={'Create Role'}
+          />
+        )}
       </div>
       <TanStackDataTable table={table} onRowClick={onRowClick} />
     </>

@@ -13,12 +13,12 @@ export const roleTableColumn = (
   },
   {
     accessorKey: 'members',
-    header: 'Members',
+    header: '#Members',
     cell: ({ row }) => {
       return (
         <div className="flex items-center gap-1">
           {row.original.members}
-          <ToolTip content={'View Member'}>
+          <ToolTip content={'View RoleMemberTable'}>
             <User
               onClick={e => onClickViewMembers(e, row.original.roleId)}
               className="hover:cursor-pointer"

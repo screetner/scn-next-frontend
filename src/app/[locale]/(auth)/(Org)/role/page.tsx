@@ -1,4 +1,4 @@
-import RoleTable from './RoleTable'
+import RoleTable from '../../../../../components/table/RoleTable'
 import {
   Card,
   CardContent,
