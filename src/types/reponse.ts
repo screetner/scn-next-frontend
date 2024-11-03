@@ -1,4 +1,4 @@
 export type actionResponse<T> = {
-  data: T | null
+  data: T
   error: string | null
 }

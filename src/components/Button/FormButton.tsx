@@ -7,6 +7,7 @@ interface FormButtonProps {
   icon: React.ReactNode
   text: string
   className?: string
+  disabled?: boolean
 }
 
 export default function FormButton({
@@ -14,10 +15,12 @@ export default function FormButton({
   text,
   onSubmit,
   className,
+  disabled,
 }: FormButtonProps) {
   return (
     <form onSubmit={onSubmit}>
       <Button
+        disabled={disabled}
         type={'submit'}
         className={cn('flex items-center space-x-2', className)}
       >

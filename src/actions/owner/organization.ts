@@ -20,7 +20,7 @@ export async function getAllOrganization(): Promise<
     }
   } catch (e) {
     return {
-      data: null,
+      data: [],
       error: CatchAxiosError(e),
     }
   }

@@ -27,7 +27,7 @@ export default function MemberMenu({ roleId, userId }: MemberMenuProps) {
       showAlert('Are you sure you want to delete this member?', () => {
         toast.promise(removeMemberFromRole(roleId, userId), {
           loading: 'Removing member...',
-          success: 'Member removed successfully',
+          success: 'MemberTable removed successfully',
           error: err => err.message,
         })
       })

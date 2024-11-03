@@ -18,7 +18,7 @@ export const roleTableColumn = (
       return (
         <div className="flex items-center gap-1">
           {row.original.members}
-          <ToolTip content={'View Member'}>
+          <ToolTip content={'View MemberTable'}>
             <User
               onClick={e => onClickViewMembers(e, row.original.roleId)}
               className="hover:cursor-pointer"

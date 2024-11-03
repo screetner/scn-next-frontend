@@ -3,8 +3,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { EditRoleNameForm } from '@/app/[locale]/(auth)/(Org)/role/[roleId]/setting/tabs/Display'
 import { RolePermissionsForm } from '@/app/[locale]/(auth)/(Org)/role/[roleId]/setting/tabs/Permission'
 import React from 'react'
-import Member from '@/app/[locale]/(auth)/(Org)/role/[roleId]/setting/tabs/Member'
 import { useRoleSetting } from '@/context/RoleSettingContext'
+import Member from '@/app/[locale]/(auth)/(Org)/role/[roleId]/setting/tabs/Member'
 
 interface RoleSettingsProps {
   activeTab: string

@@ -11,7 +11,7 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import { roleTableColumn } from '@/app/[locale]/(auth)/(Org)/role/table/roleTableColumn'
+import { roleTableColumn } from '@/components/table/columnDef/roleTableColumn'
 import TanStackDataTable from '@/components/TanStackDataTable'
 import { createRoleWithRedirect } from '@/actions/role'
 import { useRouter } from '@/i18n/routing'
@@ -20,9 +20,13 @@ import FormButton from '@/components/Button/FormButton'
 
 interface RoleTableProps {
   roles: RolesTable[]
+  allowCreateRole?: boolean
 }
 
-export default function RoleTable({ roles }: RoleTableProps) {
+export default function RoleTable({
+  roles,
+  allowCreateRole = true,
+}: RoleTableProps) {
   const router = useRouter()
   const [roleNameFilter, setRoleNameFilter] = useState<ColumnFiltersState>([])
 
@@ -68,11 +72,14 @@ export default function RoleTable({ roles }: RoleTableProps) {
             table.getColumn('roleName')?.setFilterValue(event.target.value)
           }
         />
-        <FormButton
-          onSubmit={handleCreateRole}
-          icon={<Plus />}
-          text={'Create Role'}
-        />
+        {allowCreateRole && (
+          <FormButton
+            onSubmit={handleCreateRole}
+            disabled={!allowCreateRole}
+            icon={<Plus />}
+            text={'Create Role'}
+          />
+        )}
       </div>
       <TanStackDataTable table={table} onRowClick={onRowClick} />
     </>
