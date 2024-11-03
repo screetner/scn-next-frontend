@@ -48,10 +48,15 @@ const apiEndpoints = {
     org: {
       getAllOrganization: `${main_service}/organization/all`,
       createOrganization: `${main_service}/organization/create`,
+      getOrganizationInfo: (orgId: string) =>
+        `${main_service}organization/information/${orgId}`,
     },
     role: {
-      getRolesByOrgId: (orgId: string) =>
-        `${main_service}/role/organization/${orgId}`,
+      getRolesByOrgId: (orgId: string) => `${main_service}/role/org/${orgId}`,
+    },
+    member: {
+      getMemberByOrgId: (orgId: string) =>
+        `${main_service}/member/recent/org/${orgId}`,
     },
   },
 }

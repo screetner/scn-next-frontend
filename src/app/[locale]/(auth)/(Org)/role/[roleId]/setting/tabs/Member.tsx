@@ -1,4 +1,4 @@
-import MemberTable from '@/components/table/MemberTable'
+import RoleMemberTable from '@/components/table/RoleMemberTable'
 import { RoleMember } from '@/types/role'
 
 interface MemberProps {
@@ -10,7 +10,7 @@ interface MemberProps {
 export default function Member({ roleMembers, roleId, roleName }: MemberProps) {
   return (
     <>
-      <MemberTable
+      <RoleMemberTable
         roleMembers={roleMembers}
         roleId={roleId}
         roleName={roleName}

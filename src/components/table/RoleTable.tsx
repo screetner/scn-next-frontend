@@ -20,12 +20,12 @@ import FormButton from '@/components/Button/FormButton'
 
 interface RoleTableProps {
   roles: RolesTable[]
-  allowCreateRole?: boolean
+  ownerView?: boolean
 }
 
 export default function RoleTable({
   roles,
-  allowCreateRole = true,
+  ownerView = false,
 }: RoleTableProps) {
   const router = useRouter()
   const [roleNameFilter, setRoleNameFilter] = useState<ColumnFiltersState>([])
@@ -45,6 +45,7 @@ export default function RoleTable({
   }
 
   const onRowClick = (row: RolesTable) => {
+    if (ownerView) return
     router.push(`${fillRoute(Routes.ROLE_SETTING, row.roleId)}?tab=display`)
   }
 
@@ -62,7 +63,7 @@ export default function RoleTable({
 
   return (
     <>
-      <div className="flex space-x-4 py-4">
+      <div className="flex space-x-4 mb-2">
         <Input
           placeholder="Search roles"
           value={
@@ -72,10 +73,10 @@ export default function RoleTable({
             table.getColumn('roleName')?.setFilterValue(event.target.value)
           }
         />
-        {allowCreateRole && (
+        {!ownerView && (
           <FormButton
             onSubmit={handleCreateRole}
-            disabled={!allowCreateRole}
+            disabled={ownerView}
             icon={<Plus />}
             text={'Create Role'}
           />

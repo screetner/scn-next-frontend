@@ -2,14 +2,9 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { getRolesByOrgId } from '@/actions/owner/role'
 import RoleTable from '@/components/table/RoleTable'
 import ErrorComponent from '@/components/ErrorComponent'
+import { parallelProps } from '@/app/[locale]/(auth)/(Owner)/owner/organization/[orgId]/parallelProps'
 
-interface OrgRoleProps {
-  params: {
-    orgId: string
-  }
-}
-
-export default async function OrgRole({ params }: OrgRoleProps) {
+export default async function OrgRole({ params }: parallelProps) {
   const { data, error } = await getRolesByOrgId(params.orgId)
 
   return (
@@ -21,7 +16,7 @@ export default async function OrgRole({ params }: OrgRoleProps) {
         {error ? (
           <ErrorComponent title={error} />
         ) : (
-          <RoleTable roles={data} allowCreateRole={false} />
+          <RoleTable roles={data} ownerView={true} />
         )}
       </CardContent>
     </Card>

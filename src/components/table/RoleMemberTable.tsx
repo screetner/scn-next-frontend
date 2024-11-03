@@ -6,7 +6,6 @@ import { RoleMember } from '@/types/role'
 import { useDialog } from '@/context/DialogProvider'
 import AddMemberDialog from '@/app/[locale]/(auth)/(Org)/role/[roleId]/setting/dialogs/AddMemberDialog'
 import {
-  ColumnFiltersState,
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
@@ -19,16 +18,13 @@ interface MemberProps {
   roleId: string
   roleName: string
   roleMembers: RoleMember[]
-  allowAddMember?: boolean
 }
 
-export default function MemberTable({
+export default function RoleMemberTable({
   roleMembers,
   roleId,
   roleName,
-  allowAddMember = true,
 }: MemberProps) {
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [globalFilter, setGlobalFilter] = useState('')
   const { showDialog } = useDialog()
 
@@ -36,11 +32,9 @@ export default function MemberTable({
     columns: MemberTableColumn({ roleId }),
     data: roleMembers,
     getCoreRowModel: getCoreRowModel(),
-    onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     state: {
-      columnFilters,
       globalFilter,
     },
     onGlobalFilterChange: setGlobalFilter,
@@ -62,20 +56,18 @@ export default function MemberTable({
           value={globalFilter}
           onChange={e => setGlobalFilter(e.target.value)}
         />
-        {allowAddMember && (
-          <Button
-            variant="default"
-            disabled={roleName.toLowerCase() === 'default'}
-            onClick={() =>
-              showDialog({
-                title: 'Add MemberTable',
-                content: <AddMemberDialog roleId={roleId} />,
-              })
-            }
-          >
-            <Plus className="mr-2 h-4 w-4" /> Add Member
-          </Button>
-        )}
+        <Button
+          variant="default"
+          disabled={roleName.toLowerCase() === 'default'}
+          onClick={() =>
+            showDialog({
+              title: 'Add RoleMemberTable',
+              content: <AddMemberDialog roleId={roleId} />,
+            })
+          }
+        >
+          <Plus className="mr-2 h-4 w-4" /> Add Member
+        </Button>
       </div>
       <TanStackDataTable table={table} />
     </>

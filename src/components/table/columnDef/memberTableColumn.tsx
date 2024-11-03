@@ -4,7 +4,7 @@ import MemberMenu from '@/app/[locale]/(auth)/(Org)/role/[roleId]/setting/menu/m
 import React from 'react'
 
 interface MemberTableColumnProps {
-  roleId: string
+  roleId: string | undefined | null
 }
 
 export const MemberTableColumn = ({
@@ -22,8 +22,9 @@ export const MemberTableColumn = ({
     {
       id: 'actions',
       cell: ({ row }) => {
-        return <MemberMenu roleId={roleId} userId={row.original.userId} />
+        return <MemberMenu roleId={roleId!} userId={row.original.userId} />
       },
+      enableHiding: !roleId,
     },
   ]
 }

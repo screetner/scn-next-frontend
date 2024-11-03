@@ -67,7 +67,7 @@ export default async function RecentMember() {
                   <TableRow key={index}>
                     <TableCell>
                       <TypographyP
-                        text={`${member.userName} (${member.roleName})`}
+                        text={`${member.username} (${member.roleName})`}
                         className={'font-semibold'}
                       />
                       <div className="hidden text-sm text-muted-foreground md:inline">
