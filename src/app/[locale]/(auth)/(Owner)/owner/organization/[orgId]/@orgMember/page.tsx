@@ -3,13 +3,17 @@ import { parallelProps } from '@/app/[locale]/(auth)/(Owner)/owner/organization/
 import { getMemberByOrgId } from '@/actions/owner/member'
 import ErrorComponent from '@/components/ErrorComponent'
 import AllMemberTable from '@/components/table/AllMemberTable'
+import AddAdminButton from '@/app/[locale]/(auth)/(Owner)/owner/organization/[orgId]/@orgMember/AddAdminButton'
 
 export default async function OrgMember({ params }: parallelProps) {
   const { error, data } = await getMemberByOrgId(params.orgId)
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Organization Members</CardTitle>
+        <div className={'flex justify-between'}>
+          <CardTitle>Organization Members</CardTitle>
+          <AddAdminButton orgId={params.orgId} />
+        </div>
       </CardHeader>
       <CardContent>
         {error ? (

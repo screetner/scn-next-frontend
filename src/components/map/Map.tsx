@@ -66,7 +66,6 @@ function CustomMap({
             })
           } else if (feature.properties) {
             // Handle single point click
-            console.log('Selected popup:', feature.properties)
             setSelectedPopup(feature.properties as PopupData)
           }
         }

@@ -23,7 +23,6 @@ export default async function Layout({
   params: { orgId },
 }: LayoutProps) {
   const { data, error } = await getOrganizationIfo(orgId)
-  console.log(data, error)
   const createdDate = dayjs(data.createdAt!).format('YYYY-MM-DD')
 
   return (

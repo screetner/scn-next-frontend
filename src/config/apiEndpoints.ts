@@ -50,6 +50,7 @@ const apiEndpoints = {
       createOrganization: `${main_service}/organization/create`,
       getOrganizationInfo: (orgId: string) =>
         `${main_service}organization/information/${orgId}`,
+      inviteAdmin: `${main_service}/organization/invite-admin`,
     },
     role: {
       getRolesByOrgId: (orgId: string) => `${main_service}/role/org/${orgId}`,

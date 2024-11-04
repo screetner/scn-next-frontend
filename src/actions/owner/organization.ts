@@ -8,6 +8,7 @@ import apiEndpoints from '@/config/apiEndpoints'
 import { CreateOrgFormData } from '@/schemas/OwnerCreateOrgnization'
 import { revalidatePath } from 'next/cache'
 import { fillRoute, Routes } from '@/routes'
+import { InviteAdminFormData } from '@/schemas/InviteAdminSchema'
 
 export async function getAllOrganization(): Promise<
   actionResponse<OrganizationAll[]>
@@ -56,5 +57,16 @@ export async function getOrganizationIfo(
       },
       error: CatchAxiosError(e),
     }
+  }
+}
+
+export async function inviteAdmin(orgId: string, body: InviteAdminFormData) {
+  try {
+    await axios.post(`${apiEndpoints.owner.org.inviteAdmin}`, {
+      orgId,
+      adminEmail: body.adminEmail,
+    })
+  } catch (e) {
+    return CatchAxiosError(e)
   }
 }
