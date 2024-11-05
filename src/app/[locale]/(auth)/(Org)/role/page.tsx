@@ -8,20 +8,19 @@ import {
 } from '@/components/ui/card'
 import { AddMemberAlert } from '@/app/[locale]/(auth)/(Org)/role/AddMemberAlert'
 import { getRolesTable } from '@/actions/role'
+import { getTranslations } from 'next-intl/server'
 
 export default async function RoleManagement() {
   const roles = await getRolesTable()
+  const t = await getTranslations('RolePage')
 
   return (
     <>
       <AddMemberAlert className={'mb-3'} />
       <Card>
         <CardHeader>
-          <CardTitle>Roles</CardTitle>
-          <CardDescription>
-            Manage user roles and permissions to group users by their access
-            level.
-          </CardDescription>
+          <CardTitle>{t('title')}</CardTitle>
+          <CardDescription>{t('description')}</CardDescription>
         </CardHeader>
         <CardContent>
           <RoleTable roles={roles} />

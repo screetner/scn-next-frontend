@@ -68,5 +68,16 @@
       }
     },
     "footer": "© 2024 Screetner. All rights reserved."
+  },
+  "RolePage": {
+    "title": "Roles",
+    "description": "Manage user roles and permissions to group users by their access level.",
+    "Alert": {
+      "title": "Member management",
+      "description": "To create a URL for registering a new member, <Link> Click Here </Link>"
+    },
+    "RoleTable": {
+      "createRoleButton": "Create Role"
+    }
   }
 }

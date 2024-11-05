@@ -17,6 +17,7 @@ import { createRoleWithRedirect } from '@/actions/role'
 import { useRouter } from '@/i18n/routing'
 import { Plus } from 'lucide-react'
 import FormButton from '@/components/Button/FormButton'
+import { useTranslations } from 'next-intl'
 
 interface RoleTableProps {
   roles: RolesTable[]
@@ -29,6 +30,7 @@ export default function RoleTable({
 }: RoleTableProps) {
   const router = useRouter()
   const [roleNameFilter, setRoleNameFilter] = useState<ColumnFiltersState>([])
+  const t = useTranslations('RolePage.RoleTable')
 
   const handleCreateRole = (e: React.FormEvent) => {
     e.preventDefault()
@@ -78,7 +80,7 @@ export default function RoleTable({
             onSubmit={handleCreateRole}
             disabled={ownerView}
             icon={<Plus />}
-            text={'Create Role'}
+            text={t('createRoleButton')}
           />
         )}
       </div>
