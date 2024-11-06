@@ -105,6 +105,10 @@
         "emailPlaceholder": "Enter email address",
         "submitButton": "{isSubmitting, select, true {Inviting...} other {Invite}}"
       }
+    },
+    "recentMember": {
+      "title": "Recent Members",
+      "description": " Latest members who joined the organization"
     }
   }
 }

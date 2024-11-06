@@ -105,6 +105,10 @@
         "emailPlaceholder": "ป้อนที่อยู่อีเมล",
         "submitButton": "{isSubmitting, select, true {กำลังเชิญ...} other {เชิญ}}"
       }
+    },
+    "recentMember": {
+      "title": "สมาชิกที่เข้าร่วมล่าสุด",
+      "description": "สมาชิกใหม่ล่าสุดที่เข้าร่วมองค์กร"
     }
   }
 }

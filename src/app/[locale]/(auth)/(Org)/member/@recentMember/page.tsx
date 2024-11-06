@@ -20,9 +20,12 @@ import dayjs from 'dayjs'
 import { getRecentMembers } from '@/actions/member'
 import { revalidateTag } from 'next/cache'
 import { TypographyP } from '@/components/typography/TypographyP'
+import { getTranslations } from 'next-intl/server'
 
 export default async function RecentMember() {
   const { data: recentMember, error } = await getRecentMembers(8)
+  const t = await getTranslations('MemberPage.recentMember')
+  const t2 = await getTranslations('MemberPage')
 
   const revalidateRecentMember = async () => {
     'use server'
@@ -33,11 +36,9 @@ export default async function RecentMember() {
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
         <div className="grid gap-1">
-          <CardTitle className="text-lg font-semibold">
-            Recent Members
-          </CardTitle>
+          <CardTitle className="text-lg font-semibold">{t('title')}</CardTitle>
           <CardDescription className="text-sm text-gray-500">
-            Latest members who joined the organization
+            {t('description')}
           </CardDescription>
         </div>
         <ToolTip content={'Refresh'} side={'top'}>
@@ -82,7 +83,7 @@ export default async function RecentMember() {
               </TableBody>
             </Table>
             <div className="mt-4 text-sm text-gray-500">
-              Last updated:{' '}
+              {t2('lastUpdated')}:{' '}
               <strong>{dayjs().format('DD MMM, YYYY HH:mm')}</strong>
             </div>
           </>
