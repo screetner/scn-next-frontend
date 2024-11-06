@@ -90,6 +90,21 @@
     "totalInviteURL": {
       "totalInviteURLTitle": "สถิติการเชิญคนเข้าร่วมองค์กร",
       "active": "ผู้ใช้ที่ลงทะเบียนแล้ว"
+    },
+    "inviteLink": {
+      "title": "สร้าง URL สำหรับลงทะเบียน",
+      "description": "สร้าง URL ใหม่สำหรับเชิญสมาชิกใหม่",
+      "inviteButton": "เชิญ",
+      "dialog": {
+        "inviteDialogTitle": "เชิญสมาชิกใหม่",
+        "defaultRoleLabel": "บทบาทเริ่มต้นสำหรับผู้ใช้",
+        "defaultRolePlaceholder": "เลือกบทบาทเริ่มต้น",
+        "selectRoleLabel": "เลือกบทบาท",
+        "emailLabel": "อีเมล",
+        "emailCreateItem": "เพิ่มที่อยู่อีเมลผู้ใช้",
+        "emailPlaceholder": "ป้อนที่อยู่อีเมล",
+        "submitButton": "{isSubmitting, select, true {กำลังเชิญ...} other {เชิญ}}"
+      }
     }
   }
 }

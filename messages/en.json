@@ -90,6 +90,21 @@
     "totalInviteURL": {
       "totalInviteURLTitle": "Invite URL Stats",
       "active": "Activated"
+    },
+    "inviteLink": {
+      "title": "Create register URL",
+      "description": "Create a new register URL for inviting new members",
+      "inviteButton": "Invite",
+      "dialog": {
+        "inviteDialogTitle": "Invite new member",
+        "defaultRoleLabel": "Default role for users",
+        "defaultRolePlaceholder": "Select role",
+        "selectRoleLabel": "Select role",
+        "emailLabel": "Emails",
+        "emailCreateItem": "Add user email address",
+        "emailPlaceholder": "Enter email address",
+        "submitButton": "{isSubmitting, select, true {Inviting...} other {Invite}}"
+      }
     }
   }
 }

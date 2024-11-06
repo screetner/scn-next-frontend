@@ -14,17 +14,17 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import InviteButton from '@/app/[locale]/(auth)/(Org)/member/@inviteLink/InviteButton'
+import { getTranslations } from 'next-intl/server'
 
-export default function CreateInviteLink() {
+export default async function CreateInviteLink() {
+  const t = await getTranslations('MemberPage.inviteLink')
   return (
     <>
       <Card>
         <CardHeader className="flex flex-row items-center">
           <div className="grid gap-2">
-            <CardTitle>Create register URL</CardTitle>
-            <CardDescription>
-              Create a new register URL for inviting new members
-            </CardDescription>
+            <CardTitle>{t('title')}</CardTitle>
+            <CardDescription>{t('description')}</CardDescription>
           </div>
           <InviteButton />
         </CardHeader>

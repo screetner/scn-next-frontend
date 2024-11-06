@@ -24,9 +24,11 @@ import { inviteMembers } from '@/actions/member'
 import { useDialog } from '@/context/DialogProvider'
 import { useFetchRoleOptions } from '@/hooks/role/useFetchRoleOptions'
 import { SkeletonCard } from '@/components/SkeletonCard'
+import { useTranslations } from 'next-intl'
 
 export default function InviteDialog() {
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const t = useTranslations('MemberPage.inviteLink.dialog')
   const { data: OPTIONS, isLoading } = useFetchRoleOptions()
   const { closeDialog } = useDialog()
 
@@ -59,11 +61,11 @@ export default function InviteDialog() {
           name="defaultRoleId"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Default role for users</FormLabel>
+              <FormLabel>{t('defaultRoleLabel')}</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select a role" />
+                    <SelectValue placeholder={t('defaultRolePlaceholder')} />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
@@ -83,7 +85,7 @@ export default function InviteDialog() {
           name="emails"
           render={({}) => (
             <FormItem>
-              <FormLabel>Email Addresses</FormLabel>
+              <FormLabel>{t('emailLabel')}</FormLabel>
               <FormControl>
                 <Controller
                   name="emails"
@@ -92,8 +94,8 @@ export default function InviteDialog() {
                     <MultipleSelector
                       defaultOptions={[]}
                       hidePlaceholderWhenSelected
-                      customTextCreateItem="Add user email address"
-                      placeholder="Enter email addresses"
+                      customTextCreateItem={t('emailCreateItem')}
+                      placeholder={t('emailPlaceholder')}
                       creatable
                       onChange={value =>
                         field.onChange(value.map(v => v.value))
@@ -108,7 +110,7 @@ export default function InviteDialog() {
         />
         <div className={'flex justify-end'}>
           <Button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? 'Inviting...' : 'Invite Users'}
+            {t('submitButton', { isSubmitting: isSubmitting })}
           </Button>
         </div>
       </form>
