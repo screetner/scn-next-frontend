@@ -86,6 +86,10 @@
       "totalMembersTitle": "สมาชิกทั้งหมด",
       "description": "สมาชิกในองค์กร",
       "growth": "{percentage}% {growth} จากเดือนที่แล้ว"
+    },
+    "totalInviteURL": {
+      "totalInviteURLTitle": "สถิติการเชิญคนเข้าร่วมองค์กร",
+      "active": "ผู้ใช้ที่ลงทะเบียนแล้ว"
     }
   }
 }
