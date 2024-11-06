@@ -79,5 +79,13 @@
     "RoleTable": {
       "createRoleButton": "Create Role"
     }
+  },
+  "MemberPage": {
+    "lastUpdated": "Last updated",
+    "totalMember": {
+      "totalMembersTitle": "Total Members",
+      "description": "Member in the organization",
+      "growth": "{percentage}% {growth} from last month"
+    }
   }
 }

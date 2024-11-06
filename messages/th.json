@@ -79,5 +79,13 @@
     "RoleTable": {
       "createRoleButton": "สร้างบทบาท"
     }
+  },
+  "MemberPage": {
+    "lastUpdated": "อัปเดตล่าสุด",
+    "totalMember": {
+      "totalMembersTitle": "สมาชิกทั้งหมด",
+      "description": "สมาชิกในองค์กร",
+      "growth": "{percentage}% {growth} จากเดือนที่แล้ว"
+    }
   }
 }
