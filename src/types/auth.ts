@@ -22,6 +22,9 @@ export type TSignInResponse = {
 export type TSessions = TUser
 
 export type TRefreshTokenResponse = {
-  accessToken: string
-  accessTokenExpiry: string
+  user: {
+    accessToken: string
+    accessTokenExpiry: string
+    refreshToken: string
+  }
 }
