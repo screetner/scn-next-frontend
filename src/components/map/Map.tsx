@@ -24,6 +24,7 @@ import {
   polygonFillLayer,
   polygonOutlineLayer,
 } from '@/components/map/component/PolygonLayers'
+import { useDrawer } from '@/context/DrawerContext'
 
 function CustomMap({
   isSettingMode = false,
@@ -38,6 +39,7 @@ function CustomMap({
   const mapboxAccessToken = process.env.NEXT_PUBLIC_MAP_API_KEY
   const [selectedPopup, setSelectedPopup] = useState<PopupData | null>(null)
   const mapRef = useRef<MapRef>(null)
+  const { showDrawer } = useDrawer()
 
   const handleMapClick = useCallback(
     (event: MapMouseEvent) => {
@@ -67,6 +69,14 @@ function CustomMap({
           } else if (feature.properties) {
             // Handle single point click
             setSelectedPopup(feature.properties as PopupData)
+            const openDrawer = () => {
+              showDrawer({
+                id: 'custom-drawer',
+                title: 'Custom Side Drawer',
+                content: <div>Content</div>,
+              })
+            }
+            openDrawer()
           }
         }
       } else if (onLocationAdd) {
