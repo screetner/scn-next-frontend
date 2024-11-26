@@ -25,6 +25,7 @@ import {
   polygonOutlineLayer,
 } from '@/components/map/component/PolygonLayers'
 import { useDrawer } from '@/context/DrawerContext'
+import LocationDrawer from '@/components/drawer/Location'
 
 function CustomMap({
   isSettingMode = false,
@@ -40,6 +41,14 @@ function CustomMap({
   const [selectedPopup, setSelectedPopup] = useState<PopupData | null>(null)
   const mapRef = useRef<MapRef>(null)
   const { showDrawer } = useDrawer()
+
+  const openDrawer = () => {
+    showDrawer({
+      id: 'custom-drawer',
+      title: 'Location Details',
+      content: <LocationDrawer />, // This is the component that will be rendered inside the drawer
+    })
+  }
 
   const handleMapClick = useCallback(
     (event: MapMouseEvent) => {
@@ -69,13 +78,6 @@ function CustomMap({
           } else if (feature.properties) {
             // Handle single point click
             setSelectedPopup(feature.properties as PopupData)
-            const openDrawer = () => {
-              showDrawer({
-                id: 'custom-drawer',
-                title: 'Custom Side Drawer',
-                content: <div>Content</div>,
-              })
-            }
             openDrawer()
           }
         }

@@ -5,6 +5,7 @@ import { InvalidLoginError } from '@/utils/custom'
 import { shouldRefreshToken } from '@/utils/helper'
 import { redirect } from '@/i18n/routing'
 import apiEndpoints from '@/config/apiEndpoints'
+import { TRefreshTokenResponse } from '@/types/auth'
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -63,14 +64,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 AuthorizationRefresh: `Bearer ${token.user.refreshToken}`,
               },
             })
-            const data = await res.json()
+            const data: TRefreshTokenResponse = await res.json()
             return {
               ...token,
               user: {
                 ...token.user,
-                accessToken: data.accessToken,
-                accessTokenExpiry: data.accessTokenExpiry,
-                refreshToken: data.refreshToken,
+                accessToken: data.user.accessToken,
+                accessTokenExpiry: data.user.accessTokenExpiry,
+                refreshToken: data.user.refreshToken,
               },
             }
           }
