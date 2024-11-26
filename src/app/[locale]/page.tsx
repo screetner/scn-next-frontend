@@ -77,7 +77,7 @@ export default async function Home() {
 
         {/* Features Section */}
         <section className="grid md:grid-cols-3 gap-8">
-          <Card className="hover:shadow-lg transition-shadow">
+          <Card className="shadow-md hover:shadow-lg transition-shadow">
             <CardHeader>
               <MapPin className="w-8 h-8 text-blue-600" />
               <CardTitle className="mt-2">
@@ -91,7 +91,7 @@ export default async function Home() {
             </CardContent>
           </Card>
 
-          <Card className="hover:shadow-lg transition-shadow">
+          <Card className="shadow-md hover:shadow-lg transition-shadow">
             <CardHeader>
               <Camera className="w-8 h-8 text-blue-600" />
               <CardTitle className="mt-2">
@@ -103,7 +103,7 @@ export default async function Home() {
             </CardContent>
           </Card>
 
-          <Card className="hover:shadow-lg transition-shadow">
+          <Card className="shadow-md hover:shadow-lg transition-shadow">
             <CardHeader>
               <FileText className="w-8 h-8 text-blue-600" />
               <CardTitle className="mt-2">
