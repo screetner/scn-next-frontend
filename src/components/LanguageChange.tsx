@@ -10,6 +10,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { usePathname, useRouter } from '@/i18n/routing'
 import { useLocale } from 'next-intl'
+import { ThailandFlag, UnitedKingdomFlag } from '@/components/svg/flags'
 
 type Locale = 'en' | 'th'
 
@@ -40,7 +41,7 @@ export function LanguageChange({
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline" size="icon" aria-label={locale}>
-          {locale.toUpperCase()}
+          {locale === 'en' ? <UnitedKingdomFlag /> : <ThailandFlag />}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent side={side}>
@@ -50,7 +51,10 @@ export function LanguageChange({
             onSelect={() => changeLanguage(loc)}
             disabled={locale === loc}
           >
-            {loc.toUpperCase()}
+            <span className="flex justify-between w-full">
+              {loc.toUpperCase()}
+              {loc === 'en' ? <UnitedKingdomFlag /> : <ThailandFlag />}
+            </span>{' '}
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>

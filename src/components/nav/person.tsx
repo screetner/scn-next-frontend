@@ -15,13 +15,14 @@ import { Link } from '@/i18n/routing'
 export async function Person() {
   const session = await auth()
   const user = session?.user
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
           size="icon"
-          className="overflow-hidden rounded-full"
+          className={`overflow-hidden rounded-full`}
         >
           {get2CapitalizedWords(user?.username)}
         </Button>
