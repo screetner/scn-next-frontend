@@ -19,6 +19,7 @@ const apiEndpoints = {
     getTotalMembers: `${main_service}/dashboard/member`,
     getTotalInvitees: `${main_service}/dashboard/invite`,
     inviteMembers: `${main_service}/member/invite`,
+    inviteList: `${main_service}/organization/invite-list`,
   },
   register: {
     checkRegisterToken: `${main_service}/register/check`,

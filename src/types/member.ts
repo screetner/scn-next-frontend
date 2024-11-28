@@ -17,3 +17,9 @@ export type TotalInvite = {
   inviteTotal: number
   inviteActivate: number
 }
+
+export type InviteList = {
+  inviterEmail: string | null
+  inviteeEmail: string
+  time: string
+}

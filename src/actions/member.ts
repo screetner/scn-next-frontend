@@ -1,7 +1,12 @@
 'use server'
 
 import axios from '@/lib/axios'
-import { RecentMember, TotalInvite, TotalMember } from '@/types/member'
+import {
+  InviteList,
+  RecentMember,
+  TotalInvite,
+  TotalMember,
+} from '@/types/member'
 import { actionResponse } from '@/types/reponse'
 import { InviteFormData } from '@/schemas/InviteMemberSchema'
 import { CatchAxiosError } from '@/utils/CatchAxiosError'
@@ -60,5 +65,17 @@ export const inviteMembers = async (body: InviteFormData): Promise<void> => {
     await axios.post(`${apiEndpoints.member.inviteMembers}`, body)
   } catch (e) {
     CatchAxiosError(e)
+  }
+}
+
+export const inviteList = async (): Promise<actionResponse<InviteList[]>> => {
+  try {
+    const { data } = await axios.get(`${apiEndpoints.member.inviteList}`)
+    return { data, error: null }
+  } catch (e) {
+    return {
+      data: [],
+      error: 'Failed to fetch invite list. Please try again.',
+    }
   }
 }

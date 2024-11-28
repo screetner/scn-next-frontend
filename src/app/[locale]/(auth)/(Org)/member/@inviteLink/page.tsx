@@ -15,9 +15,12 @@ import {
 } from '@/components/ui/table'
 import InviteButton from '@/app/[locale]/(auth)/(Org)/member/@inviteLink/InviteButton'
 import { getTranslations } from 'next-intl/server'
+import { inviteList } from '@/actions/member'
+import dayjs from 'dayjs'
 
 export default async function CreateInviteLink() {
   const t = await getTranslations('MemberPage.inviteLink')
+  const { data } = await inviteList()
   return (
     <>
       <Card>
@@ -32,19 +35,34 @@ export default async function CreateInviteLink() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Customer</TableHead>
-                <TableHead className="text-right">Amount</TableHead>
+                <TableHead>
+                  <div className="text-sm text-muted-foreground">Inviter</div>
+                </TableHead>
+                <TableHead>
+                  <div className="text-sm text-muted-foreground">Invitee</div>
+                </TableHead>
+                <TableHead className="text-right">
+                  <div className="text-sm text-muted-foreground">Time</div>
+                </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               <TableRow>
-                <TableCell>
-                  <div className="font-medium">Liam Johnson</div>
-                  <div className="hidden text-sm text-muted-foreground md:inline">
-                    liam@example.com
-                  </div>
-                </TableCell>
-                <TableCell className="text-right">$250.00</TableCell>
+                {data.map(item => (
+                  <>
+                    <TableCell key={item.time}>
+                      <div className="font-medium">{item.inviterEmail}</div>
+                    </TableCell>
+                    <TableCell key={item.time}>
+                      <div className="font-medium">{item.inviteeEmail}</div>
+                    </TableCell>
+                    <TableCell key={item.time} className="text-right">
+                      <div className="font-medium">
+                        {dayjs(item.time).format('DD MMM, YYYY')}
+                      </div>
+                    </TableCell>
+                  </>
+                ))}
               </TableRow>
             </TableBody>
           </Table>
