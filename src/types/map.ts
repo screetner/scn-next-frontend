@@ -1,24 +1,25 @@
 export interface Location {
-  latitude: number;
-  longitude: number;
+  latitude: number
+  longitude: number
 }
 
 export interface PopupData {
-  location: Location;
+  assetId: string
+  location: Location
 }
 
 export interface CustomMapProps {
-  isSettingMode: boolean;
+  isSettingMode: boolean
   initialViewState: {
-    longitude: number;
-    latitude: number;
-    zoom: number;
-  };
-  popupData: PopupData[];
-  locations: Location[];
-  onLocationAdd?: (location: Location) => void;
-  onLocationRemove?: (index: number) => void;
-  width?: string;
-  height?: string;
-  hoveredIndex?: number | null;
+    longitude: number
+    latitude: number
+    zoom: number
+  }
+  popupData: PopupData[]
+  locations: Location[]
+  onLocationAdd?: (location: Location) => void
+  onLocationRemove?: (index: number) => void
+  width?: string
+  height?: string
+  hoveredIndex?: number | null
 }

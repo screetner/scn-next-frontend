@@ -1,13 +1,13 @@
-'use client';
+'use client'
 
-import CustomMap from '@/components/map/Map';
-import { AssetResponse } from '@/types/dashboard';
-import { useMemo } from 'react';
-import { PopupData } from '@/types/map';
-import { calculateCenter } from '@/utils/helper';
+import CustomMap from '@/components/map/Map'
+import { AssetResponse } from '@/types/dashboard'
+import { useMemo } from 'react'
+import { PopupData } from '@/types/map'
+import { calculateCenter } from '@/utils/helper'
 
 interface DashboardMapProps {
-  data: AssetResponse | undefined;
+  data: AssetResponse | undefined
 }
 
 export function DashboardMap({ data }: DashboardMapProps) {
@@ -15,19 +15,20 @@ export function DashboardMap({ data }: DashboardMapProps) {
     if (data) {
       return data.assets.map(asset => {
         return {
+          assetId: asset.assetId,
           location: {
             latitude: asset.geoCoordinate[0],
             longitude: asset.geoCoordinate[1],
           },
-        };
-      });
+        }
+      })
     }
-    return [];
-  }, [data]);
+    return []
+  }, [data])
   const center = useMemo(
     () => calculateCenter(data?.border ?? []),
     [data?.border],
-  );
+  )
   return (
     <CustomMap
       isSettingMode={false}
@@ -39,5 +40,5 @@ export function DashboardMap({ data }: DashboardMapProps) {
       popupData={popUpData}
       locations={data?.border ?? []}
     />
-  );
+  )
 }

@@ -50,9 +50,9 @@ export const heatmapLayer: LayerProps = {
     ],
 
     // Radius of influence for each point
-    'heatmap-radius': ['interpolate', ['linear'], ['zoom'], 0, 10, 15, 50],
+    'heatmap-radius': ['interpolate', ['linear'], ['zoom'], 0, 10, 15, 30],
 
     // Opacity of the heatmap layer
-    'heatmap-opacity': ['interpolate', ['linear'], ['zoom'], 7, 0.7, 15, 0.5],
+    'heatmap-opacity': ['interpolate', ['linear'], ['zoom'], 7, 1, 15, 0.8],
   },
 }

@@ -14,11 +14,7 @@ import { MapPinIcon } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { Alert } from '@/components/ui/alert'
-import {
-  clusterCountLayer,
-  clusterLayer,
-  unClusteredPointLayer,
-} from '@/components/map/component/ClusterLayers'
+import { unClusteredPointLayer } from '@/components/map/component/ClusterLayers'
 import {
   polygonFillLayer,
   polygonOutlineLayer,
@@ -34,26 +30,37 @@ function CustomMap({
   locations = [],
   onLocationAdd,
   onLocationRemove,
-  hoveredIndex,
 }: CustomMapProps) {
+  const ZOOM_THRESHOLD = 16
   const { theme } = useTheme()
   const mapboxAccessToken = process.env.NEXT_PUBLIC_MAP_API_KEY
-  const [selectedPopup, setSelectedPopup] = useState<PopupData | null>(null)
+  const [currentZoom, setCurrentZoom] = useState(0) // Track zoom level
   const mapRef = useRef<MapRef>(null)
   const { showDrawer } = useDrawer()
 
-  const openDrawer = () => {
-    showDrawer({
-      id: 'custom-drawer',
-      title: 'Location Details',
-      content: <LocationDrawer />, // This is the component that will be rendered inside the drawer
-    })
-  }
+  const openDrawer = useCallback(
+    (location: PopupData) => {
+      showDrawer({
+        id: 'custom-drawer',
+        title: 'Location Details',
+        content: <LocationDrawer data={location} />, // This is the component that will be rendered inside the drawer
+      })
+    },
+    [showDrawer, currentZoom],
+  )
 
   const handleMapClick = useCallback(
     (event: MapMouseEvent) => {
       if (!isSettingMode) {
-        //   marker click
+        if (currentZoom < ZOOM_THRESHOLD) return
+        const features = mapRef.current?.queryRenderedFeatures(event.point, {
+          layers: ['unClustered-point'],
+        })
+        if (features?.length) {
+          const clickedFeature = features[0]
+          const clickedIndex: number = clickedFeature.properties?.index
+          openDrawer(popupData[clickedIndex])
+        }
       } else if (onLocationAdd) {
         // Add new location in setting mode
         const clickedLocation = {
@@ -63,7 +70,7 @@ function CustomMap({
         onLocationAdd(clickedLocation)
       }
     },
-    [isSettingMode, onLocationAdd],
+    [currentZoom, isSettingMode, onLocationAdd, openDrawer, popupData],
   )
 
   const features = useMemo(
@@ -73,7 +80,6 @@ function CustomMap({
         properties: {
           ...data,
           index,
-          // Add a density property (you can customize this logic)
           density: calculateDensity(data, popupData),
         },
         geometry: {
@@ -84,25 +90,22 @@ function CustomMap({
           ] as Position,
         },
       })),
-    [popupData],
+    [calculateDensity, popupData],
   )
 
-  // Optional: Density calculation function
   function calculateDensity(point: PopupData, allPoints: PopupData[]): number {
-    // Simple proximity-based density calculation
-    const radius = 0.1 // Adjust this value to control density calculation
+    const radius = 0.1
     const nearbyPoints = allPoints.filter(
       p => calculateDistance(point.location, p.location) <= radius,
     )
     return nearbyPoints.length / allPoints.length
   }
 
-  // Haversine formula for distance calculation
   function calculateDistance(
     loc1: { longitude: number; latitude: number },
     loc2: { longitude: number; latitude: number },
   ): number {
-    const R = 6371 // Radius of the Earth in km
+    const R = 6371
     const dLat = ((loc2.latitude - loc1.latitude) * Math.PI) / 180
     const dLon = ((loc2.longitude - loc1.longitude) * Math.PI) / 180
     const a =
@@ -115,7 +118,6 @@ function CustomMap({
     return R * c
   }
 
-  // Memoize GeoJSON data
   const geoJsonData: SourceProps['data'] = useMemo(
     () => ({
       type: 'FeatureCollection',
@@ -124,7 +126,6 @@ function CustomMap({
     [features],
   )
 
-  // Memoize polygon data with proper typing
   const polygonData = useMemo(
     () => ({
       type: 'Feature' as const,
@@ -136,7 +137,6 @@ function CustomMap({
                 ...locations.map(
                   loc => [loc.longitude, loc.latitude] as Position,
                 ),
-                // Close the polygon by adding the first point again
                 [locations[0].longitude, locations[0].latitude] as Position,
               ]
             : [],
@@ -146,7 +146,6 @@ function CustomMap({
     [locations],
   )
 
-  // Handle marker removal with proper event handling
   const handleMarkerRemove = useCallback(
     (index: number, e: React.MouseEvent) => {
       e.stopPropagation()
@@ -177,14 +176,10 @@ function CustomMap({
           ? 'mapbox://styles/mapbox/dark-v11?optimize=true'
           : 'mapbox://styles/mapbox/light-v11?optimize=true'
       }
-      interactiveLayerIds={[
-        clusterLayer.id!,
-        clusterCountLayer.id!,
-        unClusteredPointLayer.id!,
-      ]}
+      interactiveLayerIds={['unclustered-point-layer']}
       onClick={handleMapClick}
+      onZoom={e => setCurrentZoom(e.target.getZoom())}
     >
-      {/* Polygon Layer */}
       {locations.length > 2 && (
         <Source id="polygon" type="geojson" data={polygonData}>
           <Layer {...polygonFillLayer} />
@@ -192,7 +187,6 @@ function CustomMap({
         </Source>
       )}
 
-      {/* Setting Mode Markers */}
       {isSettingMode &&
         locations.map((location, index) => (
           <Marker
@@ -201,11 +195,7 @@ function CustomMap({
             latitude={location.latitude}
           >
             <div
-              className={`
-                text-2xl cursor-pointer transition-all duration-300
-                ${hoveredIndex === index ? 'text-blue-500 scale-125 -translate-y-1' : 'text-red-500'}
-                ${hoveredIndex === index ? 'filter drop-shadow-md' : ''}
-              `}
+              className="text-2xl cursor-pointer text-red-500 transition-all duration-300"
               onClick={e => handleMarkerRemove(index, e)}
             >
               <MapPinIcon />
@@ -213,9 +203,11 @@ function CustomMap({
           </Marker>
         ))}
 
-      {/* Clustered Markers */}
-      {popupData && popupData.length > 0 && (
+      {popupData.length > 0 && (
         <Source id="markers" type="geojson" data={geoJsonData}>
+          {currentZoom >= ZOOM_THRESHOLD && (
+            <Layer {...unClusteredPointLayer} />
+          )}
           <Layer {...heatmapLayer} />
         </Source>
       )}
