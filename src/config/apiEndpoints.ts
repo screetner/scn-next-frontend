@@ -8,6 +8,8 @@ const apiEndpoints = {
   },
   dashboard: {
     getAssets: `${main_service}/assets/orgId`,
+    getAssetsById: (assetId: string) =>
+      `${main_service}/assets/assetId/${assetId}`,
   },
   geolocation: {
     patchGeolocationOrganizationBorder: `${main_service}/geolocation/organization-border`,

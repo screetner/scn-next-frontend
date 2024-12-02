@@ -6,5 +6,6 @@ export const CatchAxiosError = (err: any) => {
       err.response?.data.message || 'An unexpected error occurred',
     )
   }
+  console.log(err)
   throw new Error('An unexpected error occurred')
 }
