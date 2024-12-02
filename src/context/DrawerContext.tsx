@@ -82,17 +82,19 @@ export const DrawerProvider: React.FC<{ children: ReactNode }> = ({
           open={true}
           onOpenChange={isOpen => handleOpenChange(isOpen, drawer)}
         >
-          <DrawerContent>
-            <DrawerHeader className="space-y-2">
+          <DrawerContent className="h-[90vh] flex flex-col">
+            <DrawerHeader className="space-y-2 shrink-0">
               <DrawerTitle>{drawer.title}</DrawerTitle>
               {drawer.description && (
                 <DrawerDescription>{drawer.description}</DrawerDescription>
               )}
             </DrawerHeader>
-            <div className="px-4 overflow-y-auto flex-grow">
+            <div className="px-4 overflow-y-auto flex-grow select-text">
               {drawer.content}
             </div>
-            {drawer.footer && <DrawerFooter>{drawer.footer}</DrawerFooter>}
+            {drawer.footer && (
+              <DrawerFooter className="shrink-0">{drawer.footer}</DrawerFooter>
+            )}
           </DrawerContent>
         </Drawer>
       ))}
