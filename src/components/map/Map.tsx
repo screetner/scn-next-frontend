@@ -6,10 +6,9 @@ import Map, {
   Layer,
   MapRef,
   MapMouseEvent,
-  GeoJSONSource,
   SourceProps,
 } from 'react-map-gl'
-import { Point, Position } from 'geojson'
+import { Position } from 'geojson'
 import { CustomMapProps, PopupData } from '@/types/map'
 import { MapPinIcon } from 'lucide-react'
 import { useTheme } from 'next-themes'
@@ -26,6 +25,7 @@ import {
 } from '@/components/map/component/PolygonLayers'
 import { useDrawer } from '@/context/DrawerContext'
 import LocationDrawer from '@/components/drawer/Location'
+import { heatmapLayer } from '@/components/map/component/heatmapLayer'
 
 function CustomMap({
   isSettingMode = false,
@@ -53,34 +53,7 @@ function CustomMap({
   const handleMapClick = useCallback(
     (event: MapMouseEvent) => {
       if (!isSettingMode) {
-        // Handle cluster click
-        if (event.features && event.features.length > 0) {
-          const feature = event.features[0]
-          const clusterId = feature.properties?.cluster_id
-
-          const mapboxSource = mapRef.current?.getSource('markers') as
-            | GeoJSONSource
-            | undefined
-
-          if (clusterId && mapboxSource) {
-            mapboxSource.getClusterExpansionZoom(clusterId, (err, zoom) => {
-              if (err) return
-
-              const geometry = feature.geometry as Point
-              if (geometry.type === 'Point') {
-                mapRef.current?.easeTo({
-                  center: geometry.coordinates as [number, number],
-                  zoom: zoom || 0,
-                  duration: 500,
-                })
-              }
-            })
-          } else if (feature.properties) {
-            // Handle single point click
-            setSelectedPopup(feature.properties as PopupData)
-            openDrawer()
-          }
-        }
+        //   marker click
       } else if (onLocationAdd) {
         // Add new location in setting mode
         const clickedLocation = {
@@ -93,12 +66,16 @@ function CustomMap({
     [isSettingMode, onLocationAdd],
   )
 
-  // Memoize features for better performance
   const features = useMemo(
     () =>
       popupData?.map((data, index) => ({
         type: 'Feature' as const,
-        properties: { ...data, index },
+        properties: {
+          ...data,
+          index,
+          // Add a density property (you can customize this logic)
+          density: calculateDensity(data, popupData),
+        },
         geometry: {
           type: 'Point' as const,
           coordinates: [
@@ -109,6 +86,34 @@ function CustomMap({
       })),
     [popupData],
   )
+
+  // Optional: Density calculation function
+  function calculateDensity(point: PopupData, allPoints: PopupData[]): number {
+    // Simple proximity-based density calculation
+    const radius = 0.1 // Adjust this value to control density calculation
+    const nearbyPoints = allPoints.filter(
+      p => calculateDistance(point.location, p.location) <= radius,
+    )
+    return nearbyPoints.length / allPoints.length
+  }
+
+  // Haversine formula for distance calculation
+  function calculateDistance(
+    loc1: { longitude: number; latitude: number },
+    loc2: { longitude: number; latitude: number },
+  ): number {
+    const R = 6371 // Radius of the Earth in km
+    const dLat = ((loc2.latitude - loc1.latitude) * Math.PI) / 180
+    const dLon = ((loc2.longitude - loc1.longitude) * Math.PI) / 180
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos((loc1.latitude * Math.PI) / 180) *
+        Math.cos((loc2.latitude * Math.PI) / 180) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2)
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+    return R * c
+  }
 
   // Memoize GeoJSON data
   const geoJsonData: SourceProps['data'] = useMemo(
@@ -162,7 +167,6 @@ function CustomMap({
   }
 
   return (
-    // <div className="w-full h-full">
     <Map
       ref={mapRef}
       mapboxAccessToken={mapboxAccessToken}
@@ -211,21 +215,11 @@ function CustomMap({
 
       {/* Clustered Markers */}
       {popupData && popupData.length > 0 && (
-        <Source
-          id="markers"
-          type="geojson"
-          data={geoJsonData}
-          cluster={true}
-          clusterMaxZoom={20}
-          clusterRadius={35}
-        >
-          <Layer {...clusterLayer} />
-          <Layer {...clusterCountLayer} />
-          <Layer {...unClusteredPointLayer} />
+        <Source id="markers" type="geojson" data={geoJsonData}>
+          <Layer {...heatmapLayer} />
         </Source>
       )}
     </Map>
-    // </div>
   )
 }
 
