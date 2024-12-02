@@ -5,7 +5,11 @@ const withNextIntl = createNextIntlPlugin()
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['thanapatsblobpocv2.blob.core.windows.net'],
+    remotePatterns: [
+      {
+        hostname: 'thanapatsblobpocv2.blob.core.windows.net',
+      },
+    ],
   },
 }
 

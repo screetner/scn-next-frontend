@@ -6,14 +6,14 @@ import { Badge } from '@/components/ui/badge'
 import { MapPin, Type, User, Calendar } from 'lucide-react'
 import Image from 'next/image'
 import { PopupData } from '@/types/map'
-import { uesFetchAsset } from '@/hooks/asset/uesFetchAsset'
+import { useFetchAsset } from '@/hooks/asset/uesFetchAsset'
 
 interface LocationDrawerProps {
   data: PopupData
 }
 
 export default function LocationDrawer({ data }: LocationDrawerProps) {
-  const { data: assetData, isLoading } = uesFetchAsset({
+  const { data: assetData, isLoading } = useFetchAsset({
     assetId: data.assetId,
   })
 

@@ -2,11 +2,11 @@ import { useQuery } from '@tanstack/react-query'
 import CustomFetch from '@/lib/customFetch'
 import { IndividualAssetResponse } from '@/types/dashboard'
 
-interface useFetchAssetProps {
+interface UseFetchAssetProps {
   assetId: string
 }
 
-export function uesFetchAsset({ assetId }: useFetchAssetProps) {
+export function useFetchAsset({ assetId }: UseFetchAssetProps) {
   return useQuery<IndividualAssetResponse>({
     queryKey: ['asset', assetId],
     queryFn: async () =>
