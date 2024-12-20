@@ -16,11 +16,11 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { RegisterFormValues, registerSchema } from '@/schemas/registerSchema'
-import { toast } from 'sonner'
 import { registerUser } from '@/actions/register'
 import { Link, useRouter } from '@/i18n/routing'
 import { useTranslations } from 'next-intl'
 import { PasswordAndConfirmPassword } from '@/components/input/PasswordAndConfirmPassword'
+import { withToastPromise } from '@/utils/toastPromise'
 
 export default function RegisterForm({ token }: { token: string }) {
   const t = useTranslations('RegisterPage.form')
@@ -38,10 +38,10 @@ export default function RegisterForm({ token }: { token: string }) {
 
   const handleSubmit = async (values: RegisterFormValues) => {
     setIsSubmitting(true)
-    toast.promise(registerUser(token, values.username, values.password), {
+    await withToastPromise(() => registerUser(token, values.username, values.password), {
       loading: 'Registering...',
       success: 'Account registered successfully.',
-      error: error => error.message,
+      error: error => error.message || 'Failed to register account. Please try again.',
     })
     setIsSubmitting(false)
     router.push('/signin')

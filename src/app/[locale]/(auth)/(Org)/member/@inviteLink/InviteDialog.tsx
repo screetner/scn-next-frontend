@@ -19,12 +19,12 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { InviteFormData, inviteSchema } from '@/schemas/InviteMemberSchema'
-import { toast } from 'sonner'
 import { inviteMembers } from '@/actions/member'
 import { useDialog } from '@/context/DialogProvider'
 import { useFetchRoleOptions } from '@/hooks/role/useFetchRoleOptions'
 import { SkeletonCard } from '@/components/SkeletonCard'
 import { useTranslations } from 'next-intl'
+import { withToastPromise } from '@/utils/toastPromise'
 
 export default function InviteDialog() {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -42,10 +42,10 @@ export default function InviteDialog() {
 
   const onSubmit = async (data: InviteFormData) => {
     setIsSubmitting(true)
-    toast.promise(inviteMembers(data), {
+    await withToastPromise(() => inviteMembers(data), {
       loading: 'Inviting users...',
       success: 'Users invited successfully',
-      error: err => err.message,
+      error: err => err.message || 'Failed to invite users',
     })
     setIsSubmitting(false)
     closeDialog()

@@ -2,10 +2,10 @@
 
 import { actionResponse } from '@/types/reponse'
 import axios from '@/lib/axios'
-import { CatchAxiosError } from '@/utils/CatchAxiosError'
 import apiEndpoints from '@/config/apiEndpoints'
 import { CheckRegisterTokenResponse } from '@/types/register'
 import dayjs from 'dayjs'
+import { createServerAction } from '@/utils/action-utils'
 
 export async function checkRegisterToken(
   token: string,
@@ -31,12 +31,8 @@ export async function checkRegisterToken(
   }
 }
 
-export async function registerUser(
-  token: string,
-  username: string,
-  password: string,
-): Promise<void> {
-  try {
+export const registerUser = createServerAction<void, [string, string, string]>(
+  async (token, username, password) => {
     await axios.post(
       `${apiEndpoints.register.registerUser}`,
       {
@@ -49,7 +45,6 @@ export async function registerUser(
         },
       },
     )
-  } catch (e) {
-    CatchAxiosError(e)
-  }
-}
+  },
+)
+

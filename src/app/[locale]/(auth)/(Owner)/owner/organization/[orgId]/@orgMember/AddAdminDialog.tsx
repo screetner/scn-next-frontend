@@ -19,7 +19,7 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useDialog } from '@/context/DialogProvider'
 import { inviteAdmin } from '@/actions/owner/organization'
-import { toast } from 'sonner'
+import { withToastPromise } from '@/utils/toastPromise'
 
 interface InviteAdminDialogProps {
   orgId: string
@@ -38,12 +38,10 @@ const InviteAdminDialog = ({ orgId }: InviteAdminDialogProps) => {
 
   const onSubmit = async (data: InviteAdminFormData) => {
     setIsSubmitting(true)
-    console.log(data)
-    console.log(orgId)
-    toast.promise(inviteAdmin(orgId, data), {
+    await withToastPromise(() => inviteAdmin(orgId, data), {
       loading: 'Inviting admins...',
       success: 'Admins invited successfully',
-      error: err => err.message,
+      error: err => err.message || 'Failed to invite admins',
     })
     closeDialog()
     setIsSubmitting(false)

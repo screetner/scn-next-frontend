@@ -19,6 +19,7 @@ import { PasswordChangeSchema } from '@/schemas/PasswordChange'
 import { PasswordAndConfirmPassword } from '@/components/input/PasswordAndConfirmPassword'
 import { changePassword } from '@/actions/user'
 import { PasswordInput } from '@/components/input/PasswordInput'
+import { withToastPromise } from '@/utils/toastPromise'
 
 export default function Account() {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
@@ -34,10 +35,10 @@ export default function Account() {
 
   const handleSubmit = async (values: PasswordChangeSchema) => {
     setIsSubmitting(true)
-    toast.promise(changePassword(values), {
+    await withToastPromise(() => changePassword(values), {
       loading: 'Changing password...',
       success: 'Password changed successfully',
-      error: (err) => err.message,
+      error: (err) => err.message || 'Something went wrong',
     })
     setIsSubmitting(false)
     form.reset()

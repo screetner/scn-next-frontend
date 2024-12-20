@@ -9,8 +9,8 @@ import {
 } from '@/types/member'
 import { actionResponse } from '@/types/reponse'
 import { InviteFormData } from '@/schemas/InviteMemberSchema'
-import { CatchAxiosError } from '@/utils/CatchAxiosError'
 import apiEndpoints from '@/config/apiEndpoints'
+import { createServerAction, ServerActionError } from '@/utils/action-utils'
 
 export const getRecentMembers = async (
   limit: number,
@@ -60,13 +60,15 @@ export const getTotalInvitees = async (): Promise<
   }
 }
 
-export const inviteMembers = async (body: InviteFormData): Promise<void> => {
-  try {
-    await axios.post(`${apiEndpoints.member.inviteMembers}`, body)
-  } catch (e) {
-    CatchAxiosError(e)
-  }
-}
+export const inviteMembers = createServerAction<void, [InviteFormData]>(
+  async body => {
+    try {
+      await axios.post(`${apiEndpoints.member.inviteMembers}`, body)
+    } catch (e : any) {
+      throw new ServerActionError(e.response?.data?.message)
+    }
+  },
+)
 
 export const inviteList = async (): Promise<actionResponse<InviteList[]>> => {
   try {

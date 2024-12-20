@@ -12,13 +12,13 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import MultipleSelector from '@/components/ui/MultipleSelector'
-import { toast } from 'sonner'
 import { useDialog } from '@/context/DialogProvider'
 import {
   CreateOrgFormData,
   createOrgSchema,
 } from '@/schemas/OwnerCreateOrgnization'
 import { createOrganization } from '@/actions/owner/organization'
+import { withToastPromise } from '@/utils/toastPromise'
 
 export default function CreateOrganizationDialog() {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -34,10 +34,10 @@ export default function CreateOrganizationDialog() {
 
   const onSubmit = async (data: CreateOrgFormData) => {
     setIsSubmitting(true)
-    toast.promise(createOrganization(data), {
+    await withToastPromise(() => createOrganization(data), {
       loading: 'Creating organization...',
       success: 'Organization created successfully',
-      error: err => err.message,
+      error: err => err.message || 'Failed to create organization',
     })
     setIsSubmitting(false)
     closeDialog()

@@ -4,10 +4,10 @@ import CustomMap from '@/components/map/Map'
 import { LocationList } from '@/components/map/LocationList'
 import { useCallback, useMemo, useState } from 'react'
 import { Location } from '@/types/map'
-import { toast } from 'sonner'
 import { calculateCenter } from '@/utils/helper'
 import { Card, CardContent } from '@/components/ui/card'
 import { patchGeolocationOrganizationBorder } from '@/actions/geolocation'
+import { withToastPromise } from '@/utils/toastPromise'
 
 interface EditGeolocationProps {
   Locations: Location[]
@@ -31,7 +31,7 @@ export default function EditGeolocation({ Locations }: EditGeolocationProps) {
   }, [])
 
   const handleSave = async () => {
-    toast.promise(patchGeolocationOrganizationBorder(savedGeometry), {
+    await withToastPromise(() => patchGeolocationOrganizationBorder(savedGeometry), {
       loading: 'Saving...',
       success: 'Successfully saved!',
       error: err => err.message || 'Failed to save geometry',
