@@ -4,11 +4,11 @@ import { Separator } from '@/components/ui/separator'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { cn } from '@/lib/utils'
 import React, { useCallback } from 'react'
-import { toast } from 'sonner'
 import RoleMenu from '@/app/[locale]/(auth)/(Org)/role/[roleId]/setting/menu/RoleMenu'
 import { useRoleSetting } from '@/context/RoleSettingContext'
 import { createRoleWithRedirect } from '@/actions/role'
 import FormButton from '@/components/Button/FormButton'
+import { withToastPromise } from '@/utils/toastPromise'
 
 interface ListRoleProps {
   handleRoleSelect: (roleId: string) => void
@@ -17,11 +17,11 @@ interface ListRoleProps {
 export default function ListRole({ handleRoleSelect }: ListRoleProps) {
   const { roleId : selectedRoleId } = useRoleSetting()
   const { roleList } = useRoleSetting()
-  const onCreateRole = useCallback(() => {
-    toast.promise(createRoleWithRedirect(), {
+  const onCreateRole = useCallback(async () => {
+    await withToastPromise(() => createRoleWithRedirect(), {
       loading: 'Creating role...',
       success: 'Role created successfully',
-      error: 'Failed to create role',
+      error: err => err.message || 'Failed to create role',
     })
   }, [])
 

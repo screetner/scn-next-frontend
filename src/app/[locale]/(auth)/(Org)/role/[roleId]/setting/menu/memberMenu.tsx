@@ -10,9 +10,9 @@ import {
 import { Button } from '@/components/ui/button'
 import { MoreVertical, Trash2 } from 'lucide-react'
 import React, { useCallback } from 'react'
-import { toast } from 'sonner'
 import { useAlertDialog } from '@/context/AlertDialogContext'
 import { removeMemberFromRole } from '@/actions/role'
+import { withToastPromise } from '@/utils/toastPromise'
 
 interface MemberMenuProps {
   roleId: string
@@ -25,7 +25,7 @@ export default function MemberMenu({ roleId, userId }: MemberMenuProps) {
   const onDeleteMember = useCallback(
     async (userId: string) => {
       showAlert('Are you sure you want to delete this member?', () => {
-        toast.promise(removeMemberFromRole(roleId, userId), {
+        withToastPromise(() => removeMemberFromRole(roleId, userId), {
           loading: 'Removing member...',
           success: 'RoleMemberTable removed successfully',
           error: err => err.message,

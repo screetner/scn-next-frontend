@@ -10,9 +10,9 @@ import {
 import { Button } from '@/components/ui/button'
 import { MoreVertical, Trash2 } from 'lucide-react'
 import React, { useCallback } from 'react'
-import { toast } from 'sonner'
 import { useAlertDialog } from '@/context/AlertDialogContext'
 import { deleteRoleFromOrg } from '@/actions/role'
+import { withToastPromise } from '@/utils/toastPromise'
 
 interface RoleActionProps {
   currentRoleId: string
@@ -26,7 +26,7 @@ export default function RoleMenu({ currentRoleId,targetRoleId }: RoleActionProps
     async (e: React.MouseEvent, targetRoleId: string) => {
       e.stopPropagation()
       showAlert('Are you sure you want to delete this role?', () => {
-        toast.promise(deleteRoleFromOrg(targetRoleId, currentRoleId), {
+        withToastPromise(() => deleteRoleFromOrg(targetRoleId, currentRoleId), {
           loading: 'Deleting role...',
           success: 'Role deleted successfully',
           error: err => err.message || 'An unexpected error occurred',

@@ -13,12 +13,12 @@ import {
 } from '@/components/ui/table'
 import { Checkbox } from '@/components/ui/checkbox'
 import { DialogFooter } from '@/components/ui/dialog'
-import { toast } from 'sonner'
 import { useDialog } from '@/context/DialogProvider'
 import { UseFetchUnAssignUser } from '@/hooks/role/useFetchUnAssignUser'
 import { assignRoleToMember } from '@/actions/role'
 import { SkeletonCard } from '@/components/SkeletonCard'
 import FormButton from '@/components/Button/FormButton'
+import { withToastPromise } from '@/utils/toastPromise'
 
 interface AddMemberDialogProps {
   roleId: string
@@ -53,11 +53,10 @@ export default function AddMemberDialog({ roleId }: AddMemberDialogProps) {
       userId: selectedMembers.map(member => member.userId),
       roleId: roleId,
     }
-
-    toast.promise(assignRoleToMember(body), {
+    await withToastPromise(() => assignRoleToMember(body), {
       loading: 'Assigning role to member...',
       success: 'Role assigned to member successfully',
-      error: 'Failed to assign role to member',
+      error: err => err.message || 'Failed to assign role to member',
     })
     closeDialog()
   }

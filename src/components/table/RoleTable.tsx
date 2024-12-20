@@ -3,7 +3,6 @@ import { RolesTable } from '@/types/role'
 import React, { useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { fillRoute, Routes } from '@/routes'
-import { toast } from 'sonner'
 import {
   ColumnFiltersState,
   getCoreRowModel,
@@ -18,6 +17,7 @@ import { useRouter } from '@/i18n/routing'
 import { Plus } from 'lucide-react'
 import FormButton from '@/components/Button/FormButton'
 import { useTranslations } from 'next-intl'
+import { withToastPromise } from '@/utils/toastPromise'
 
 interface RoleTableProps {
   roles: RolesTable[]
@@ -32,12 +32,12 @@ export default function RoleTable({
   const [roleNameFilter, setRoleNameFilter] = useState<ColumnFiltersState>([])
   const t = useTranslations('RolePage.RoleTable')
 
-  const handleCreateRole = (e: React.FormEvent) => {
+  const handleCreateRole = async (e: React.FormEvent) => {
     e.preventDefault()
-    toast.promise(createRoleWithRedirect(), {
+    await withToastPromise(createRoleWithRedirect, {
       loading: 'Creating role...',
       success: 'Role created successfully',
-      error: 'Failed to create role',
+      error: err => err.message || 'Failed to create role',
     })
   }
 

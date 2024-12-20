@@ -23,9 +23,9 @@ import {
   PermissionResponse,
   PermissionSection,
 } from '@/types/role'
-import { toast } from 'sonner'
 import { updateRolePermissions } from '@/actions/role'
 import { ScrollArea } from '@/components/ui/scroll-area'
+import { withToastPromise } from '@/utils/toastPromise'
 
 type NestedDefaults = {
   [key: string]: boolean | NestedDefaults
@@ -86,10 +86,10 @@ export function RolePermissionsForm({ data, roleId }: RolePermissionsProps) {
   }
 
   async function onSubmit(data: RolePermissions) {
-    toast.promise(updateRolePermissions(roleId, data), {
+    await withToastPromise(() => updateRolePermissions(roleId, data), {
       loading: 'Updating permissions...',
       success: 'Permissions updated successfully',
-      error: (err) => err.message,
+      error: err => err.message || 'Failed to update permissions',
     })
   }
 
