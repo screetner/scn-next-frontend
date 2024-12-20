@@ -89,7 +89,7 @@ export function RolePermissionsForm({ data, roleId }: RolePermissionsProps) {
     toast.promise(updateRolePermissions(roleId, data), {
       loading: 'Updating permissions...',
       success: 'Permissions updated successfully',
-      error: 'Failed to update permissions',
+      error: (err) => err.message,
     })
   }
 
