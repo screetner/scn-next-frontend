@@ -5,7 +5,7 @@ import axios from '@/lib/axios'
 import apiEndpoints from '@/config/apiEndpoints'
 import { CheckRegisterTokenResponse } from '@/types/register'
 import dayjs from 'dayjs'
-import { createServerAction } from '@/utils/action-utils'
+import { createServerAction, ServerActionError } from '@/utils/action-utils'
 
 export async function checkRegisterToken(
   token: string,
@@ -32,19 +32,23 @@ export async function checkRegisterToken(
 }
 
 export const registerUser = createServerAction<void, [string, string, string]>(
-  async (token, username, password) => {
-    await axios.post(
-      `${apiEndpoints.register.registerUser}`,
-      {
-        username,
-        password,
-      },
-      {
-        headers: {
-          AuthorizationRegister: `Bearer ${token}`,
-        },
-      },
-    )
-  },
+    async (token, username, password) => {
+      try{
+        await axios.post(
+          `${apiEndpoints.register.registerUser}`,
+          {
+            username,
+            password,
+          },
+          {
+            headers: {
+              AuthorizationRegister: `Bearer ${token}`,
+            },
+          },
+        )
+      }catch(e : any){
+        throw new ServerActionError(e.response.data.message)
+      }
+    },
 )
 
