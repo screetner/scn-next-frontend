@@ -3,13 +3,14 @@
 import React, { useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { MapPin, Type, User, Calendar } from 'lucide-react'
+import { MapPin, Type, User, Calendar, Archive } from 'lucide-react'
 import Image from 'next/image'
 import { PopupData } from '@/types/map'
 import { useFetchAsset } from '@/hooks/asset/uesFetchAsset'
 import { Separator } from '@/components/ui/separator'
 import LoadingFramer from '@/components/LoadingFramer'
 import { Link } from '@/i18n/routing'
+import { Button } from '../ui/button'
 
 interface LocationDrawerProps {
   data: PopupData
@@ -89,6 +90,12 @@ export default function LocationDrawer({ data }: LocationDrawerProps) {
                 <Type className="w-4 h-4 text-muted-foreground" />
                 <Badge variant="secondary">{assetData.assetType}</Badge>
               </div>
+            </div>
+            <div>
+              <Button variant={'destructive'} className={'mt-5 w-full'}>
+                <Archive className={'mr-2'} />
+                Archive
+              </Button>
             </div>
           </CardContent>
         </div>
