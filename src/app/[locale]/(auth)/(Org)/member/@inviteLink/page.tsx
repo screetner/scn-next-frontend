@@ -47,23 +47,21 @@ export default async function CreateInviteLink() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {
-                data.map(item => (
-                  <TableRow key={item.time}>
-                    <TableCell>
-                      <div className="font-medium">{item.inviterEmail}</div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="font-medium">{item.inviteeEmail}</div>
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <div className="font-medium">
-                        {dayjs(item.time).format('DD MMM, YYYY')}
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))
-              }
+              {data.map(item => (
+                <TableRow key={item.time}>
+                  <TableCell>
+                    <div className="font-medium">{item.inviterEmail}</div>
+                  </TableCell>
+                  <TableCell>
+                    <div className="font-medium">{item.inviteeEmail}</div>
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <div className="font-medium">
+                      {dayjs(item.time).format('DD MMM, YYYY')}
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </CardContent>

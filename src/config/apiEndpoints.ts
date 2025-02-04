@@ -62,6 +62,10 @@ const apiEndpoints = {
       getMemberByOrgId: (orgId: string) =>
         `${main_service}/member/recent/org/${orgId}`,
     },
+    asset: {
+      deleteAsset: (assetId: string) =>
+        `${main_service}/assets/assetId/${assetId}`,
+    }
   },
 }
 

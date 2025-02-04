@@ -11,12 +11,16 @@ import { Separator } from '@/components/ui/separator'
 import LoadingFramer from '@/components/LoadingFramer'
 import { Link } from '@/i18n/routing'
 import { Button } from '../ui/button'
+import { withToastPromise } from '@/utils/toastPromise'
+import { deleteAsset } from '@/actions/owner/asset'
+import { useDrawer } from '@/context/DrawerContext'
 
 interface LocationDrawerProps {
   data: PopupData
 }
 
 export default function LocationDrawer({ data }: LocationDrawerProps) {
+  const { closeAllDrawers } = useDrawer()
   const { data: assetData, isLoading } = useFetchAsset({
     assetId: data.assetId,
   })
@@ -25,6 +29,16 @@ export default function LocationDrawer({ data }: LocationDrawerProps) {
 
   const handleImageLoad = () => {
     setIsImageLoading(false)
+  }
+
+  const handleArchive = async () => {
+    await withToastPromise(() => deleteAsset(data.assetId), {
+      loading: 'Archiving...',
+      success: 'Successfully archived!',
+      error: err => err.message || 'Failed to archive asset',
+    }).then(() => {
+      closeAllDrawers()
+    })
   }
 
   if (isLoading) return <LoadingFramer width="100%" height="100%" />
@@ -92,7 +106,11 @@ export default function LocationDrawer({ data }: LocationDrawerProps) {
               </div>
             </div>
             <div>
-              <Button variant={'destructive'} className={'mt-5 w-full'}>
+              <Button
+                variant={'destructive'}
+                className={'mt-5 w-full'}
+                onClick={handleArchive}
+              >
                 <Archive className={'mr-2'} />
                 Archive
               </Button>
