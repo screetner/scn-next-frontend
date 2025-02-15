@@ -46,7 +46,7 @@ function CustomMap({
         content: <LocationDrawer data={location} />, // This is the component that will be rendered inside the drawer
       })
     },
-    [showDrawer, currentZoom],
+    [showDrawer], // Removed currentZoom from dependency array
   )
 
   const handleMapClick = useCallback(
@@ -73,33 +73,34 @@ function CustomMap({
     [currentZoom, isSettingMode, onLocationAdd, openDrawer, popupData],
   )
 
-  const features = useMemo(
-    () =>
-      popupData?.map((data, index) => ({
-        type: 'Feature' as const,
-        properties: {
-          ...data,
-          index,
-          density: calculateDensity(data, popupData),
-        },
-        geometry: {
-          type: 'Point' as const,
-          coordinates: [
-            data.location.longitude,
-            data.location.latitude,
-          ] as Position,
-        },
-      })),
-    [calculateDensity, popupData],
-  )
+  const features = useMemo(() => {
+    function calculateDensity(
+      point: PopupData,
+      allPoints: PopupData[],
+    ): number {
+      const radius = 0.1
+      const nearbyPoints = allPoints.filter(
+        p => calculateDistance(point.location, p.location) <= radius,
+      )
+      return nearbyPoints.length / allPoints.length
+    }
 
-  function calculateDensity(point: PopupData, allPoints: PopupData[]): number {
-    const radius = 0.1
-    const nearbyPoints = allPoints.filter(
-      p => calculateDistance(point.location, p.location) <= radius,
-    )
-    return nearbyPoints.length / allPoints.length
-  }
+    return popupData?.map((data, index) => ({
+      type: 'Feature' as const,
+      properties: {
+        ...data,
+        index,
+        density: calculateDensity(data, popupData),
+      },
+      geometry: {
+        type: 'Point' as const,
+        coordinates: [
+          data.location.longitude,
+          data.location.latitude,
+        ] as Position,
+      },
+    }))
+  }, [popupData])
 
   function calculateDistance(
     loc1: { longitude: number; latitude: number },

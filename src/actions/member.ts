@@ -11,6 +11,7 @@ import { actionResponse } from '@/types/reponse'
 import { InviteFormData } from '@/schemas/InviteMemberSchema'
 import apiEndpoints from '@/config/apiEndpoints'
 import { createServerAction, ServerActionError } from '@/utils/action-utils'
+import { revalidatePath } from 'next/cache'
 
 export const getRecentMembers = async (
   limit: number,
@@ -60,11 +61,26 @@ export const getTotalInvitees = async (): Promise<
   }
 }
 
+export const getTotalAdmins = async (): Promise<actionResponse<number>> => {
+  try {
+    const { data } = await axios.get<number>(
+      `${apiEndpoints.member.getTotalAdmins}`,
+    )
+    return { data, error: null }
+  } catch (e) {
+    return {
+      data: 0,
+      error: 'Failed to fetch total admins. Please try again.',
+    }
+  }
+}
+
 export const inviteMembers = createServerAction<void, [InviteFormData]>(
   async body => {
     try {
       await axios.post(`${apiEndpoints.member.inviteMembers}`, body)
-    } catch (e : any) {
+      revalidatePath('/member')
+    } catch (e: any) {
       throw new ServerActionError(e.response?.data?.message)
     }
   },

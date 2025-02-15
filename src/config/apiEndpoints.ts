@@ -20,6 +20,7 @@ const apiEndpoints = {
       `${main_service}/member/recent?limit=${limit}`,
     getTotalMembers: `${main_service}/dashboard/member`,
     getTotalInvitees: `${main_service}/dashboard/invite`,
+    getTotalAdmins: `${main_service}/dashboard/admin`,
     inviteMembers: `${main_service}/member/invite`,
     inviteList: `${main_service}/organization/invite-list`,
   },
