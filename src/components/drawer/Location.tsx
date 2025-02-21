@@ -14,6 +14,7 @@ import { Button } from '../ui/button'
 import { withToastPromise } from '@/utils/toastPromise'
 import { deleteAsset } from '@/actions/owner/asset'
 import { useDrawer } from '@/context/DrawerContext'
+import { useAlertDialog } from '@/context/AlertDialogContext'
 
 interface LocationDrawerProps {
   data: PopupData
@@ -21,6 +22,7 @@ interface LocationDrawerProps {
 
 export default function LocationDrawer({ data }: LocationDrawerProps) {
   const { closeAllDrawers } = useDrawer()
+  const { showAlert } = useAlertDialog()
   const { data: assetData, isLoading } = useFetchAsset({
     assetId: data.assetId,
   })
@@ -112,8 +114,11 @@ export default function LocationDrawer({ data }: LocationDrawerProps) {
                 onClick={handleArchive}
               >
                 <Archive className={'mr-2'} />
-                Archive
+                Delete
               </Button>
+              <p className="font-extralight text-sm text-muted-foreground mt-2">
+                delete this asset permanently, if it not needed anymore
+              </p>
             </div>
           </CardContent>
         </div>

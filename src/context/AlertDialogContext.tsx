@@ -11,10 +11,6 @@ import {
 } from '@/components/ui/alert-dialog'
 
 interface AlertDialogContextProps {
-  open: boolean
-  message: string
-  onConfirm: () => void
-  onCancel: (() => void) | null
   showAlert: (
     message: string,
     onConfirm: () => void,
@@ -45,22 +41,8 @@ export const AlertDialogProvider: React.FC<{ children: ReactNode }> = ({
     setOpen(true)
   }
 
-  const handleConfirm = () => {
-    onConfirm()
-    setOpen(false)
-  }
-
-  const handleCancel = () => {
-    if (onCancel) {
-      onCancel()
-    }
-    setOpen(false)
-  }
-
   return (
-    <AlertDialogContext.Provider
-      value={{ open, message, onConfirm, onCancel, showAlert }}
-    >
+    <AlertDialogContext.Provider value={{ showAlert }}>
       {children}
       <AlertDialog open={open} onOpenChange={setOpen}>
         <AlertDialogContent>
@@ -69,10 +51,10 @@ export const AlertDialogProvider: React.FC<{ children: ReactNode }> = ({
             <AlertDialogDescription>{message}</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogAction onClick={handleConfirm}>
-              Confirm
-            </AlertDialogAction>
-            <AlertDialogCancel onClick={handleCancel}>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={onConfirm}>Confirm</AlertDialogAction>
+            <AlertDialogCancel onClick={() => onCancel && onCancel()}>
+              Cancel
+            </AlertDialogCancel>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
