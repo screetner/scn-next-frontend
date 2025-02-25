@@ -22,122 +22,129 @@ export default async function Home() {
   const t = await getTranslations('HomePage')
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <header className="container mx-auto px-6 py-4">
-        <nav className="flex justify-between items-center">
-          <TypographyH2 text="Screetner" className="text-2xl font-bold" />
-          <div className="flex space-x-4 items-center">
-            <Link
-              href="https://github.com/screetner"
-              target="_blank"
-              aria-label={'github'}
-            >
-              <GithubSVG />
-            </Link>
-            <LanguageChange side={'bottom'} />
-            <ModeToggle />
-            {session && <Person />}
-          </div>
-        </nav>
-      </header>
-
-      <main className="container mx-auto px-6 py-16 flex-grow">
-        {/* Hero Section */}
-        <section className="text-center mb-12">
-          <TypographyH2
-            text={t('title')}
-            className="sm:text-4xl font-bold mb-4"
-          />
-          <TypographyP
-            text={t('description')}
-            className="sm:text-lg mb-8 max-w-2xl mx-auto"
-          />
-          {session ? (
-            <Link href={dashboardPath}>
-              <Button
-                size="lg"
-                className="px-6 py-3 space-x-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-full transition-colors duration-300 shadow-lg hover:shadow-xl"
+    <>
+      {/* gradiant bg */}
+      {/* <div
+        className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-green-400 to-teal-600 transition-opacity duration-300"
+        aria-hidden="true"
+      ></div> */}
+      <div className="min-h-screen flex flex-col bg-gradient-to-b from-sky-500 via-sky-200 to-blue-100 dark:bg-gradient-to-b dark:from-gray-900 dark:to-blue-900">
+        <header className="container mx-auto px-6 py-4">
+          <nav className="flex justify-between items-center">
+            <TypographyH2 text="Screetner" className="text-2xl font-bold" />
+            <div className="flex space-x-4 items-center">
+              <Link
+                href="https://github.com/screetner"
+                target="_blank"
+                aria-label={'github'}
               >
-                <span>{t('dashboardButton')}</span>
-                <LayoutDashboard className={'w-5 h-5'} />
-              </Button>
-            </Link>
-          ) : (
-            <Link href={'/signin'}>
-              <Button
-                size="lg"
-                className="px-6 py-3 space-x-2 bg-green-700 hover:bg-green-800 text-white font-semibold rounded-full transition-colors duration-300 shadow-lg hover:shadow-xl"
-              >
-                <span>{t('loginButton')}</span>
-                <LogIn className="w-5 h-5" />
-              </Button>
-            </Link>
-          )}
-        </section>
+                <GithubSVG />
+              </Link>
+              <LanguageChange side={'bottom'} />
+              <ModeToggle />
+              {session && <Person />}
+            </div>
+          </nav>
+        </header>
 
-        {/* Features Section */}
-        <section className="grid md:grid-cols-3 gap-8">
-          <Card className="shadow-md hover:shadow-lg transition-shadow">
-            <CardHeader>
-              <MapPin className="w-8 h-8 text-blue-600" />
-              <CardTitle className="mt-2">
-                {t('features.urbanAssetTracking.title')}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <TypographyP
-                text={t('features.urbanAssetTracking.description')}
-              />
-            </CardContent>
-          </Card>
+        <main className="container mx-auto px-6 py-16 flex-grow">
+          {/* Hero Section */}
+          <section className="text-center mb-12">
+            <TypographyH2
+              text={t('title')}
+              className="sm:text-4xl font-bold mb-4"
+            />
+            <TypographyP
+              text={t('description')}
+              className="sm:text-lg mb-8 max-w-2xl mx-auto"
+            />
+            {session ? (
+              <Link href={dashboardPath}>
+                <Button
+                  size="lg"
+                  className="px-6 py-3 space-x-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-full transition-colors duration-300 shadow-lg hover:shadow-xl"
+                >
+                  <span>{t('dashboardButton')}</span>
+                  <LayoutDashboard className={'w-5 h-5'} />
+                </Button>
+              </Link>
+            ) : (
+              <Link href={'/signin'}>
+                <Button
+                  size="lg"
+                  className="px-6 py-3 space-x-2 bg-green-700 hover:bg-green-800 text-white font-semibold rounded-full transition-colors duration-300 shadow-lg hover:shadow-xl"
+                >
+                  <span>{t('loginButton')}</span>
+                  <LogIn className="w-5 h-5" />
+                </Button>
+              </Link>
+            )}
+          </section>
 
-          <Card className="shadow-md hover:shadow-lg transition-shadow">
-            <CardHeader>
-              <Camera className="w-8 h-8 text-blue-600" />
-              <CardTitle className="mt-2">
-                {t('features.streetScanning.title')}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <TypographyP text={t('features.streetScanning.description')} />
-            </CardContent>
-          </Card>
+          {/* Features Section */}
+          <section className="grid md:grid-cols-3 gap-8">
+            <Card className="shadow-md hover:shadow-lg transition-shadow">
+              <CardHeader>
+                <MapPin className="w-8 h-8 text-blue-600" />
+                <CardTitle className="mt-2">
+                  {t('features.urbanAssetTracking.title')}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <TypographyP
+                  text={t('features.urbanAssetTracking.description')}
+                />
+              </CardContent>
+            </Card>
 
-          <Card className="shadow-md hover:shadow-lg transition-shadow">
-            <CardHeader>
-              <FileText className="w-8 h-8 text-blue-600" />
-              <CardTitle className="mt-2">
-                {t('features.reportingAnalytics.title')}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <TypographyP
-                text={t('features.reportingAnalytics.description')}
-              />
-            </CardContent>
-          </Card>
-        </section>
+            <Card className="shadow-md hover:shadow-lg transition-shadow">
+              <CardHeader>
+                <Camera className="w-8 h-8 text-blue-600" />
+                <CardTitle className="mt-2">
+                  {t('features.streetScanning.title')}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <TypographyP text={t('features.streetScanning.description')} />
+              </CardContent>
+            </Card>
 
-        {/* Contributors Section */}
-        <section className="mt-16 text-center">
-          <TypographyH2
-            text={t('contributorsTitle')}
-            className="text-2xl font-semibold mb-4"
-          />
-          <div className="flex flex-wrap justify-center gap-4">
-            {['AuJung', 'Quercussi', 'ball46'].map((name, index) => (
-              <Badge key={index} className="bg-blue-600 text-white">
-                {name}
-              </Badge>
-            ))}
-          </div>
-        </section>
-      </main>
+            <Card className="shadow-md hover:shadow-lg transition-shadow">
+              <CardHeader>
+                <FileText className="w-8 h-8 text-blue-600" />
+                <CardTitle className="mt-2">
+                  {t('features.reportingAnalytics.title')}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <TypographyP
+                  text={t('features.reportingAnalytics.description')}
+                />
+              </CardContent>
+            </Card>
+          </section>
 
-      {/* Footer */}
-      <footer className="bg-gray-800 py-6 text-center">
-        <TypographyP text={t('footerText')} className="text-gray-400" />
-      </footer>
-    </div>
+          {/* Contributors Section */}
+          <section className="mt-16 text-center">
+            <TypographyH2
+              text={t('contributorsTitle')}
+              className="text-2xl font-semibold mb-4"
+            />
+            <div className="flex flex-wrap justify-center gap-4">
+              {['AuJung', 'Quercussi', 'ball46'].map((name, index) => (
+                <Badge key={index} className="bg-blue-600 text-white">
+                  {name}
+                </Badge>
+              ))}
+            </div>
+          </section>
+        </main>
+
+        {/* Footer */}
+        <footer className="bg-gray-800 py-6 text-center">
+          <TypographyP text={t('footerText')} className="text-gray-400" />
+        </footer>
+      </div>
+    </>
   )
 }
