@@ -34,7 +34,7 @@ export default async function Layout({
           <AlertDescription>Created At : {createdDate}</AlertDescription>
         </Alert>
       </div>
-      <div className={'mb-2'}>{orgAsset}</div>
+      {/* <div className={'mb-2'}>{orgAsset}</div> */}
       <div className={'grid gap-4 md:grid-cols-2 md:gap-3 lg:grid-cols-3 mb-5'}>
         {orgRole}
         {orgMember}
