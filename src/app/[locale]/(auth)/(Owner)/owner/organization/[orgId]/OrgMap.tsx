@@ -20,14 +20,7 @@ export default function OrgMap({ borders }: orgMapProps) {
           <Map
             isSettingMode={false}
             popupData={[]}
-            locations={[
-              { longitude: 98.97849483131057, latitude: 18.795812641568034 },
-              { longitude: 98.98600860479195, latitude: 18.79808881339615 },
-              { longitude: 98.99377999336423, latitude: 18.79516230110697 },
-              { longitude: 98.99274953300068, latitude: 18.781423271878722 },
-              { longitude: 98.97776492188694, latitude: 18.78158587049316 },
-              { longitude: 98.97849483131057, latitude: 18.795812641568034 },
-            ]}
+            locations={borders}
             initialViewState={{
               longitude: center.long || 100.523186,
               latitude: center.lat || 13.736717,
