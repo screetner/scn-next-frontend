@@ -23,12 +23,7 @@ export default async function Home() {
 
   return (
     <>
-      {/* gradiant bg */}
-      {/* <div
-        className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-green-400 to-teal-600 transition-opacity duration-300"
-        aria-hidden="true"
-      ></div> */}
-      <div className="min-h-screen flex flex-col bg-gradient-to-b from-sky-500 via-sky-200 to-blue-100 dark:bg-gradient-to-b dark:from-gray-900 dark:to-blue-900">
+      <div className="min-h-screen flex flex-col bg-gradient-to-b from-sky-200 via-sky-300 to-sky-500 dark:bg-gradient-to-b dark:from-gray-900 dark:to-blue-900">
         <header className="container mx-auto px-6 py-4">
           <nav className="flex justify-between items-center">
             <TypographyH2 text="Screetner" className="text-2xl font-bold" />
